@@ -1,0 +1,57 @@
+id: HEWRES:00000123
+title: Wildfire smoke and asthma emergency visits during extreme heat
+resource_type: literature
+doi: 10.0000/example
+publication_type: research_article
+annotations:
+  - id: HEWANN:00004567
+    subject: HEWRES:00000123
+    coding_scheme: HEW Resource Library Coding Guide
+    coding_scheme_version: draft
+    annotation_date: 2026-08-11
+    coded_by:
+      - LaserAI
+      - human_curator_placeholder
+    coding_method: laser_ai_assisted_human_curated
+    information_source: complete_resource
+    reference_type: research_article
+    study_objective: Assess associations between wildfire smoke, heat, and asthma-related emergency visits.
+    exposure_annotations:
+      - coded_concept: HEW:wildfire_smoke
+        parent_concept: HEW:air_pollution
+        coding_depth: 2
+      - coded_concept: HEW:particulate_matter
+        parent_concept: HEW:air_pollution
+        coding_depth: 2
+      - coded_concept: HEW:extreme_heat_heat
+        parent_concept: HEW:temperature
+        coding_depth: 2
+    health_impact_annotations:
+      - coded_concept: HEW:asthma
+        parent_concept: HEW:respiratory_impact
+        coding_depth: 2
+      - coded_concept: HEW:medical_visit
+        coding_depth: 1
+    geography_annotations:
+      - geographic_locations:
+          - united_states
+        geographic_features:
+          - urban
+    data_tool_method_annotations:
+      - data_resource_types:
+          - dataset
+        model_types:
+          - exposure_modeling
+          - geospatial_modeling
+        mentioned_resources:
+          - name: Example PM2.5 exposure grid
+            resource_type: geospatial_dataset
+            relationship_to_literature: uses
+            availability: unknown
+    special_topic_annotations:
+      - coded_concept: HEW:study_population
+        coding_depth: 1
+      - coded_concept: HEW:health_sector_influence
+        coding_depth: 1
+    needs_human_review: true
+    confidence: 0.82

@@ -1,0 +1,32 @@
+terms:
+  climate_justice_climate_equity:
+    label: Climate Justice/Climate Equity
+  communication:
+    label: Communication
+    children: [general_public_unspecified, community_disease_advocacy_non_governmental, educator_student, health_professional, policymaker, researcher, other_communication_audience]
+  economic_impact:
+    label: Economic Impact
+  health_sector_influence:
+    label: Health Sector Influence
+  intervention:
+    label: Intervention
+    children: [disaster_risk_reduction, early_warning_system, vulnerability_assessment]
+  policy:
+    label: Policy
+  population_displacement_forced_migration:
+    label: Population Displacement/Forced Migration
+  research_gap:
+    label: Research Gap
+  sociodemographic_vulnerability:
+    label: Sociodemographic Vulnerability
+    children: [healthcare_access]
+  study_population:
+    label: Study Population
+    children: [general_population, athletes_recreational_warriors, children, displaced_populations, elderly, farmers, sex, incarcerated_persons, indigenous_people, low_socioeconomic_status, people_with_disabilities, pre_existing_medical_condition, pregnant_or_breastfeeding_women, unhoused_persons_people_experiencing_homelessness, workers, indigenous_racial_ethnic_subgroup, other_study_population]
+standardized_write_ins:
+  - Chronic Mental Condition
+coding_rules:
+  - if: farmers
+    also_code: workers
+  - if: sociodemographic_vulnerability
+    likely_also_code: low_socioeconomic_status

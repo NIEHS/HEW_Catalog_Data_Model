@@ -1,0 +1,32 @@
+geographic_locations:
+  - global_or_unspecified_location
+  - africa
+  - antarctica
+  - asia
+  - australasia
+  - central_south_america
+  - europe
+  - non_us_north_america
+  - united_states
+geographic_features:
+  - general_geographic_feature
+  - built_environment
+  - desert
+  - forest
+  - freshwater
+  - grassland
+  - island
+  - mountain
+  - ocean_coastal
+  - polar
+  - rainforest
+  - rural
+  - temperate
+  - tropical
+  - urban
+  - valley
+  - wetland
+  - other
+coding_rules:
+  - note: Broad Arctic references should be coded as global_or_unspecified_location plus polar.
+  - note: Altitude is not a geographic feature; represent it as Other Exposure, Specify.

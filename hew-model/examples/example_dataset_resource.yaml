@@ -1,0 +1,30 @@
+id: HEWRES:00001000
+title: Example Heat Exposure Gridded Dataset
+description: Example placeholder dataset resource for HEW schema development.
+resource_type: geospatial_dataset
+url: https://example.org/hew/heat-grid
+access_rights: public
+license: CC-BY-4.0
+spatial_coverage: United States
+temporal_coverage: 2010/2020
+spatial_resolution: 1 km
+coordinate_reference_system: EPSG:4326
+measured_variables:
+  - daily_maximum_temperature
+  - heat_index
+data_dictionary:
+  id: HEWDD:00001000
+  title: Example Heat Exposure Data Dictionary
+  variables:
+    - id: HEWVAR:00000001
+      name: tmax
+      title: Daily maximum temperature
+      description: Daily maximum near-surface air temperature.
+      data_type: float
+      unit: degree Celsius
+    - id: HEWVAR:00000002
+      name: heat_index
+      title: Heat index
+      description: Apparent temperature derived from temperature and relative humidity.
+      data_type: float
+      unit: degree Celsius

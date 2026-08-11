@@ -1,0 +1,51 @@
+terms:
+  general_exposure:
+    label: General Exposure
+  air_pollution:
+    label: Air Pollution
+    children: [allergens, dust, ground_level_ozone, interaction_with_temperature, particulate_matter, wildfire_smoke, other_air_pollution]
+  extreme_weather_related_event_or_disaster:
+    label: Extreme Weather-Related Event or Disaster
+    children: [avalanche, dust_storm, drought, flood, heatwave, hurricane, ice_snow_storm, landslide, lightning_storm, tornado, tsunami, wildfire, windstorm, other_extreme_weather_event_or_disaster]
+  ecosystem_change:
+    label: Ecosystem Change
+  food_quality:
+    label: Food Quality
+  food_security:
+    label: Food Security
+  glacier_snow_melt:
+    label: Glacier/Snow Melt
+  green_space_blue_space:
+    label: Green space/Blue space
+  human_conflict_violence:
+    label: Human Conflict/Violence
+  indoor_environment:
+    label: Indoor Environment
+  meteorological_factor:
+    label: Meteorological Factor
+  precipitation:
+    label: Precipitation
+  sea_level_rise:
+    label: Sea Level Rise
+  sea_surface_oscillation:
+    label: Sea Surface Oscillation
+  seasonality:
+    label: Seasonality
+  solar_radiation:
+    label: Solar Radiation
+  temperature:
+    label: Temperature
+    children: [extreme_cold_cold, extreme_heat_heat, variability]
+  water_quality:
+    label: Water Quality
+  water_security:
+    label: Water Security
+  other_exposure:
+    label: Other Exposure, Specify
+coding_rules:
+  - if: heatwave
+    also_code: extreme_heat_heat
+  - if: ice_snow_storm
+    also_code: extreme_cold_cold
+  - if: wildfire_smoke
+    also_code: particulate_matter

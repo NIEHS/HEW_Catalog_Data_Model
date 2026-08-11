@@ -1,0 +1,47 @@
+terms:
+  general_health_impact:
+    label: General Health Impact
+  cancer:
+    label: Cancer
+  cardiovascular_impact:
+    label: Cardiovascular Impact
+    children: [heart_attack_myocardial_infarction, stroke, hypertension_high_blood_pressure, other_cardiovascular_impact]
+  dermatological_impact:
+    label: Dermatological Impact
+  developmental_impact:
+    label: Developmental Impact
+    children: [birth_outcomes, cognitive_neurological_psychological_disorder, pubertal_timing, stunting, other_developmental_impact]
+  diabetes_obesity_overweight:
+    label: Diabetes/Obesity/Overweight
+  infectious_disease:
+    label: Infectious Disease
+    children: [general_infectious_disease, airborne_disease, foodborne_disease, vectorborne_disease, waterborne_disease, zoonotic_disease, other_infectious_disease]
+  vectorborne_disease:
+    label: Vectorborne Disease
+    children: [flea_borne_disease, fly_borne_disease, mosquito_borne_disease, tick_borne_disease]
+  injury:
+    label: Injury
+  malnutrition:
+    label: Malnutrition
+  medical_visit:
+    label: Medical Visit
+  mental_health_and_well_being:
+    label: Mental Health and Well-Being
+  morbidity_mortality:
+    label: Morbidity/Mortality
+  neurological_impact:
+    label: Neurological Impact
+  reproductive_impact:
+    label: Reproductive Impact
+  respiratory_impact:
+    label: Respiratory Impact
+    children: [asthma, bronchitis_pneumonia, chronic_obstructive_pulmonary_disease, interstitial_lung_disease, lung_cancer, upper_respiratory_allergy, other_respiratory_impact]
+  temperature_related_health_impact:
+    label: Temperature-Related Health Impact
+    children: [cold_related_health_impact, heat_related_health_impact, thermal_comfort]
+  urologic_impact:
+    label: Urologic Impact
+  other_health_impact:
+    label: Other Health Impact, Specify
+standardized_write_ins:
+  - Antimicrobial Resistance

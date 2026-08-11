@@ -1,0 +1,7 @@
+# Placeholder module for future split-out schema content.
+# Current compact schema lives in ../hew.yaml.
+id: https://w3id.org/hew/schema/modules/hew_core
+name: hew_core
+title: "HEW schema module: hew_core"
+imports:
+  - linkml:types

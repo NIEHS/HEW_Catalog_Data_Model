@@ -1,0 +1,12 @@
+data_resource_types:
+  - cohort
+  - source_cohort_publication
+  - dataset
+  - software_code_library
+  - survey
+  - other
+model_types:
+  - artificial_intelligence_machine_learning
+  - exposure_modeling
+  - geospatial_modeling
+  - other

@@ -1,0 +1,12 @@
+[project]
+name = "hew-data-commons-model"
+version = "0.1.0"
+description = "LinkML schema for the HEW Data Commons model"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "linkml>=1.8.0"
+]
+
+[tool.setuptools]
+packages = []

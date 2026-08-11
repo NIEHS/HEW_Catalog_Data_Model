@@ -1,0 +1,470 @@
+id: https://w3id.org/hew/schema
+name: hew-schema
+title: Health and Extreme Weather Data Commons Schema
+description: >-
+  A LinkML schema for cataloging health and extreme weather resources,
+  systematic-review annotations, exposures, health impacts, geographies,
+  data resources, tools, methods, and special topics.
+license: CC-BY-4.0
+
+prefixes:
+  HEW: https://w3id.org/hew/
+  hew: https://w3id.org/hew/
+  biolink: https://w3id.org/biolink/vocab/
+  ecto: http://purl.obolibrary.org/obo/ECTO_
+  envo: http://purl.obolibrary.org/obo/ENVO_
+  mondo: http://purl.obolibrary.org/obo/MONDO_
+  hp: http://purl.obolibrary.org/obo/HP_
+  dcterms: http://purl.org/dc/terms/
+  schema: https://schema.org/
+  linkml: https://w3id.org/linkml/
+
+default_prefix: HEW
+default_range: string
+
+imports:
+  - linkml:types
+
+classes:
+  HEWResource:
+    tree_root: true
+    description: A cataloged resource relevant to health and extreme weather.
+    slots:
+      - id
+      - title
+      - description
+      - resource_type
+      - url
+      - identifiers
+      - annotations
+      - related_resources
+
+  LiteratureResource:
+    is_a: HEWResource
+    description: A bibliographic resource relevant to health and extreme weather.
+    slots:
+      - doi
+      - abstract
+      - citation
+      - publication_type
+      - study_objective
+
+  DatasetResource:
+    is_a: HEWResource
+    description: >-
+      A dataset relevant to health and extreme weather, including health,
+      environmental, exposure, geospatial, survey, cohort, and derived datasets.
+    slots:
+      - data_dictionary
+      - spatial_coverage
+      - temporal_coverage
+      - access_rights
+      - license
+      - measured_variables
+
+  CohortResource:
+    is_a: DatasetResource
+    description: A cohort or cohort-derived resource relevant to exposure-health research.
+
+  SurveyInstrument:
+    is_a: HEWResource
+    description: A survey instrument or questionnaire used to collect HEW-relevant data.
+
+  SoftwareResource:
+    is_a: HEWResource
+    description: Software, code, library, workflow, notebook, or computational tool relevant to HEW.
+    slots:
+      - repository
+      - programming_language
+      - license
+      - software_type
+
+  ModelResource:
+    is_a: HEWResource
+    description: A computational, exposure, geospatial, statistical, or AI/ML model resource.
+    slots:
+      - model_type
+      - input_variables
+      - output_variables
+
+  GeospatialResource:
+    is_a: DatasetResource
+    description: A geospatial dataset, layer, raster, vector file, map service, or spatial data product.
+    slots:
+      - spatial_resolution
+      - coordinate_reference_system
+
+  DataDictionary:
+    description: A structured description of variables, fields, measures, or data elements.
+    slots:
+      - id
+      - title
+      - description
+      - variables
+      - source_resource
+
+  Variable:
+    description: A variable, field, measure, or data element in a HEW-relevant resource.
+    slots:
+      - id
+      - name
+      - title
+      - description
+      - data_type
+      - unit
+      - mappings
+
+  HEWSystematicReviewAnnotation:
+    description: A systematic-review coding annotation for a HEW literature resource.
+    slots:
+      - id
+      - subject
+      - coding_scheme
+      - coding_scheme_version
+      - annotation_date
+      - coded_by
+      - coding_method
+      - information_source
+      - reference_type
+      - study_objective
+      - exposure_annotations
+      - health_impact_annotations
+      - geography_annotations
+      - data_tool_method_annotations
+      - special_topic_annotations
+      - notes
+      - confidence
+      - needs_human_review
+
+  ExposureAnnotation:
+    description: Coding of an exposure pathway by which extreme weather affects health.
+    slots:
+      - coded_concept
+      - parent_concept
+      - specified_text
+      - evidence_text
+      - coding_depth
+      - is_not_reported
+
+  HealthImpactAnnotation:
+    description: Coding of a health impact related to extreme weather exposure.
+    slots:
+      - coded_concept
+      - parent_concept
+      - specified_text
+      - evidence_text
+      - coding_depth
+      - is_not_reported
+
+  GeographyAnnotation:
+    description: Coding of broad geographic location and geographic feature.
+    slots:
+      - geographic_locations
+      - geographic_features
+      - spatial_text
+      - is_global_or_unspecified
+      - is_not_reported
+
+  DataToolMethodAnnotation:
+    description: Coding of data resource types and model types used, created, or described by a literature resource.
+    slots:
+      - data_resource_types
+      - model_types
+      - mentioned_resources
+      - evidence_text
+      - is_not_reported
+
+  SpecialTopicAnnotation:
+    description: Coding of a cross-cutting special topic relevant to HEW literature.
+    slots:
+      - coded_concept
+      - parent_concept
+      - specified_text
+      - evidence_text
+      - coding_depth
+      - is_not_reported
+
+  MentionedResource:
+    description: A data, software, model, cohort, survey, or tool resource mentioned in a literature resource.
+    slots:
+      - name
+      - resource_type
+      - url
+      - relationship_to_literature
+      - availability
+      - access_statement
+
+slots:
+  id:
+    identifier: true
+    range: uriorcurie
+    required: true
+  title:
+    range: string
+  name:
+    range: string
+  description:
+    range: string
+  subject:
+    range: uriorcurie
+    required: true
+  resource_type:
+    range: ResourceTypeEnum
+  publication_type:
+    range: ReferenceTypeEnum
+  reference_type:
+    range: ReferenceTypeEnum
+  information_source:
+    range: InformationSourceEnum
+  coding_method:
+    range: CodingMethodEnum
+  coding_scheme:
+    range: string
+  coding_scheme_version:
+    range: string
+  annotation_date:
+    range: date
+  coded_by:
+    range: string
+    multivalued: true
+  study_objective:
+    range: string
+  abstract:
+    range: string
+  citation:
+    range: string
+  doi:
+    range: string
+  url:
+    range: uri
+  identifiers:
+    multivalued: true
+    range: string
+  annotations:
+    multivalued: true
+    range: HEWSystematicReviewAnnotation
+    inlined_as_list: true
+  related_resources:
+    multivalued: true
+    range: uriorcurie
+  exposure_annotations:
+    multivalued: true
+    range: ExposureAnnotation
+    inlined_as_list: true
+  health_impact_annotations:
+    multivalued: true
+    range: HealthImpactAnnotation
+    inlined_as_list: true
+  geography_annotations:
+    multivalued: true
+    range: GeographyAnnotation
+    inlined_as_list: true
+  data_tool_method_annotations:
+    multivalued: true
+    range: DataToolMethodAnnotation
+    inlined_as_list: true
+  special_topic_annotations:
+    multivalued: true
+    range: SpecialTopicAnnotation
+    inlined_as_list: true
+  coded_concept:
+    range: uriorcurie
+  parent_concept:
+    range: uriorcurie
+  specified_text:
+    range: string
+  evidence_text:
+    range: string
+  coding_depth:
+    range: integer
+  geographic_locations:
+    multivalued: true
+    range: GeographicLocationEnum
+  geographic_features:
+    multivalued: true
+    range: GeographicFeatureEnum
+  spatial_text:
+    range: string
+  data_resource_types:
+    multivalued: true
+    range: DataResourceTypeEnum
+  model_types:
+    multivalued: true
+    range: ModelTypeEnum
+  mentioned_resources:
+    multivalued: true
+    range: MentionedResource
+    inlined_as_list: true
+  relationship_to_literature:
+    range: ResourceRelationshipEnum
+  availability:
+    range: AvailabilityEnum
+  access_statement:
+    range: string
+  is_not_reported:
+    range: boolean
+  is_global_or_unspecified:
+    range: boolean
+  notes:
+    range: string
+  confidence:
+    range: float
+  needs_human_review:
+    range: boolean
+  data_dictionary:
+    range: DataDictionary
+    inlined: true
+  source_resource:
+    range: uriorcurie
+  variables:
+    multivalued: true
+    range: Variable
+    inlined_as_list: true
+  spatial_coverage:
+    range: string
+  temporal_coverage:
+    range: string
+  access_rights:
+    range: AccessRightsEnum
+  license:
+    range: string
+  measured_variables:
+    multivalued: true
+    range: string
+  repository:
+    range: uri
+  programming_language:
+    range: string
+  software_type:
+    range: SoftwareTypeEnum
+  model_type:
+    range: ModelTypeEnum
+  input_variables:
+    multivalued: true
+    range: string
+  output_variables:
+    multivalued: true
+    range: string
+  spatial_resolution:
+    range: string
+  coordinate_reference_system:
+    range: string
+  data_type:
+    range: string
+  unit:
+    range: string
+  mappings:
+    multivalued: true
+    range: uriorcurie
+
+enums:
+  ReferenceTypeEnum:
+    permissible_values:
+      research_article:
+      review_article:
+      commentary_opinion:
+      assessment_book_report:
+  InformationSourceEnum:
+    permissible_values:
+      complete_resource:
+      abstract_and_title_only:
+  CodingMethodEnum:
+    permissible_values:
+      human_curated:
+      laser_ai_generated:
+      laser_ai_assisted_human_curated:
+      imported_from_legacy_spreadsheet:
+  ResourceTypeEnum:
+    permissible_values:
+      literature:
+      dataset:
+      cohort:
+      source_cohort_publication:
+      software_code_library:
+      survey_instrument:
+      geospatial_dataset:
+      exposome_dataset:
+      model:
+      tool:
+      tutorial:
+      notebook:
+      data_dictionary:
+      other:
+  DataResourceTypeEnum:
+    permissible_values:
+      cohort:
+      source_cohort_publication:
+      dataset:
+      software_code_library:
+      survey:
+      other:
+  ModelTypeEnum:
+    permissible_values:
+      artificial_intelligence_machine_learning:
+      exposure_modeling:
+      geospatial_modeling:
+      other:
+  ResourceRelationshipEnum:
+    permissible_values:
+      uses:
+      creates:
+      describes:
+      evaluates:
+      deposits:
+      cites:
+      derived_from:
+  AvailabilityEnum:
+    permissible_values:
+      open_access:
+      controlled_access:
+      available_upon_request:
+      unavailable:
+      unknown:
+  AccessRightsEnum:
+    permissible_values:
+      public:
+      registered_access:
+      controlled_access:
+      embargoed:
+      restricted:
+      unknown:
+  SoftwareTypeEnum:
+    permissible_values:
+      software_package:
+      code_library:
+      workflow:
+      notebook:
+      web_tool:
+      command_line_tool:
+      other:
+  GeographicLocationEnum:
+    permissible_values:
+      global_or_unspecified_location:
+      africa:
+      antarctica:
+      asia:
+      australasia:
+      central_south_america:
+      europe:
+      non_us_north_america:
+      united_states:
+  GeographicFeatureEnum:
+    permissible_values:
+      general_geographic_feature:
+      built_environment:
+      desert:
+      forest:
+      freshwater:
+      grassland:
+      island:
+      mountain:
+      ocean_coastal:
+      polar:
+      rainforest:
+      rural:
+      temperate:
+      tropical:
+      urban:
+      valley:
+      wetland:
+      other:
