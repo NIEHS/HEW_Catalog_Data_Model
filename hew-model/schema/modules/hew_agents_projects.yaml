@@ -1,0 +1,11 @@
+id: https://w3id.org/hew/schema/modules/agents-projects
+name: hew-agents-projects
+schema_generating: true
+description: >-
+  Planned module for people, organizations, software agents, programs,
+  projects, funding sources, and provenance-bearing role associations.
+
+comments:
+  - >-
+    The combined schema in schema/hew.yaml currently contains these classes.
+    This stub marks the intended future module boundary.

@@ -223,3 +223,98 @@ Version 0.2 can promote discovered datasets, cohorts, surveys, software, models,
 ## Practical design rule
 
 Start with the systematic review, but model it as **evidence-bearing annotations over general HEW resources**. That lets LaserAI be useful now without locking the commons into a spreadsheet-shaped universe forever.
+
+## Programs, projects, people, organizations, and funding
+
+The model also needs a coordination layer for the people and organizations associated with HEW work. This layer should not be embedded directly inside the LaserAI coding profile. It should sit beside the resource and annotation layer so that the commons can describe who produced, reviewed, funded, maintained, and used resources.
+
+Recommended classes:
+
+- `Agent`: abstract superclass for people, organizations, groups, and software agents.
+- `Person`: a human agent such as a researcher, curator, reviewer, PI, contact, or contributor.
+- `Organization`: an institution, agency, NIH institute or center, funder, consortium, healthcare system, company, or community partner.
+- `SoftwareAgent`: a software system or AI system that creates annotations, extracts metadata, or performs analysis.
+- `Program`: a coordinated HEW initiative, funding program, consortium, center, or strategic activity.
+- `Project`: a bounded research, infrastructure, curation, data generation, software, analysis, or translation effort.
+- `FundingSource`: a grant, award, cooperative agreement, contract, or sponsor.
+- `AgentAssociation`: a role-bearing relationship between an agent and a program, project, resource, annotation, or funding source.
+
+The design uses `AgentAssociation` instead of adding dozens of direct slots such as `pi`, `coder`, `reviewer`, `maintainer`, `contact`, `program_officer`, and `data_steward` everywhere. This is more extensible because an association can carry role, date range, source, affiliation context, and a contribution description.
+
+Example:
+
+```yaml
+agent_associations:
+  - id: HEWASSOC:000001
+    agent: PERSON:example_researcher
+    associated_with: HEWPROJECT:laserai_systematic_review
+    role: principal_investigator
+    start_date: "2026-05-01"
+  - id: HEWASSOC:000002
+    agent: AGENT:laserai
+    associated_with: HEWANN:00004567
+    role: software_agent
+    contribution_description: "Generated initial systematic-review coding suggestions"
+```
+
+This allows the commons to represent:
+
+- a program containing projects;
+- a project using or producing resources;
+- a person serving as PI, contributor, curator, coder, reviewer, maintainer, or scientific contact;
+- an organization sponsoring, funding, participating in, or hosting work;
+- a software agent generating an annotation;
+- a human reviewer validating a machine-generated or machine-assisted annotation;
+- a funding source supporting a project, program, or resource.
+
+## Reusing schema.org, PROV-O, BioLink, and DCAT
+
+The schema should define HEW-specific profiles while reusing established vocabularies for interoperability.
+
+Recommended mappings:
+
+| HEW class | Primary reuse target | Other alignment |
+|---|---|---|
+| `Person` | `schema:Person` | `biolink:Person`, `prov:Person` |
+| `Organization` | `schema:Organization` | `biolink:Organization`, `prov:Organization` |
+| `SoftwareAgent` | `prov:SoftwareAgent` | `schema:SoftwareApplication` where appropriate |
+| `Project` | `schema:Project` | `prov:Activity` |
+| `Program` | `schema:Project` | `prov:Activity` |
+| `FundingSource` | `schema:Grant` | local HEW profile |
+| `AgentAssociation` | `prov:Association` | `schema:Role`, `schema:OrganizationRole`, `biolink:Association` |
+| `DatasetResource` | `schema:Dataset` | `dcat:Dataset` |
+| `Distribution` | `dcat:Distribution` | `schema:DataDownload` where appropriate |
+| `HEWResource` | `schema:CreativeWork` | `biolink:InformationContentEntity` |
+
+The practical rule is: use schema.org for public web discovery metadata, DCAT for catalog/distribution metadata, PROV-O for provenance and role-bearing activity relationships, and BioLink for biomedical graph alignment. HEW classes remain local profiles so the model can represent domain-specific needs without letting any single external schema drive the whole design.
+
+## Provenance implications for LaserAI and human review
+
+LaserAI-generated fields and coding suggestions should be represented with explicit provenance. The coding guide itself notes that the LaserAI-generated `Study Objective` is only a suggestion and should be verified by reading and coding the article. The model therefore distinguishes:
+
+- `coded_by`: agents that created the annotation or coding assertion;
+- `generated_by`: project, activity, or software agent that generated the annotation;
+- `reviewed_by`: agents that reviewed or verified the annotation;
+- `coding_method`: human curated, LaserAI generated, LaserAI-assisted human curated, or imported from a legacy spreadsheet;
+- `part_of_project`: the project in which the annotation was produced.
+
+This keeps automated extraction useful while preserving the difference between machine-generated suggestions and human-reviewed curation.
+
+## Updated module suggestion
+
+As the schema grows, split the current combined schema into modules:
+
+```text
+hew-core.yaml
+hew-agents-projects.yaml
+hew-literature.yaml
+hew-review-coding.yaml
+hew-exposure.yaml
+hew-health.yaml
+hew-geography.yaml
+hew-resource-types.yaml
+hew-special-topics.yaml
+hew-alignments.yaml
+```
+
+The newly added `hew-agents-projects.yaml` module should contain `Agent`, `Person`, `Organization`, `SoftwareAgent`, `Program`, `Project`, `FundingSource`, and `AgentAssociation`.

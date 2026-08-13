@@ -4,7 +4,8 @@ title: Health and Extreme Weather Data Commons Schema
 description: >-
   A LinkML schema for cataloging health and extreme weather resources,
   systematic-review annotations, exposures, health impacts, geographies,
-  data resources, tools, methods, and special topics.
+  data resources, tools, methods, special topics, people, organizations,
+  programs, projects, funding, and provenance-bearing associations.
 license: CC-BY-4.0
 
 prefixes:
@@ -17,6 +18,8 @@ prefixes:
   hp: http://purl.obolibrary.org/obo/HP_
   dcterms: http://purl.org/dc/terms/
   schema: https://schema.org/
+  prov: http://www.w3.org/ns/prov#
+  dcat: http://www.w3.org/ns/dcat#
   linkml: https://w3id.org/linkml/
 
 default_prefix: HEW
@@ -28,29 +31,49 @@ imports:
 classes:
   HEWResource:
     tree_root: true
+    class_uri: schema:CreativeWork
+    close_mappings:
+      - biolink:InformationContentEntity
     description: A cataloged resource relevant to health and extreme weather.
     slots:
       - id
       - title
+      - name
       - description
       - resource_type
       - url
       - identifiers
+      - same_as
+      - keywords
+      - produced_by_projects
+      - used_by_projects
+      - agent_associations
       - annotations
       - related_resources
 
   LiteratureResource:
     is_a: HEWResource
+    class_uri: schema:ScholarlyArticle
+    close_mappings:
+      - biolink:Publication
     description: A bibliographic resource relevant to health and extreme weather.
     slots:
       - doi
+      - pmid
+      - pmcid
       - abstract
       - citation
       - publication_type
+      - journal
+      - publication_date
+      - authors
       - study_objective
 
   DatasetResource:
     is_a: HEWResource
+    class_uri: schema:Dataset
+    close_mappings:
+      - dcat:Dataset
     description: >-
       A dataset relevant to health and extreme weather, including health,
       environmental, exposure, geospatial, survey, cohort, and derived datasets.
@@ -61,6 +84,7 @@ classes:
       - access_rights
       - license
       - measured_variables
+      - distributions
 
   CohortResource:
     is_a: DatasetResource
@@ -72,12 +96,14 @@ classes:
 
   SoftwareResource:
     is_a: HEWResource
+    class_uri: schema:SoftwareSourceCode
     description: Software, code, library, workflow, notebook, or computational tool relevant to HEW.
     slots:
       - repository
       - programming_language
       - license
       - software_type
+      - maintainers
 
   ModelResource:
     is_a: HEWResource
@@ -95,6 +121,7 @@ classes:
       - coordinate_reference_system
 
   DataDictionary:
+    class_uri: schema:Dataset
     description: A structured description of variables, fields, measures, or data elements.
     slots:
       - id
@@ -114,7 +141,164 @@ classes:
       - unit
       - mappings
 
+  Agent:
+    abstract: true
+    class_uri: prov:Agent
+    description: >-
+      A person, organization, group, or software agent associated with a HEW
+      resource, program, project, annotation, funding source, or activity.
+    slots:
+      - id
+      - name
+      - description
+      - identifiers
+      - same_as
+      - url
+      - email
+
+  Person:
+    is_a: Agent
+    class_uri: schema:Person
+    exact_mappings:
+      - biolink:Person
+      - prov:Person
+    description: A human agent, such as a researcher, curator, contact, PI, or contributor.
+    slots:
+      - given_name
+      - family_name
+      - orcid
+      - affiliations
+      - roles
+
+  Organization:
+    is_a: Agent
+    class_uri: schema:Organization
+    exact_mappings:
+      - biolink:Organization
+      - prov:Organization
+    description: >-
+      An organization associated with HEW work, such as a university, NIH institute,
+      agency, funder, center, consortium, healthcare system, or community partner.
+    slots:
+      - ror_id
+      - organization_type
+      - parent_organization
+      - members
+
+  SoftwareAgent:
+    is_a: Agent
+    class_uri: prov:SoftwareAgent
+    description: A software system or AI agent that performs curation, extraction, analysis, or annotation.
+    slots:
+      - software_version
+      - url
+
+  Program:
+    class_uri: schema:Project
+    close_mappings:
+      - prov:Activity
+    description: >-
+      A coordinated HEW initiative, funding program, consortium, center, or strategic
+      activity that may contain projects and produce resources.
+    slots:
+      - id
+      - title
+      - name
+      - description
+      - identifiers
+      - same_as
+      - url
+      - start_date
+      - end_date
+      - status
+      - sponsoring_organizations
+      - contacts
+      - agent_associations
+      - has_projects
+      - produces_resources
+      - themes
+
+  Project:
+    class_uri: schema:Project
+    close_mappings:
+      - prov:Activity
+    description: >-
+      A bounded HEW research, infrastructure, curation, data generation, software,
+      analysis, translation, or community-engagement effort.
+    slots:
+      - id
+      - title
+      - name
+      - description
+      - identifiers
+      - same_as
+      - url
+      - start_date
+      - end_date
+      - status
+      - part_of_programs
+      - agent_associations
+      - principal_investigators
+      - contributors
+      - participating_organizations
+      - funding_sources
+      - uses_resources
+      - produces_resources
+      - annotations
+      - themes
+
+  AgentAssociation:
+    class_uri: prov:Association
+    close_mappings:
+      - schema:Role
+      - schema:OrganizationRole
+      - biolink:Association
+    description: >-
+      A role-bearing association between an agent and another HEW entity, such as a
+      project, program, resource, annotation, activity, or funding source.
+    slots:
+      - id
+      - agent
+      - associated_with
+      - role
+      - start_date
+      - end_date
+      - affiliation_context
+      - contribution_description
+      - source
+
+  FundingSource:
+    class_uri: schema:Grant
+    description: A funding award, mechanism, contract, cooperative agreement, or sponsor.
+    slots:
+      - id
+      - title
+      - name
+      - description
+      - award_number
+      - funder
+      - sponsor
+      - funding_mechanism
+      - start_date
+      - end_date
+      - url
+      - identifiers
+
+  Distribution:
+    class_uri: dcat:Distribution
+    description: A concrete downloadable, API, service, or object distribution of a dataset or resource.
+    slots:
+      - id
+      - title
+      - description
+      - url
+      - access_rights
+      - license
+      - media_type
+      - format
+
   HEWSystematicReviewAnnotation:
+    class_uri: prov:Entity
     description: A systematic-review coding annotation for a HEW literature resource.
     slots:
       - id
@@ -123,6 +307,9 @@ classes:
       - coding_scheme_version
       - annotation_date
       - coded_by
+      - reviewed_by
+      - generated_by
+      - part_of_project
       - coding_method
       - information_source
       - reference_type
@@ -197,15 +384,20 @@ classes:
 slots:
   id:
     identifier: true
+    slot_uri: schema:identifier
     range: uriorcurie
     required: true
   title:
+    slot_uri: schema:name
     range: string
   name:
+    slot_uri: schema:name
     range: string
   description:
+    slot_uri: schema:description
     range: string
   subject:
+    slot_uri: schema:about
     range: uriorcurie
     required: true
   resource_type:
@@ -225,19 +417,57 @@ slots:
   annotation_date:
     range: date
   coded_by:
-    range: string
+    description: Agent identifiers for coders or curation systems that created the annotation.
+    range: uriorcurie
     multivalued: true
+  reviewed_by:
+    description: Agent identifiers for humans or groups that reviewed the annotation.
+    range: uriorcurie
+    multivalued: true
+  generated_by:
+    slot_uri: prov:wasGeneratedBy
+    description: Project, software agent, or activity that generated the annotation.
+    range: uriorcurie
+  part_of_project:
+    description: Project in which the annotation was produced or reviewed.
+    range: uriorcurie
   study_objective:
     range: string
   abstract:
+    slot_uri: schema:abstract
     range: string
   citation:
+    slot_uri: schema:citation
     range: string
   doi:
     range: string
+  pmid:
+    range: string
+  pmcid:
+    range: string
+  journal:
+    slot_uri: schema:isPartOf
+    range: string
+  publication_date:
+    slot_uri: schema:datePublished
+    range: date
+  authors:
+    slot_uri: schema:author
+    multivalued: true
+    range: uriorcurie
   url:
+    slot_uri: schema:url
     range: uri
   identifiers:
+    slot_uri: schema:identifier
+    multivalued: true
+    range: string
+  same_as:
+    slot_uri: schema:sameAs
+    multivalued: true
+    range: uriorcurie
+  keywords:
+    slot_uri: schema:keywords
     multivalued: true
     range: string
   annotations:
@@ -321,22 +551,37 @@ slots:
     range: Variable
     inlined_as_list: true
   spatial_coverage:
+    slot_uri: dcterms:spatial
     range: string
   temporal_coverage:
+    slot_uri: dcterms:temporal
     range: string
   access_rights:
+    slot_uri: dcterms:accessRights
     range: AccessRightsEnum
   license:
+    slot_uri: dcterms:license
     range: string
   measured_variables:
     multivalued: true
     range: string
+  distributions:
+    slot_uri: dcat:distribution
+    multivalued: true
+    range: Distribution
+    inlined_as_list: true
   repository:
+    slot_uri: schema:codeRepository
     range: uri
   programming_language:
+    slot_uri: schema:programmingLanguage
     range: string
   software_type:
     range: SoftwareTypeEnum
+  maintainers:
+    slot_uri: schema:maintainer
+    multivalued: true
+    range: uriorcurie
   model_type:
     range: ModelTypeEnum
   input_variables:
@@ -356,6 +601,133 @@ slots:
   mappings:
     multivalued: true
     range: uriorcurie
+  email:
+    slot_uri: schema:email
+    range: string
+  given_name:
+    slot_uri: schema:givenName
+    range: string
+  family_name:
+    slot_uri: schema:familyName
+    range: string
+  orcid:
+    range: uriorcurie
+  ror_id:
+    range: uriorcurie
+  affiliations:
+    slot_uri: schema:affiliation
+    multivalued: true
+    range: uriorcurie
+  roles:
+    multivalued: true
+    range: AgentRoleEnum
+  organization_type:
+    range: OrganizationTypeEnum
+  parent_organization:
+    slot_uri: schema:parentOrganization
+    range: uriorcurie
+  members:
+    slot_uri: schema:member
+    multivalued: true
+    range: uriorcurie
+  software_version:
+    slot_uri: schema:softwareVersion
+    range: string
+  start_date:
+    slot_uri: schema:startDate
+    range: date
+  end_date:
+    slot_uri: schema:endDate
+    range: date
+  status:
+    range: ProjectStatusEnum
+  sponsoring_organizations:
+    slot_uri: schema:sponsor
+    multivalued: true
+    range: uriorcurie
+  sponsor:
+    slot_uri: schema:sponsor
+    range: uriorcurie
+  contacts:
+    slot_uri: schema:contactPoint
+    multivalued: true
+    range: uriorcurie
+  agent_associations:
+    slot_uri: prov:qualifiedAssociation
+    multivalued: true
+    range: AgentAssociation
+    inlined_as_list: true
+  has_projects:
+    multivalued: true
+    range: uriorcurie
+  part_of_programs:
+    slot_uri: schema:isPartOf
+    multivalued: true
+    range: uriorcurie
+  principal_investigators:
+    multivalued: true
+    range: uriorcurie
+  contributors:
+    slot_uri: schema:contributor
+    multivalued: true
+    range: uriorcurie
+  participating_organizations:
+    multivalued: true
+    range: uriorcurie
+  funding_sources:
+    slot_uri: schema:funding
+    multivalued: true
+    range: uriorcurie
+  uses_resources:
+    close_mappings:
+      - prov:used
+    multivalued: true
+    range: uriorcurie
+  used_by_projects:
+    multivalued: true
+    range: uriorcurie
+  produces_resources:
+    close_mappings:
+      - prov:generated
+    multivalued: true
+    range: uriorcurie
+  produced_by_projects:
+    close_mappings:
+      - prov:wasGeneratedBy
+    multivalued: true
+    range: uriorcurie
+  themes:
+    multivalued: true
+    range: uriorcurie
+  agent:
+    slot_uri: prov:agent
+    range: uriorcurie
+  associated_with:
+    description: CURIE for the program, project, resource, annotation, activity, or funding source.
+    range: uriorcurie
+  role:
+    slot_uri: prov:hadRole
+    range: AgentRoleEnum
+  affiliation_context:
+    range: uriorcurie
+  contribution_description:
+    range: string
+  source:
+    range: uriorcurie
+  award_number:
+    slot_uri: schema:identifier
+    range: string
+  funder:
+    slot_uri: schema:funder
+    range: uriorcurie
+  funding_mechanism:
+    range: string
+  media_type:
+    slot_uri: dcat:mediaType
+    range: string
+  format:
+    slot_uri: dcterms:format
+    range: string
 
 enums:
   ReferenceTypeEnum:
@@ -389,6 +761,9 @@ enums:
       tutorial:
       notebook:
       data_dictionary:
+      program:
+      project:
+      funding_source:
       other:
   DataResourceTypeEnum:
     permissible_values:
@@ -467,4 +842,48 @@ enums:
       urban:
       valley:
       wetland:
+      other:
+  OrganizationTypeEnum:
+    permissible_values:
+      university:
+      nih_institute_or_center:
+      federal_agency:
+      state_agency:
+      local_agency:
+      non_governmental_organization:
+      community_organization:
+      healthcare_system:
+      research_institute:
+      consortium:
+      private_company:
+      funder:
+      other:
+  ProjectStatusEnum:
+    permissible_values:
+      planned:
+      active:
+      completed:
+      suspended:
+      unknown:
+  AgentRoleEnum:
+    permissible_values:
+      principal_investigator:
+      co_investigator:
+      researcher:
+      curator:
+      coder:
+      reviewer:
+      software_developer:
+      data_steward:
+      data_contributor:
+      project_manager:
+      program_officer:
+      scientific_contact:
+      community_partner:
+      funder:
+      sponsor:
+      author:
+      corresponding_author:
+      maintainer:
+      software_agent:
       other:
