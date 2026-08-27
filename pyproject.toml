@@ -5,8 +5,13 @@ description = "LinkML schema for the HEW Data Commons model"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-  "linkml>=1.8.0"
+  "linkml>=1.8.0",
+  "linkml-runtime>=1.10.0",
+  "rdflib>=7.0.0"
 ]
 
 [tool.setuptools]
-packages = []
+package-dir = {"" = "hew-model"}
+
+[tool.setuptools.packages.find]
+where = ["hew-model"]

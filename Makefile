@@ -1,13 +1,16 @@
-SCHEMA=schema/hew.yaml
+SCHEMA=hew-model/schema/hew.yaml
 
-.PHONY: validate jsonschema docs clean
+.PHONY: validate jsonschema jsonld-context docs clean
 
 validate:
-	./scripts/validate_examples.sh
+	./hew-model/scripts/validate_examples.sh
 
 jsonschema:
 	mkdir -p build
 	gen-json-schema $(SCHEMA) > build/hew.schema.json
+
+jsonld-context:
+	python hew-model/scripts/generate_jsonld_context.py --schema $(SCHEMA) --output build/hew.context.jsonld
 
 docs:
 	mkdir -p build/docs

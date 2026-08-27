@@ -11,6 +11,8 @@ license: CC-BY-4.0
 prefixes:
   HEW: https://w3id.org/hew/
   hew: https://w3id.org/hew/
+  HEWRES: https://w3id.org/hew/resource/
+  HEWANN: https://w3id.org/hew/annotation/
   biolink: https://w3id.org/biolink/vocab/
   ecto: http://purl.obolibrary.org/obo/ECTO_
   envo: http://purl.obolibrary.org/obo/ENVO_
