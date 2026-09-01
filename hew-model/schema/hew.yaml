@@ -7,6 +7,7 @@ description: >-
   data resources, tools, methods, special topics, people, organizations,
   programs, projects, funding, and provenance-bearing associations.
 license: CC-BY-4.0
+version: 1.0.0
 
 prefixes:
   HEW: https://w3id.org/hew/
