@@ -19,7 +19,7 @@ prefixes:
   mondo: http://purl.obolibrary.org/obo/MONDO_
   hp: http://purl.obolibrary.org/obo/HP_
   dcterms: http://purl.org/dc/terms/
-  schema: https://schema.org/
+  schema: http://schema.org/
   prov: http://www.w3.org/ns/prov#
   dcat: http://www.w3.org/ns/dcat#
   linkml: https://w3id.org/linkml/
