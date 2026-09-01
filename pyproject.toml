@@ -15,3 +15,8 @@ package-dir = {"" = "hew-model"}
 
 [tool.setuptools.packages.find]
 where = ["hew-model"]
+
+[tool.setuptools.package-data]
+schema = ["*.yaml", "modules/*.yaml"]
+terms = ["*.yaml"]
+examples = ["*.yaml"]
