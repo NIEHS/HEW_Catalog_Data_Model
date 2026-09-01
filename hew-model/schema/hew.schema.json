@@ -2822,6 +2822,6 @@
     ],
     "title": "hew-schema",
     "type": "object",
-    "version": null
+    "version": "1.0.0"
 }
 
