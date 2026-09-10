@@ -9,9 +9,65 @@ spatial_coverage: United States
 temporal_coverage: 2010/2020
 spatial_resolution: 1 km
 coordinate_reference_system: EPSG:4326
+spatial_extent:
+  named_locations:
+    - location_id: geonames:6252001
+      name: United States
+      location_type: administrative_area
+      geographic_identifiers:
+        - geonames:6252001
+  bounding_box:
+    west: -125.0
+    south: 24.0
+    east: -66.0
+    north: 50.0
+  coordinate_reference_system_uri: epsg:4326
 measured_variables:
   - daily_maximum_temperature
   - heat_index
+environmental_variables:
+  - id: HEWVAR:00000001
+    name: tmax
+    title: Daily Maximum Air Temperature
+    description: Daily maximum near-surface air temperature on a regular grid.
+    data_type: float
+    unit: UCUM:Cel
+    measured_property: envo:01000254
+    measurement_method: HEW:gridded_temperature_model
+    aggregation_method: maximum
+    spatial_support:
+      support_type: raster_grid_cell
+      spatial_resolution: 1 km
+      geometry_type: polygon
+      coordinate_reference_system_uri: epsg:4326
+    temporal_support:
+      temporal_resolution: P1D
+      aggregation_window: P1D
+      temporal_alignment: end
+    concept_mappings:
+      - envo:01000254
+      - ecto:0000000
+    omop_concept_binding:
+      concept_status: vocabulary_gap
+  - id: HEWVAR:00000002
+    name: heat_index
+    title: Daily Heat Index
+    description: Apparent temperature derived from temperature and relative humidity.
+    data_type: float
+    unit: UCUM:Cel
+    measured_property: envo:01000254
+    aggregation_method: maximum
+    spatial_support:
+      support_type: raster_grid_cell
+      spatial_resolution: 1 km
+      geometry_type: polygon
+      coordinate_reference_system_uri: epsg:4326
+    temporal_support:
+      temporal_resolution: P1D
+      aggregation_window: P1D
+      temporal_alignment: end
+    omop_concept_binding:
+      concept_status: not_evaluated
 data_dictionary:
   id: HEWDD:00001000
   title: Example Heat Exposure Data Dictionary
@@ -22,6 +78,23 @@ data_dictionary:
       description: Daily maximum near-surface air temperature.
       data_type: float
       unit: degree Celsius
+  environmental_variables:
+    - id: HEWVAR:00000001
+      name: tmax
+      title: Daily Maximum Air Temperature
+      data_type: float
+      unit: UCUM:Cel
+      measured_property: envo:01000254
+      aggregation_method: maximum
+      spatial_support:
+        support_type: raster_grid_cell
+        spatial_resolution: 1 km
+        geometry_type: polygon
+        coordinate_reference_system_uri: epsg:4326
+      temporal_support:
+        temporal_resolution: P1D
+        aggregation_window: P1D
+        temporal_alignment: end
     - id: HEWVAR:00000002
       name: heat_index
       title: Heat index

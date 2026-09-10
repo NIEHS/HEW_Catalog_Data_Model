@@ -7,5 +7,5 @@ description: >-
 
 comments:
   - >-
-    The combined schema in schema/hew.yaml currently contains these classes.
+    The combined schema in schema/hew-geospatial.yaml currently contains these classes.
     This stub marks the intended future module boundary.

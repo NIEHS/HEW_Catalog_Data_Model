@@ -1,5 +1,5 @@
 # Placeholder module for future split-out schema content.
-# Current compact schema lives in ../hew.yaml.
+# Current compact schema lives in ../hew-geospatial.yaml.
 id: https://w3id.org/hew/schema/modules/hew_review_coding
 name: hew_review_coding
 title: "HEW schema module: hew_review_coding"

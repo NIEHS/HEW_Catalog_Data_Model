@@ -1,4 +1,4 @@
-SCHEMA=hew-model/schema/hew.yaml
+SCHEMA=hew-model/schema/hew-geospatial.yaml
 
 .PHONY: validate jsonschema jsonld-context docs clean
 

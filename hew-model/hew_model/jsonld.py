@@ -12,7 +12,7 @@ from rdflib import Graph
 from rdflib.compare import to_isomorphic
 
 
-SCHEMA_PATH = Path(__file__).parents[1] / "schema" / "hew.yaml"
+SCHEMA_PATH = Path(__file__).parents[1] / "schema" / "hew-geospatial.yaml"
 
 # LinkML's context generator maps slots, but plain dictionaries do not carry
 # Python class metadata. Add the class types needed for nested HEW instances.

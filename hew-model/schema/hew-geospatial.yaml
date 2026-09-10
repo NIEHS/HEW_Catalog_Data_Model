@@ -7,7 +7,7 @@ description: >-
   data resources, tools, methods, special topics, people, organizations,
   programs, projects, funding, and provenance-bearing associations.
 license: CC-BY-4.0
-version: 1.0.0
+version: 1.2.0
 
 prefixes:
   HEW: https://w3id.org/hew/
@@ -23,6 +23,10 @@ prefixes:
   schema: http://schema.org/
   prov: http://www.w3.org/ns/prov#
   dcat: http://www.w3.org/ns/dcat#
+  geo: http://www.opengis.net/ont/geosparql#
+  sf: http://www.opengis.net/ont/sf#
+  epsg: http://www.opengis.net/def/crs/EPSG/0/
+  geonames: https://www.geonames.org/ontology#
   linkml: https://w3id.org/linkml/
 
 default_prefix: HEW
@@ -53,6 +57,52 @@ classes:
       - agent_associations
       - annotations
       - related_resources
+      - doi
+      - pmid
+      - pmcid
+      - abstract
+      - citation
+      - publication_type
+      - journal
+      - publication_date
+      - authors
+      - study_objective
+      - data_dictionary
+      - spatial_coverage
+      - spatial_extent
+      - temporal_coverage
+      - access_rights
+      - license
+      - measured_variables
+      - environmental_variables
+      - distributions
+      - repository
+      - programming_language
+      - software_type
+      - maintainers
+      - model_type
+      - input_variables
+      - output_variables
+      - spatial_resolution
+      - coordinate_reference_system
+      - coordinate_reference_system_uri
+      - start_date
+      - end_date
+      - status
+      - sponsoring_organizations
+      - contacts
+      - agent_associations
+      - has_projects
+      - part_of_programs
+      - principal_investigators
+      - contributors
+      - participating_organizations
+      - funding_sources
+      - uses_resources
+      - used_by_projects
+      - produces_resources
+      - produced_by_projects
+      - themes
 
   LiteratureResource:
     is_a: HEWResource
@@ -83,10 +133,12 @@ classes:
     slots:
       - data_dictionary
       - spatial_coverage
+      - spatial_extent
       - temporal_coverage
       - access_rights
       - license
       - measured_variables
+      - environmental_variables
       - distributions
 
   CohortResource:
@@ -122,6 +174,58 @@ classes:
     slots:
       - spatial_resolution
       - coordinate_reference_system
+      - coordinate_reference_system_uri
+
+  GeographicLocation:
+    class_uri: biolink:GeographicLocation
+    description: >-
+      A named or coordinate-defined geographic location associated with a HEW
+      resource, study, exposure, observation, project, or annotation. Named
+      locations should use authoritative identifiers when available.
+    slots:
+      - location_id
+      - name
+      - location_type
+      - latitude
+      - longitude
+      - geometry
+      - geographic_identifiers
+      - environmental_context
+
+  Geometry:
+    class_uri: geo:Geometry
+    description: >-
+      A machine-readable geometry. GeoJSON is recommended for application and
+      API interchange; WKT is recommended for GeoSPARQL/RDF interchange.
+    slots:
+      - geometry_type
+      - wkt
+      - geojson
+      - coordinate_reference_system_uri
+
+  SpatialExtent:
+    description: >-
+      Structured spatial coverage of a resource. This complements the legacy
+      spatial_coverage string and supports geometry, bounding boxes, centroids,
+      named places, environmental context, and resolution.
+    slots:
+      - geometry
+      - bounding_box
+      - centroid
+      - named_locations
+      - environmental_context
+      - spatial_resolution
+      - coordinate_reference_system_uri
+
+  BoundingBox:
+    description: >-
+      An axis-aligned geographic bounding box expressed as west, south, east,
+      and north coordinates, normally in WGS84 longitude/latitude.
+    slots:
+      - west
+      - south
+      - east
+      - north
 
   DataDictionary:
     class_uri: schema:Dataset
@@ -131,6 +235,7 @@ classes:
       - title
       - description
       - variables
+      - environmental_variables
       - source_resource
 
   Variable:
@@ -143,6 +248,56 @@ classes:
       - data_type
       - unit
       - mappings
+
+  EnvironmentalVariable:
+    is_a: Variable
+    description: >-
+      An environmental variable described with EnVar-aligned metadata sufficient
+      to interpret what was measured or derived, how it was summarized, where and
+      when values apply, and how the variable maps to environmental and clinical
+      vocabularies. This is an HEW integration profile, not a copy of the
+      authoritative EnVar micro-schema.
+    slots:
+      - measured_property
+      - measurement_method
+      - aggregation_method
+      - spatial_support
+      - temporal_support
+      - concept_mappings
+      - omop_concept_binding
+
+  SpatialSupport:
+    description: >-
+      The geographic support over which a single environmental variable value is
+      defined. This is distinct from the overall spatial extent of the dataset.
+    slots:
+      - support_type
+      - spatial_resolution
+      - administrative_level
+      - geometry_type
+      - coordinate_reference_system_uri
+
+  TemporalSupport:
+    description: >-
+      The temporal support and aggregation semantics of an environmental variable.
+      ISO 8601 duration strings are recommended for resolution and window fields.
+    slots:
+      - temporal_resolution
+      - aggregation_window
+      - temporal_alignment
+
+  OMOPConceptBinding:
+    description: >-
+      Optional mapping of an environmental variable to an OMOP vocabulary concept,
+      including an explicit status so vocabulary gaps can be represented without
+      inventing identifiers.
+    slots:
+      - omop_concept_id
+      - omop_concept_name
+      - omop_vocabulary_id
+      - omop_domain_id
+      - omop_standard_concept
+      - concept_status
 
   Agent:
     abstract: true
@@ -351,6 +506,8 @@ classes:
     slots:
       - geographic_locations
       - geographic_features
+      - locations
+      - environmental_context
       - spatial_text
       - is_global_or_unspecified
       - is_not_reported
@@ -516,6 +673,20 @@ slots:
   geographic_features:
     multivalued: true
     range: GeographicFeatureEnum
+  locations:
+    multivalued: true
+    range: GeographicLocation
+    inlined_as_list: true
+    description: >-
+      Structured named or coordinate-defined locations extracted or curated
+      for the annotation. This complements broad geographic coding enums.
+  environmental_context:
+    multivalued: true
+    range: uriorcurie
+    description: >-
+      Ontology identifiers describing environmental features, systems, biomes,
+      or materials associated with a location or extent; ENVO terms are
+      preferred where applicable.
   spatial_text:
     range: string
   data_resource_types:
@@ -556,6 +727,15 @@ slots:
   spatial_coverage:
     slot_uri: dcterms:spatial
     range: string
+    description: >-
+      Legacy free-text spatial coverage. Prefer spatial_extent for new records
+      requiring machine-actionable geospatial metadata.
+  spatial_extent:
+    slot_uri: dcterms:spatial
+    range: SpatialExtent
+    inlined: true
+    description: >-
+      Structured spatial extent or footprint of a dataset or resource.
   temporal_coverage:
     slot_uri: dcterms:temporal
     range: string
@@ -568,6 +748,87 @@ slots:
   measured_variables:
     multivalued: true
     range: string
+  environmental_variables:
+    multivalued: true
+    range: EnvironmentalVariable
+    inlined_as_list: true
+    description: >-
+      Structured environmental variables using the HEW EnVar integration profile.
+      This complements the legacy measured_variables string list.
+  measured_property:
+    range: uriorcurie
+    description: >-
+      Ontology identifier for the environmental property, phenomenon, substance,
+      or exposure-related quantity represented by the variable. ENVO, ECTO, CHEBI,
+      or other appropriate ontology terms may be used.
+  measurement_method:
+    range: uriorcurie
+    description: >-
+      Identifier for the measurement, observation, assay, retrieval, or derivation
+      method when a suitable controlled term exists.
+  aggregation_method:
+    range: AggregationMethodEnum
+    description: >-
+      Statistical or temporal aggregation used to derive each reported value.
+  spatial_support:
+    range: SpatialSupport
+    inlined: true
+    description: >-
+      Spatial unit over which an individual variable value applies; distinct from
+      the complete spatial extent of the parent dataset.
+  temporal_support:
+    range: TemporalSupport
+    inlined: true
+    description: >-
+      Temporal resolution, aggregation window, and alignment for individual values.
+  concept_mappings:
+    multivalued: true
+    range: uriorcurie
+    description: >-
+      Cross-vocabulary mappings for the environmental variable. Appropriate targets
+      include ENVO, ECTO, CHEBI, LOINC, SNOMED CT, and related vocabularies.
+  omop_concept_binding:
+    range: OMOPConceptBinding
+    inlined: true
+    description: >-
+      Optional OMOP vocabulary mapping and mapping status for downstream Gaia or
+      external-exposure workflows.
+  support_type:
+    range: SpatialSupportTypeEnum
+  administrative_level:
+    range: string
+    description: >-
+      Administrative or statistical geography level when values are reported by
+      units such as state, county, ZIP code, census tract, or block group.
+  temporal_resolution:
+    range: string
+    description: >-
+      Temporal spacing or nominal resolution of values; ISO 8601 duration syntax
+      such as PT1H, P1D, or P1M is recommended where applicable.
+  aggregation_window:
+    range: string
+    description: >-
+      Time window over which a reported environmental value is aggregated; ISO 8601
+      duration syntax is recommended.
+  temporal_alignment:
+    range: TemporalAlignmentEnum
+  omop_concept_id:
+    range: integer
+  omop_concept_name:
+    range: string
+  omop_vocabulary_id:
+    range: string
+  omop_domain_id:
+    range: string
+  omop_standard_concept:
+    range: string
+    description: >-
+      OMOP standard-concept indicator when available.
+  concept_status:
+    range: ConceptStatusEnum
+    description: >-
+      Status of the OMOP concept mapping, including explicit representation of a
+      vocabulary gap.
   distributions:
     slot_uri: dcat:distribution
     multivalued: true
@@ -595,8 +856,85 @@ slots:
     range: string
   spatial_resolution:
     range: string
+    description: >-
+      Human-readable spatial resolution, retained for compatibility. Examples
+      include 1 km, 30 arc-second, county, or census tract.
   coordinate_reference_system:
     range: string
+    description: >-
+      Legacy free-text coordinate reference system. Prefer
+      coordinate_reference_system_uri for normalized new metadata.
+  coordinate_reference_system_uri:
+    range: uriorcurie
+    description: >-
+      Identifier for the coordinate reference system, preferably an OGC CRS URI
+      or EPSG identifier such as epsg:4326.
+  location_id:
+    range: uriorcurie
+    description: >-
+      Stable identifier for a geographic location when available, for example a
+      GeoNames, Wikidata, GAZ, or other authoritative gazetteer identifier.
+  location_type:
+    range: GeographicLocationTypeEnum
+  latitude:
+    slot_uri: biolink:latitude
+    range: float
+    minimum_value: -90
+    maximum_value: 90
+  longitude:
+    slot_uri: biolink:longitude
+    range: float
+    minimum_value: -180
+    maximum_value: 180
+  geometry:
+    slot_uri: geo:hasGeometry
+    range: Geometry
+    inlined: true
+  geometry_type:
+    range: GeometryTypeEnum
+  wkt:
+    slot_uri: geo:asWKT
+    range: string
+    description: >-
+      Well-Known Text geometry serialization. For RDF export this may be emitted
+      as a GeoSPARQL geo:wktLiteral.
+  geojson:
+    slot_uri: geo:asGeoJSON
+    range: string
+    description: >-
+      GeoJSON geometry serialized as a JSON string.
+  geographic_identifiers:
+    multivalued: true
+    range: uriorcurie
+    description: >-
+      Additional identifiers for the named geographic entity, such as GeoNames,
+      Wikidata, GAZ, GNIS, or other authoritative geographic identifiers.
+  bounding_box:
+    range: BoundingBox
+    inlined: true
+  centroid:
+    range: GeographicLocation
+    inlined: true
+  named_locations:
+    multivalued: true
+    range: GeographicLocation
+    inlined_as_list: true
+  west:
+    range: float
+    minimum_value: -180
+    maximum_value: 180
+  east:
+    range: float
+    minimum_value: -180
+    maximum_value: 180
+  south:
+    range: float
+    minimum_value: -90
+    maximum_value: 90
+  north:
+    range: float
+    minimum_value: -90
+    maximum_value: 90
   data_type:
     range: string
   unit:
@@ -733,6 +1071,71 @@ slots:
     range: string
 
 enums:
+  AggregationMethodEnum:
+    permissible_values:
+      instantaneous:
+      mean:
+      minimum:
+      maximum:
+      median:
+      sum:
+      count:
+      percentile:
+      cumulative:
+      other:
+
+  SpatialSupportTypeEnum:
+    permissible_values:
+      point:
+      monitoring_station:
+      raster_grid_cell:
+      polygon:
+      administrative_area:
+      statistical_area:
+      model_grid_cell:
+      other:
+
+  TemporalAlignmentEnum:
+    permissible_values:
+      start:
+      center:
+      end:
+      interval:
+      unknown:
+
+  ConceptStatusEnum:
+    permissible_values:
+      mapped_standard:
+      mapped_nonstandard:
+      candidate_mapping:
+      vocabulary_gap:
+      not_evaluated:
+
+  GeometryTypeEnum:
+    permissible_values:
+      point:
+        meaning: sf:Point
+      multipoint:
+        meaning: sf:MultiPoint
+      linestring:
+        meaning: sf:LineString
+      multilinestring:
+        meaning: sf:MultiLineString
+      polygon:
+        meaning: sf:Polygon
+      multipolygon:
+        meaning: sf:MultiPolygon
+
+  GeographicLocationTypeEnum:
+    permissible_values:
+      named_place:
+      point:
+      administrative_area:
+      study_area:
+      observation_location:
+      exposure_location:
+      other:
+
   ReferenceTypeEnum:
     permissible_values:
       research_article:
