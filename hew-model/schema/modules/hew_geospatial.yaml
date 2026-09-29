@@ -7,8 +7,10 @@ description: >-
 prefixes:
   biolink: https://w3id.org/biolink/vocab/
   geo: http://www.opengis.net/ont/geosparql#
+  sf: http://www.opengis.net/ont/sf#
 imports:
   - linkml:types
+  - hew_core
 
 classes:
   GeographicLocation:
@@ -138,6 +140,10 @@ slots:
     maximum_value: 90
   spatial_resolution:
     range: string
+  support_type:
+    range: SpatialSupportTypeEnum
+  administrative_level:
+    range: string
   coordinate_reference_system_uri:
     range: uriorcurie
   measured_property:
@@ -176,3 +182,69 @@ slots:
     range: string
   concept_status:
     range: ConceptStatusEnum
+
+enums:
+  AggregationMethodEnum:
+    permissible_values:
+      instantaneous:
+      mean:
+      minimum:
+      maximum:
+      median:
+      sum:
+      count:
+      percentile:
+      cumulative:
+      other:
+
+  SpatialSupportTypeEnum:
+    permissible_values:
+      point:
+      monitoring_station:
+      raster_grid_cell:
+      polygon:
+      administrative_area:
+      statistical_area:
+      model_grid_cell:
+      other:
+
+  TemporalAlignmentEnum:
+    permissible_values:
+      start:
+      center:
+      end:
+      interval:
+      unknown:
+
+  ConceptStatusEnum:
+    permissible_values:
+      mapped_standard:
+      mapped_nonstandard:
+      candidate_mapping:
+      vocabulary_gap:
+      not_evaluated:
+
+  GeometryTypeEnum:
+    permissible_values:
+      point:
+        meaning: sf:Point
+      multipoint:
+        meaning: sf:MultiPoint
+      linestring:
+        meaning: sf:LineString
+      multilinestring:
+        meaning: sf:MultiLineString
+      polygon:
+        meaning: sf:Polygon
+      multipolygon:
+        meaning: sf:MultiPolygon
+
+  GeographicLocationTypeEnum:
+    permissible_values:
+      named_place:
+      point:
+      administrative_area:
+      study_area:
+      observation_location:
+      exposure_location:
+      other:

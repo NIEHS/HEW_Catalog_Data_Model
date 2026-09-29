@@ -11,7 +11,6 @@ version: 1.2.0
 
 prefixes:
   HEW: https://w3id.org/hew/
-  hew: https://w3id.org/hew/
   HEWRES: https://w3id.org/hew/resource/
   HEWANN: https://w3id.org/hew/annotation/
   biolink: https://w3id.org/biolink/vocab/
@@ -91,7 +90,6 @@ classes:
       - status
       - sponsoring_organizations
       - contacts
-      - agent_associations
       - has_projects
       - part_of_programs
       - principal_investigators
@@ -99,9 +97,7 @@ classes:
       - participating_organizations
       - funding_sources
       - uses_resources
-      - used_by_projects
       - produces_resources
-      - produced_by_projects
       - themes
 
   LiteratureResource:
