@@ -1,0 +1,178 @@
+id: https://w3id.org/hew/schema/modules/geospatial
+name: hew-geospatial
+title: "HEW schema module: geospatial and environmental variables"
+description: >-
+  Structured geographic locations, geometries, resource extents, and EnVar-aligned
+  environmental variable metadata.
+prefixes:
+  biolink: https://w3id.org/biolink/vocab/
+  geo: http://www.opengis.net/ont/geosparql#
+imports:
+  - linkml:types
+
+classes:
+  GeographicLocation:
+    class_uri: biolink:GeographicLocation
+    slots:
+      - location_id
+      - name
+      - location_type
+      - latitude
+      - longitude
+      - geometry
+      - geographic_identifiers
+      - environmental_context
+
+  Geometry:
+    class_uri: geo:Geometry
+    slots:
+      - geometry_type
+      - wkt
+      - geojson
+      - coordinate_reference_system_uri
+
+  BoundingBox:
+    slots:
+      - west
+      - south
+      - east
+      - north
+
+  SpatialExtent:
+    slots:
+      - geometry
+      - bounding_box
+      - centroid
+      - named_locations
+      - environmental_context
+      - spatial_resolution
+      - coordinate_reference_system_uri
+
+  EnvironmentalVariable:
+    is_a: Variable
+    slots:
+      - measured_property
+      - measurement_method
+      - aggregation_method
+      - spatial_support
+      - temporal_support
+      - concept_mappings
+      - omop_concept_binding
+
+  SpatialSupport:
+    slots:
+      - support_type
+      - spatial_resolution
+      - administrative_level
+      - geometry_type
+      - coordinate_reference_system_uri
+
+  TemporalSupport:
+    slots:
+      - temporal_resolution
+      - aggregation_window
+      - temporal_alignment
+
+  OMOPConceptBinding:
+    slots:
+      - omop_concept_id
+      - omop_concept_name
+      - omop_vocabulary_id
+      - omop_domain_id
+      - omop_standard_concept
+      - concept_status
+
+slots:
+  location_id:
+    range: uriorcurie
+  location_type:
+    range: GeographicLocationTypeEnum
+  latitude:
+    range: float
+    minimum_value: -90
+    maximum_value: 90
+  longitude:
+    range: float
+    minimum_value: -180
+    maximum_value: 180
+  geometry:
+    range: Geometry
+    inlined: true
+  geometry_type:
+    range: GeometryTypeEnum
+  wkt:
+    range: string
+  geojson:
+    range: string
+  geographic_identifiers:
+    multivalued: true
+    range: uriorcurie
+  environmental_context:
+    multivalued: true
+    range: uriorcurie
+  bounding_box:
+    range: BoundingBox
+    inlined: true
+  centroid:
+    range: GeographicLocation
+    inlined: true
+  named_locations:
+    multivalued: true
+    range: GeographicLocation
+    inlined_as_list: true
+  west:
+    range: float
+    minimum_value: -180
+    maximum_value: 180
+  east:
+    range: float
+    minimum_value: -180
+    maximum_value: 180
+  south:
+    range: float
+    minimum_value: -90
+    maximum_value: 90
+  north:
+    range: float
+    minimum_value: -90
+    maximum_value: 90
+  spatial_resolution:
+    range: string
+  coordinate_reference_system_uri:
+    range: uriorcurie
+  measured_property:
+    range: uriorcurie
+  measurement_method:
+    range: uriorcurie
+  aggregation_method:
+    range: AggregationMethodEnum
+  spatial_support:
+    range: SpatialSupport
+    inlined: true
+  temporal_support:
+    range: TemporalSupport
+    inlined: true
+  temporal_resolution:
+    range: string
+  aggregation_window:
+    range: string
+  temporal_alignment:
+    range: TemporalAlignmentEnum
+  concept_mappings:
+    multivalued: true
+    range: uriorcurie
+  omop_concept_binding:
+    range: OMOPConceptBinding
+    inlined: true
+  omop_concept_id:
+    range: integer
+  omop_concept_name:
+    range: string
+  omop_vocabulary_id:
+    range: string
+  omop_domain_id:
+    range: string
+  omop_standard_concept:
+    range: string
+  concept_status:
+    range: ConceptStatusEnum

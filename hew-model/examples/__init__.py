@@ -1,0 +1,1 @@
+"""Packaged HEW example resources."""
