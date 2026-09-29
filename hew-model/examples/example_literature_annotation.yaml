@@ -8,7 +8,7 @@ annotations:
     subject: HEWRES:00000123
     coding_scheme: HEW Resource Library Coding Guide
     coding_scheme_version: draft
-    annotation_date: 2026-08-11
+    annotation_date: "2026-08-11"
     coded_by:
       - LaserAI
       - human_curator_placeholder
@@ -37,6 +37,19 @@ annotations:
           - united_states
         geographic_features:
           - urban
+        locations:
+          - location_id: geonames:5303754
+            name: Maricopa County
+            location_type: study_area
+            latitude: 33.35
+            longitude: -112.49
+            geographic_identifiers:
+              - geonames:5303754
+            environmental_context:
+              - envo:0000000
+        environmental_context:
+          - envo:0000000
+        spatial_text: Maricopa County, Arizona
     data_tool_method_annotations:
       - data_resource_types:
           - dataset

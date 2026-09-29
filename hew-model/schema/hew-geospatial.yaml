@@ -7,11 +7,10 @@ description: >-
   data resources, tools, methods, special topics, people, organizations,
   programs, projects, funding, and provenance-bearing associations.
 license: CC-BY-4.0
-version: 1.1.0
+version: 1.2.0
 
 prefixes:
   HEW: https://w3id.org/hew/
-  hew: https://w3id.org/hew/
   HEWRES: https://w3id.org/hew/resource/
   HEWANN: https://w3id.org/hew/annotation/
   biolink: https://w3id.org/biolink/vocab/
@@ -57,6 +56,49 @@ classes:
       - agent_associations
       - annotations
       - related_resources
+      - doi
+      - pmid
+      - pmcid
+      - abstract
+      - citation
+      - publication_type
+      - journal
+      - publication_date
+      - authors
+      - study_objective
+      - data_dictionary
+      - spatial_coverage
+      - spatial_extent
+      - temporal_coverage
+      - access_rights
+      - license
+      - measured_variables
+      - environmental_variables
+      - distributions
+      - repository
+      - programming_language
+      - software_type
+      - maintainers
+      - model_type
+      - input_variables
+      - output_variables
+      - spatial_resolution
+      - coordinate_reference_system
+      - coordinate_reference_system_uri
+      - start_date
+      - end_date
+      - status
+      - sponsoring_organizations
+      - contacts
+      - has_projects
+      - part_of_programs
+      - principal_investigators
+      - contributors
+      - participating_organizations
+      - funding_sources
+      - uses_resources
+      - produces_resources
+      - themes
 
   LiteratureResource:
     is_a: HEWResource
@@ -92,6 +134,7 @@ classes:
       - access_rights
       - license
       - measured_variables
+      - environmental_variables
       - distributions
 
   CohortResource:
@@ -188,6 +231,7 @@ classes:
       - title
       - description
       - variables
+      - environmental_variables
       - source_resource
 
   Variable:
@@ -200,6 +244,56 @@ classes:
       - data_type
       - unit
       - mappings
+
+  EnvironmentalVariable:
+    is_a: Variable
+    description: >-
+      An environmental variable described with EnVar-aligned metadata sufficient
+      to interpret what was measured or derived, how it was summarized, where and
+      when values apply, and how the variable maps to environmental and clinical
+      vocabularies. This is an HEW integration profile, not a copy of the
+      authoritative EnVar micro-schema.
+    slots:
+      - measured_property
+      - measurement_method
+      - aggregation_method
+      - spatial_support
+      - temporal_support
+      - concept_mappings
+      - omop_concept_binding
+
+  SpatialSupport:
+    description: >-
+      The geographic support over which a single environmental variable value is
+      defined. This is distinct from the overall spatial extent of the dataset.
+    slots:
+      - support_type
+      - spatial_resolution
+      - administrative_level
+      - geometry_type
+      - coordinate_reference_system_uri
+
+  TemporalSupport:
+    description: >-
+      The temporal support and aggregation semantics of an environmental variable.
+      ISO 8601 duration strings are recommended for resolution and window fields.
+    slots:
+      - temporal_resolution
+      - aggregation_window
+      - temporal_alignment
+
+  OMOPConceptBinding:
+    description: >-
+      Optional mapping of an environmental variable to an OMOP vocabulary concept,
+      including an explicit status so vocabulary gaps can be represented without
+      inventing identifiers.
+    slots:
+      - omop_concept_id
+      - omop_concept_name
+      - omop_vocabulary_id
+      - omop_domain_id
+      - omop_standard_concept
+      - concept_status
 
   Agent:
     abstract: true
@@ -650,6 +744,87 @@ slots:
   measured_variables:
     multivalued: true
     range: string
+  environmental_variables:
+    multivalued: true
+    range: EnvironmentalVariable
+    inlined_as_list: true
+    description: >-
+      Structured environmental variables using the HEW EnVar integration profile.
+      This complements the legacy measured_variables string list.
+  measured_property:
+    range: uriorcurie
+    description: >-
+      Ontology identifier for the environmental property, phenomenon, substance,
+      or exposure-related quantity represented by the variable. ENVO, ECTO, CHEBI,
+      or other appropriate ontology terms may be used.
+  measurement_method:
+    range: uriorcurie
+    description: >-
+      Identifier for the measurement, observation, assay, retrieval, or derivation
+      method when a suitable controlled term exists.
+  aggregation_method:
+    range: AggregationMethodEnum
+    description: >-
+      Statistical or temporal aggregation used to derive each reported value.
+  spatial_support:
+    range: SpatialSupport
+    inlined: true
+    description: >-
+      Spatial unit over which an individual variable value applies; distinct from
+      the complete spatial extent of the parent dataset.
+  temporal_support:
+    range: TemporalSupport
+    inlined: true
+    description: >-
+      Temporal resolution, aggregation window, and alignment for individual values.
+  concept_mappings:
+    multivalued: true
+    range: uriorcurie
+    description: >-
+      Cross-vocabulary mappings for the environmental variable. Appropriate targets
+      include ENVO, ECTO, CHEBI, LOINC, SNOMED CT, and related vocabularies.
+  omop_concept_binding:
+    range: OMOPConceptBinding
+    inlined: true
+    description: >-
+      Optional OMOP vocabulary mapping and mapping status for downstream Gaia or
+      external-exposure workflows.
+  support_type:
+    range: SpatialSupportTypeEnum
+  administrative_level:
+    range: string
+    description: >-
+      Administrative or statistical geography level when values are reported by
+      units such as state, county, ZIP code, census tract, or block group.
+  temporal_resolution:
+    range: string
+    description: >-
+      Temporal spacing or nominal resolution of values; ISO 8601 duration syntax
+      such as PT1H, P1D, or P1M is recommended where applicable.
+  aggregation_window:
+    range: string
+    description: >-
+      Time window over which a reported environmental value is aggregated; ISO 8601
+      duration syntax is recommended.
+  temporal_alignment:
+    range: TemporalAlignmentEnum
+  omop_concept_id:
+    range: integer
+  omop_concept_name:
+    range: string
+  omop_vocabulary_id:
+    range: string
+  omop_domain_id:
+    range: string
+  omop_standard_concept:
+    range: string
+    description: >-
+      OMOP standard-concept indicator when available.
+  concept_status:
+    range: ConceptStatusEnum
+    description: >-
+      Status of the OMOP concept mapping, including explicit representation of a
+      vocabulary gap.
   distributions:
     slot_uri: dcat:distribution
     multivalued: true
@@ -892,6 +1067,46 @@ slots:
     range: string
 
 enums:
+  AggregationMethodEnum:
+    permissible_values:
+      instantaneous:
+      mean:
+      minimum:
+      maximum:
+      median:
+      sum:
+      count:
+      percentile:
+      cumulative:
+      other:
+
+  SpatialSupportTypeEnum:
+    permissible_values:
+      point:
+      monitoring_station:
+      raster_grid_cell:
+      polygon:
+      administrative_area:
+      statistical_area:
+      model_grid_cell:
+      other:
+
+  TemporalAlignmentEnum:
+    permissible_values:
+      start:
+      center:
+      end:
+      interval:
+      unknown:
+
+  ConceptStatusEnum:
+    permissible_values:
+      mapped_standard:
+      mapped_nonstandard:
+      candidate_mapping:
+      vocabulary_gap:
+      not_evaluated:
+
   GeometryTypeEnum:
     permissible_values:
       point:

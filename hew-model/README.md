@@ -14,17 +14,18 @@ The model is organized around three separable ideas:
 ```text
 .
 |-- README.md
-|-- SCHEMA_DESIGN.md
+|-- docs/SCHEMA_DESIGN.md
 |-- pyproject.toml
 |-- Makefile
 |-- schema/
-|   |-- hew.yaml
+|   |-- hew-geospatial.yaml
 |   `-- modules/
 |       |-- hew_core.yaml
 |       |-- hew_literature.yaml
 |       |-- hew_review_coding.yaml
 |       |-- hew_resource_types.yaml
-|       `-- hew_agents_projects.yaml
+|       |-- hew_agents_projects.yaml
+|       `-- hew_geospatial.yaml
 |-- terms/
 |   |-- exposure_terms.yaml
 |   |-- health_impact_terms.yaml
@@ -43,6 +44,9 @@ The model is organized around three separable ideas:
 `-- .github/workflows/
     `-- ci.yml
 ```
+
+The consolidated schema design, geospatial architecture, and EnVar integration
+are documented in [`docs/SCHEMA_DESIGN.md`](../docs/SCHEMA_DESIGN.md).
 
 ## Quick start
 

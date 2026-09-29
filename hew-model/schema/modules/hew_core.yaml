@@ -1,7 +1,60 @@
-# Placeholder module for future split-out schema content.
-# Current compact schema lives in ../hew.yaml.
+# Core resource-independent data structures shared by HEW modules.
 id: https://w3id.org/hew/schema/modules/hew_core
 name: hew_core
 title: "HEW schema module: hew_core"
+prefixes:
+  schema: http://schema.org/
 imports:
   - linkml:types
+
+classes:
+  Variable:
+    description: A variable, field, measure, or data element in a HEW-relevant resource.
+    slots:
+      - id
+      - name
+      - title
+      - description
+      - data_type
+      - unit
+      - mappings
+
+  DataDictionary:
+    class_uri: schema:Dataset
+    description: A structured description of variables, fields, measures, or data elements.
+    slots:
+      - id
+      - title
+      - description
+      - variables
+      - environmental_variables
+      - source_resource
+
+slots:
+  id:
+    identifier: true
+    range: uriorcurie
+    required: true
+  name:
+    range: string
+  title:
+    range: string
+  description:
+    range: string
+  data_type:
+    range: string
+  unit:
+    range: string
+  mappings:
+    multivalued: true
+    range: uriorcurie
+  variables:
+    multivalued: true
+    range: Variable
+    inlined_as_list: true
+  environmental_variables:
+    multivalued: true
+    range: EnvironmentalVariable
+    inlined_as_list: true
+  source_resource:
+    range: uriorcurie

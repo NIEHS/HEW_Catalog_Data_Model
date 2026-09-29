@@ -10,7 +10,7 @@ from hew_model.jsonld import generate_context
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--schema", type=Path, default=Path("schema/hew.yaml"))
+    parser.add_argument("--schema", type=Path, default=Path("schema/hew-geospatial.yaml"))
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
