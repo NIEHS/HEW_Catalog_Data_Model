@@ -102,6 +102,11 @@ temporal resolution and aggregation windows. OMOP bindings remain separate from
 generic ontology mappings so a vocabulary gap can be recorded without inventing
 an identifier.
 
+`SpatiotemporalExposure` combines these concerns for a measured, modeled,
+derived, assigned, or summarized exposure estimate. `CovariateCalculation`
+records how a source dataset and its variables were transformed into that
+estimate, while `TemporalExtent` captures the structured start/end interval.
+
 ## Interoperability
 
 HEW LinkML provides structural validation. External standards are projections:
@@ -126,8 +131,9 @@ objects, semantic mappings, and OMOP status.
 
 ## Module organization
 
-The combined schema is the validation entry point. Schema fragments are kept in
-`hew-model/schema/modules/` for the intended future split:
+The combined schema is the validation entry point. Reusable schema fragments are
+kept in `hew-model/schema/modules/`; the geospatial module imports the shared core
+module and can also be loaded independently:
 
 ```text
 hew_core.yaml
@@ -141,6 +147,10 @@ hew_geospatial.yaml
 The geospatial module owns the location, geometry, extent, support, temporal,
 environmental-variable, and OMOP binding structures. The core module owns the
 generic `Variable` and `DataDictionary` structures used by those additions.
+
+The consolidated schema additionally defines `SpatiotemporalExposure`,
+`CovariateCalculation`, `TemporalExtent`, `ValueSpecification`, structured
+resolution classes, processing-level metadata, and `ExternalExposureLinkage`.
 
 ## Example integrated resource
 
@@ -186,4 +196,3 @@ environmental_variables:
 3. Establish ontology and gazetteer mapping practices.
 4. Add explicit exposure, study-geography, observation-location, and temporal relationships.
 5. Develop GeoSPARQL, STAC, DCAT, DataCite, Schema.org, and OMOP/Gaia projections.
-

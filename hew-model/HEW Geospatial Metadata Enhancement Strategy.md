@@ -657,7 +657,7 @@ spatial_extent:
       geographic_identifiers:
         - geonames:5303754
       environmental_context:
-        - ENVO:...
+        - envo:0000000
 
   bounding_box:
     west: -113.33
@@ -680,7 +680,14 @@ temporal_coverage: "2020-01-01/2025-12-31"
 
 # Recommended Next Steps
 
-The geospatial patch establishes the basic spatial object model.
+The current schema implements the structured spatial object model, including
+locations, geometries, extents, CRS identifiers, spatial support, and environmental
+variables.
+
+It also provides first-class `SpatiotemporalExposure` and `CovariateCalculation`
+objects for exposome-facing estimates, including Amadeus-derived covariates,
+structured temporal extents, value semantics, processing levels, and optional
+OMOP/Gaia external exposure linkage.
 
 The next logical enhancement is a **spatiotemporal exposure model** connecting:
 

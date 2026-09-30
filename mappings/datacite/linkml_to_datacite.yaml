@@ -1,0 +1,11 @@
+schema: ../../hew-model/schema/hew-geospatial.yaml
+notes: >-
+  Project DOI-bearing HEW resources to DataCite while preserving HEW IDs and
+  structured spatial and temporal metadata as related geoLocation fields.
+fields:
+  title: title
+  description: description
+  creators: authors
+  publicationYear: publication_date
+  identifier: doi
+  geoLocation: spatial_extent

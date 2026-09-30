@@ -1,0 +1,11 @@
+schema: ../../hew-model/schema/hew-geospatial.yaml
+classes:
+  DatasetResource: STAC Collection
+  GeospatialResource: STAC Collection
+  Distribution: STAC Asset
+slots:
+  spatial_extent: extent.spatial
+  temporal_extent: extent.temporal
+  temporal_coverage: extent.temporal
+  geometry: geometry
+  bounding_box: bbox

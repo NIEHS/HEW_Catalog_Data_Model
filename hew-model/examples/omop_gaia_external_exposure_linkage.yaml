@@ -1,0 +1,10 @@
+id: HEWLINK:maricopa-heat-linkage
+exposure_estimate: HEWEXP:maricopa-heat-2020-2025
+omop_concept_binding:
+  concept_status: candidate_mapping
+  omop_concept_name: Extreme heat exposure
+exposure_start_date: '2020-01-01'
+exposure_end_date: '2025-12-31'
+spatial_join_method: within
+temporal_join_method: same_day
+privacy_preserving_geography: Census tract or approved location-history aggregate

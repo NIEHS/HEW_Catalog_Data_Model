@@ -1,0 +1,10 @@
+schema: ../../hew-model/schema/hew-geospatial.yaml
+classes:
+  ExternalExposureLinkage: OMOP/Gaia external exposure linkage profile
+slots:
+  omop_concept_binding: OMOP concept binding
+  exposure_start_date: exposure interval start
+  exposure_end_date: exposure interval end
+  spatial_join_method: spatial assignment method
+  temporal_join_method: temporal assignment method
+  privacy_preserving_geography: privacy-preserving location representation

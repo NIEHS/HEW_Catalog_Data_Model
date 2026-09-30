@@ -1,0 +1,16 @@
+id: HEWRES:geospatial-heat-grid
+title: Example geospatial heat grid
+resource_type: geospatial_dataset
+spatial_coverage: Continental United States
+spatial_extent:
+  bounding_box:
+    west: -125.0
+    south: 24.0
+    east: -66.0
+    north: 50.0
+  coordinate_reference_system_uri: epsg:4326
+temporal_coverage: 2020/2025
+temporal_extent:
+  start_time: '2020-01-01T00:00:00Z'
+  end_time: '2025-12-31T23:59:59Z'
+processing_level: derived

@@ -1,0 +1,11 @@
+schema: ../../hew-model/schema/hew-geospatial.yaml
+classes:
+  DatasetResource: dcat:Dataset
+  Distribution: dcat:Distribution
+slots:
+  access_rights: dcterms:accessRights
+  license: dcterms:license
+  spatial_extent: dcterms:spatial
+  spatial_coverage: dcterms:spatial
+  temporal_extent: dcterms:temporal
+  temporal_coverage: dcterms:temporal

@@ -13,6 +13,7 @@ This model is early and should evolve carefully.
 ## Development
 
 ```bash
-python -m pip install linkml
+python3 -m pip install -e .
 make validate
+make jsonschema jsonld-context
 ```

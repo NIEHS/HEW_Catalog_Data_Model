@@ -39,6 +39,42 @@ class TestJsonLdRoundTrip(unittest.TestCase):
         )
         self.assertTrue(round_trip_jsonld(document))
 
+    def test_geospatial_nested_objects_receive_types(self):
+        instance = {
+            "id": "HEWRES:heat-grid",
+            "title": "Example heat grid",
+            "resource_type": "geospatial_dataset",
+            "spatial_extent": {
+                "geometry": {
+                    "geometry_type": "polygon",
+                    "wkt": "POLYGON((-1 0, 1 0, 1 1, -1 1, -1 0))",
+                },
+                "named_locations": [
+                    {"location_id": "geonames:6252001", "name": "United States"}
+                ],
+            },
+            "environmental_variables": [
+                {
+                    "id": "HEWVAR:tmax",
+                    "name": "tmax",
+                    "spatial_support": {"support_type": "raster_grid_cell"},
+                    "temporal_support": {"temporal_alignment": "end"},
+                }
+            ],
+        }
+
+        document = to_jsonld(instance, class_name="DatasetResource")
+
+        self.assertEqual(document["@type"], "DatasetResource")
+        self.assertEqual(document["spatial_extent"]["@type"], "SpatialExtent")
+        self.assertEqual(
+            document["spatial_extent"]["geometry"]["@type"], "Geometry"
+        )
+        self.assertEqual(
+            document["environmental_variables"][0]["@type"], "EnvironmentalVariable"
+        )
+        self.assertTrue(round_trip_jsonld(document))
+
 
 if __name__ == "__main__":
     unittest.main()

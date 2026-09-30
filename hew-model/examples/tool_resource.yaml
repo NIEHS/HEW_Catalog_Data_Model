@@ -1,0 +1,10 @@
+id: HEWRES:amadeus
+title: Amadeus environmental covariate workflow
+resource_type: tool
+tool_type: computational_tool
+url: https://example.org/amadeus
+repository: https://github.com/example/amadeus
+input_variables:
+  - HEWVAR:temperature
+output_variables:
+  - HEWVAR:heat-exposure

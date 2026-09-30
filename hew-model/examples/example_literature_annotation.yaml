@@ -61,6 +61,8 @@ annotations:
             resource_type: geospatial_dataset
             relationship_to_literature: uses
             availability: unknown
+    related_resources:
+      - HEWEXP:maricopa-heat-2020-2025
     special_topic_annotations:
       - coded_concept: HEW:study_population
         coding_depth: 1

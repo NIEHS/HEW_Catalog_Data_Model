@@ -1,0 +1,14 @@
+id: HEWMETHOD:amadeus-daily-max-temp
+name: Amadeus daily maximum temperature extraction
+method_type: reanalysis_extraction
+software: HEWRES:amadeus
+software_version: TBD
+function_name: calculate_covariates
+input_resources:
+  - HEWRES:era5-land-daily-temperature
+output_variables:
+  - HEWVAR:daily-temperature
+extraction_method: zonal_mean
+aggregation_method: maximum
+source_crs: epsg:4326
+target_crs: epsg:4326

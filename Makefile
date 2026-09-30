@@ -1,4 +1,5 @@
 SCHEMA=hew-model/schema/hew-geospatial.yaml
+PYTHON ?= python3
 
 .PHONY: validate jsonschema jsonld-context docs clean
 
@@ -10,7 +11,7 @@ jsonschema:
 	gen-json-schema $(SCHEMA) > build/hew.schema.json
 
 jsonld-context:
-	python hew-model/scripts/generate_jsonld_context.py --schema $(SCHEMA) --output build/hew.context.jsonld
+	$(PYTHON) scripts/generate_jsonld_context.py --schema $(SCHEMA) --output build/hew.context.jsonld
 
 docs:
 	mkdir -p build/docs

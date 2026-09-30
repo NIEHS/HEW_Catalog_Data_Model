@@ -1,0 +1,11 @@
+id: HEWEXP:optional-heat-exposure
+title: Optional structured heat exposure estimate
+exposure_concept: ECTO:example_extreme_heat_exposure
+source_dataset: HEWRES:geospatial-heat-grid
+temporal_extent:
+  start_time: '2020-01-01T00:00:00Z'
+  end_time: '2025-12-31T23:59:59Z'
+value_specification:
+  unit: degC
+  value_type: modeled_value
+  statistic: maximum

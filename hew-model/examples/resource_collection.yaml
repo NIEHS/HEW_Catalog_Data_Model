@@ -1,0 +1,10 @@
+id: HEWCOLLECTION:hew-resource-library
+title: HEW Resource Library collection
+resource_type: other
+collection_scope: Curated publications, datasets, tools, and related HEW resources.
+collection_members:
+  - HEWRES:publication-heat-health
+  - HEWRES:amadeus
+curator: PERSON:hew-curator
+source_project: HEWPROJECT:hew-catalog
+version: '1.0'

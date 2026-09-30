@@ -7,7 +7,7 @@ description: >-
   data resources, tools, methods, special topics, people, organizations,
   programs, projects, funding, and provenance-bearing associations.
 license: CC-BY-4.0
-version: 1.2.0
+version: 1.3.0
 
 prefixes:
   HEW: https://w3id.org/hew/
@@ -70,6 +70,7 @@ classes:
       - spatial_coverage
       - spatial_extent
       - temporal_coverage
+      - temporal_extent
       - access_rights
       - license
       - measured_variables
@@ -99,6 +100,7 @@ classes:
       - uses_resources
       - produces_resources
       - themes
+      - spatiotemporal_exposures
 
   LiteratureResource:
     is_a: HEWResource
@@ -136,6 +138,8 @@ classes:
       - measured_variables
       - environmental_variables
       - distributions
+      - processing_level
+      - external_exposure_linkage
 
   CohortResource:
     is_a: DatasetResource
@@ -143,7 +147,72 @@ classes:
 
   SurveyInstrument:
     is_a: HEWResource
-    description: A survey instrument or questionnaire used to collect HEW-relevant data.
+    description: >-
+      A questionnaire, interview guide, assessment instrument, scale, or protocol
+      used to collect HEW-relevant survey data.
+    slots:
+      - survey_constructs
+      - survey_questions
+      - target_population
+      - administration_mode
+      - language
+      - related_resources
+
+  SurveyDataset:
+    is_a: DatasetResource
+    description: >-
+      A dataset containing survey responses or derived survey measures collected
+      using one or more survey instruments.
+    slots:
+      - survey_instruments
+      - population_or_cohort
+      - variables
+      - data_dictionary
+
+  ToolResource:
+    is_a: HEWResource
+    description: >-
+      A tool used to collect, compute, analyze, visualize, interpret, or translate
+      health and extreme weather information. Tools may include computational
+      tools, survey tools, decision-support tools, calculators, dashboards,
+      notebooks, workflows, or educational tools.
+    slots:
+      - tool_type
+      - url
+      - repository
+      - maintainers
+      - input_variables
+      - output_variables
+      - related_resources
+
+  SurveyQuestion:
+    description: A question, item, or prompt in a survey instrument.
+    slots:
+      - id
+      - text
+      - response_type
+      - response_options
+      - construct
+
+  SurveyConstruct:
+    description: A construct, domain, or scale measured by a survey instrument.
+    slots:
+      - id
+      - name
+      - description
+      - concept_mappings
+
+  ResourceCollection:
+    is_a: HEWResource
+    description: >-
+      A curated collection of HEW resources, such as the HEW Resource Library,
+      a systematic-review corpus, a Dataverse collection, or a covariate collection.
+    slots:
+      - collection_members
+      - collection_scope
+      - curator
+      - source_project
+      - version
 
   SoftwareResource:
     is_a: HEWResource
@@ -169,6 +238,8 @@ classes:
     description: A geospatial dataset, layer, raster, vector file, map service, or spatial data product.
     slots:
       - spatial_resolution
+      - quantitative_spatial_resolution
+      - administrative_spatial_resolution
       - coordinate_reference_system
       - coordinate_reference_system_uri
 
@@ -211,6 +282,8 @@ classes:
       - named_locations
       - environmental_context
       - spatial_resolution
+      - quantitative_spatial_resolution
+      - administrative_spatial_resolution
       - coordinate_reference_system_uri
 
   BoundingBox:
@@ -261,6 +334,8 @@ classes:
       - temporal_support
       - concept_mappings
       - omop_concept_binding
+      - processing_level
+      - external_exposure_linkage
 
   SpatialSupport:
     description: >-
@@ -270,6 +345,8 @@ classes:
       - support_type
       - spatial_resolution
       - administrative_level
+      - quantitative_spatial_resolution
+      - administrative_spatial_resolution
       - geometry_type
       - coordinate_reference_system_uri
 
@@ -294,6 +371,143 @@ classes:
       - omop_domain_id
       - omop_standard_concept
       - concept_status
+
+  SpatiotemporalExposure:
+    close_mappings:
+      - prov:Entity
+    description: >-
+      A measured, modeled, derived, assigned, or summarized environmental exposure
+      estimate with explicit exposure semantics, spatial support, temporal support,
+      environmental context, value semantics, provenance, and optional linkage to
+      a population, cohort, study, health resource, or OMOP/Gaia external exposure
+      workflow.
+    slots:
+      - id
+      - title
+      - description
+      - exposure_concept
+      - exposure_variable
+      - measured_property
+      - environmental_context
+      - source_dataset
+      - source_variables
+      - exposure_location
+      - exposure_geometry
+      - spatial_extent
+      - spatial_support
+      - temporal_extent
+      - temporal_support
+      - value_specification
+      - value_unit
+      - aggregation_method
+      - calculation_method
+      - generated_by
+      - software
+      - software_version
+      - population_or_cohort
+      - associated_health_outcomes
+      - omop_concept_binding
+      - external_exposure_linkage
+      - evidence_text
+      - quality_flags
+      - uncertainty
+      - processing_level
+      - access_rights
+      - license
+
+  CovariateCalculation:
+    close_mappings:
+      - prov:Activity
+    description: >-
+      A method or computational process used to derive an exposure covariate from
+      environmental, geospatial, climate, weather, social-context, or other
+      health-relevant data.
+    slots:
+      - id
+      - name
+      - description
+      - method_type
+      - software
+      - software_version
+      - function_name
+      - parameters
+      - input_resources
+      - output_variables
+      - spatial_join_method
+      - temporal_join_method
+      - buffer_radius
+      - buffer_unit
+      - extraction_method
+      - aggregation_method
+      - source_crs
+      - target_crs
+      - temporal_window
+      - generated_outputs
+
+  ParameterValue:
+    description: A named parameter used in a calculation, workflow, model, or software function.
+    slots:
+      - parameter_name
+      - parameter_value
+      - parameter_unit
+      - parameter_description
+
+  TemporalExtent:
+    description: >-
+      Structured temporal interval for a resource, exposure estimate, variable,
+      observation, model run, or derived covariate.
+    slots:
+      - start_time
+      - end_time
+      - temporal_resolution
+      - calendar
+      - timezone
+
+  ValueSpecification:
+    description: >-
+      Unit, statistic, threshold, uncertainty, and value semantics for an
+      environmental variable or exposure estimate.
+    slots:
+      - unit
+      - value_type
+      - statistic
+      - threshold
+      - threshold_unit
+      - uncertainty
+      - quality_flag
+
+  QuantitativeSpatialResolution:
+    description: Quantitative spatial resolution, such as 1 km, 250 m, or 30 arc-second.
+    slots:
+      - resolution_value
+      - resolution_unit
+      - resolution_axis
+      - resolution_description
+
+  AdministrativeSpatialResolution:
+    description: Administrative or statistical geography level used as spatial resolution.
+    slots:
+      - administrative_level
+      - coding_system
+      - example_units
+
+  ExternalExposureLinkage:
+    description: >-
+      Metadata describing how an exposure estimate, variable, or dataset can be
+      linked to OMOP/Gaia-style external exposure workflows, including spatial and
+      temporal join assumptions and privacy-preserving location references.
+    slots:
+      - id
+      - exposure_estimate
+      - omop_concept_binding
+      - location_history_reference
+      - person_or_cohort_reference
+      - exposure_start_date
+      - exposure_end_date
+      - spatial_join_method
+      - temporal_join_method
+      - privacy_preserving_geography
+      - linkage_notes
 
   Agent:
     abstract: true
@@ -473,6 +687,7 @@ classes:
       - geography_annotations
       - data_tool_method_annotations
       - special_topic_annotations
+      - related_resources
       - notes
       - confidence
       - needs_human_review
@@ -1066,6 +1281,208 @@ slots:
     slot_uri: dcterms:format
     range: string
 
+  spatiotemporal_exposures:
+    multivalued: true
+    range: SpatiotemporalExposure
+    inlined_as_list: true
+    description: Structured exposure estimates associated with a resource.
+  temporal_extent:
+    range: TemporalExtent
+    inlined: true
+    description: Structured temporal interval for a resource or exposure estimate.
+  processing_level:
+    range: DatasetProcessingLevelEnum
+    description: Processing or derivation level of a dataset or exposure resource.
+  external_exposure_linkage:
+    range: ExternalExposureLinkage
+    inlined: true
+    description: Optional OMOP/Gaia external exposure linkage metadata.
+  exposure_concept:
+    range: uriorcurie
+    description: >-
+      Ontology identifier for the exposure concept. ECTO terms are preferred when
+      available; local HEW exposure terms may be used when needed.
+  exposure_variable:
+    range: EnvironmentalVariable
+    inlined: true
+    description: Environmental variable representing or operationalizing the exposure.
+  source_dataset:
+    range: uriorcurie
+    description: Dataset or resource from which the exposure estimate was derived.
+  source_variables:
+    multivalued: true
+    range: uriorcurie
+    description: Variables used as inputs to create this exposure estimate.
+  exposure_location:
+    range: GeographicLocation
+    inlined: true
+    description: Named or coordinate-defined location where exposure applies.
+  exposure_geometry:
+    range: Geometry
+    inlined: true
+    description: Explicit geometry where exposure applies.
+  value_specification:
+    range: ValueSpecification
+    inlined: true
+    description: Unit, statistic, threshold, uncertainty, and value semantics.
+  value_unit:
+    range: string
+    description: Human-readable unit string retained for compatibility.
+  calculation_method:
+    range: CovariateCalculation
+    inlined: true
+    description: Computational or methodological process used to derive the exposure.
+  software:
+    range: uriorcurie
+    description: Software resource or software agent used to generate the exposure.
+  population_or_cohort:
+    range: uriorcurie
+    description: Population, cohort, study sample, or resource linked to the exposure.
+  associated_health_outcomes:
+    multivalued: true
+    range: uriorcurie
+    description: Health outcome concepts or resources associated with this exposure.
+  quality_flags:
+    multivalued: true
+    range: string
+  uncertainty:
+    range: string
+    description: Human-readable uncertainty statement.
+  method_type:
+    range: CovariateCalculationMethodEnum
+  function_name:
+    range: string
+    description: Name of the function or workflow step used to derive the covariate.
+  parameters:
+    multivalued: true
+    range: ParameterValue
+    inlined_as_list: true
+  input_resources:
+    multivalued: true
+    range: uriorcurie
+  spatial_join_method:
+    range: SpatialJoinMethodEnum
+  temporal_join_method:
+    range: TemporalJoinMethodEnum
+  buffer_radius:
+    range: float
+  buffer_unit:
+    range: string
+  extraction_method:
+    range: ExtractionMethodEnum
+  source_crs:
+    range: uriorcurie
+    description: CRS of source data, preferably an EPSG or OGC CRS identifier.
+  target_crs:
+    range: uriorcurie
+    description: CRS used for calculation output, preferably an EPSG or OGC CRS identifier.
+  temporal_window:
+    range: string
+    description: ISO 8601 duration or human-readable temporal window.
+  generated_outputs:
+    multivalued: true
+    range: uriorcurie
+  parameter_name:
+    range: string
+  parameter_value:
+    range: string
+  parameter_unit:
+    range: string
+  parameter_description:
+    range: string
+  start_time:
+    range: datetime
+  end_time:
+    range: datetime
+  calendar:
+    range: string
+    description: Calendar system if relevant; Gregorian is assumed when omitted.
+  timezone:
+    range: string
+    description: Timezone identifier if local time is relevant.
+  quantitative_spatial_resolution:
+    range: QuantitativeSpatialResolution
+    inlined: true
+  administrative_spatial_resolution:
+    range: AdministrativeSpatialResolution
+    inlined: true
+  resolution_value:
+    range: float
+  resolution_unit:
+    range: string
+  resolution_axis:
+    range: ResolutionAxisEnum
+  resolution_description:
+    range: string
+  coding_system:
+    range: string
+  example_units:
+    multivalued: true
+    range: string
+  exposure_estimate:
+    range: uriorcurie
+  location_history_reference:
+    range: uriorcurie
+  person_or_cohort_reference:
+    range: uriorcurie
+  exposure_start_date:
+    range: date
+  exposure_end_date:
+    range: date
+  privacy_preserving_geography:
+    range: string
+  linkage_notes:
+    range: string
+  value_type:
+    range: ValueTypeEnum
+  statistic:
+    range: AggregationMethodEnum
+  threshold:
+    range: float
+  threshold_unit:
+    range: string
+  quality_flag:
+    range: string
+  tool_type:
+    range: ToolTypeEnum
+  survey_constructs:
+    multivalued: true
+    range: SurveyConstruct
+    inlined_as_list: true
+  survey_questions:
+    multivalued: true
+    range: SurveyQuestion
+    inlined_as_list: true
+  target_population:
+    range: uriorcurie
+  administration_mode:
+    range: string
+  language:
+    range: string
+  survey_instruments:
+    multivalued: true
+    range: uriorcurie
+  text:
+    range: string
+  response_type:
+    range: string
+  response_options:
+    multivalued: true
+    range: string
+  construct:
+    range: uriorcurie
+  collection_members:
+    multivalued: true
+    range: uriorcurie
+  collection_scope:
+    range: string
+  curator:
+    range: uriorcurie
+  source_project:
+    range: uriorcurie
+  version:
+    range: string
+
 enums:
   AggregationMethodEnum:
     permissible_values:
@@ -1288,4 +1705,102 @@ enums:
       corresponding_author:
       maintainer:
       software_agent:
+      other:
+  CovariateCalculationMethodEnum:
+    permissible_values:
+      buffer_extraction:
+      point_extraction:
+      zonal_statistics:
+      raster_summary:
+      spatial_overlay:
+      interpolation:
+      model_prediction:
+      reanalysis_extraction:
+      monitor_assignment:
+      nearest_monitor:
+      distance_weighted_assignment:
+      administrative_area_summary:
+      other:
+  SpatialJoinMethodEnum:
+    permissible_values:
+      within:
+      contains:
+      intersects:
+      nearest:
+      distance_weighted:
+      centroid_within:
+      overlap_area_weighted:
+      none:
+      other:
+  TemporalJoinMethodEnum:
+    permissible_values:
+      exact_date:
+      nearest_time:
+      same_day:
+      same_month:
+      same_year:
+      moving_average:
+      lagged_window:
+      cumulative_window:
+      event_window:
+      none:
+      other:
+  ExtractionMethodEnum:
+    permissible_values:
+      point_sample:
+      bilinear_interpolation:
+      nearest_cell:
+      zonal_mean:
+      zonal_sum:
+      zonal_minimum:
+      zonal_maximum:
+      zonal_percentile:
+      majority_class:
+      area_weighted:
+      distance_weighted:
+      other:
+  ValueTypeEnum:
+    permissible_values:
+      measured_value:
+      modeled_value:
+      derived_value:
+      index_value:
+      categorical_value:
+      binary_indicator:
+      threshold_exceedance:
+      percentile:
+      anomaly:
+      other:
+  ResolutionAxisEnum:
+    permissible_values:
+      x:
+      y:
+      z:
+      temporal:
+      nominal:
+      other:
+  DatasetProcessingLevelEnum:
+    permissible_values:
+      raw:
+      cleaned:
+      harmonized:
+      derived:
+      modeled:
+      summarized:
+      exposure_assigned:
+      analysis_ready:
+      publication_ready:
+      other:
+  ToolTypeEnum:
+    permissible_values:
+      computational_tool:
+      survey_tool:
+      decision_support_tool:
+      visualization_tool:
+      data_collection_tool:
+      educational_tool:
+      calculator:
+      dashboard:
+      workflow:
+      notebook:
       other:

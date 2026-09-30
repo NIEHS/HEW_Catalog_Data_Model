@@ -1,0 +1,27 @@
+schema: ../../hew-model/schema/hew-geospatial.yaml
+assertion_policy: catalog_assertions_only
+edges:
+  - subject: Resource
+    predicate: about_exposure
+    object: ExposureConcept
+  - subject: Resource
+    predicate: about_health_impact
+    object: HealthImpactConcept
+  - subject: Resource
+    predicate: has_geographic_scope
+    object: GeographicLocation
+  - subject: Resource
+    predicate: has_environmental_variable
+    object: EnvironmentalVariable
+  - subject: ToolResource
+    predicate: computes
+    object: EnvironmentalVariable
+  - subject: SoftwareResource
+    predicate: implements
+    object: CovariateCalculation
+  - subject: Project
+    predicate: produced
+    object: Resource
+  - subject: Project
+    predicate: used
+    object: Resource

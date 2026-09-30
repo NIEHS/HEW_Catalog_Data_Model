@@ -1,8 +1,12 @@
 # HEW Data Commons Model
 
-A LinkML-based data model for cataloging Health and Extreme Weather (HEW) resources, beginning with systematic-review literature coding from LaserAI and designed to grow into a broader HEW data commons model.
+A LinkML-based canonical resource knowledge base for Health and Extreme Weather
+(HEW), designed to catalog and connect publications, datasets, surveys, tools,
+software, models, geospatial resources, cohorts, dictionaries, people, projects,
+programs, and provenance. Systematic-review coding is one supported input stream,
+not the whole model.
 
-The model is organized around three separable ideas:
+The current consolidated schema is version `1.3.0`. The model is organized around four separable ideas:
 
 1. **HEW resources**: literature, datasets, cohorts, survey instruments, software, models, geospatial resources, exposome resources, tutorials, notebooks, tools, and data dictionaries.
 2. **Review annotations**: structured coding outputs over HEW resources, initially using the HEW Resource Library Coding Guide and LaserAI-assisted systematic-review workflows.
@@ -14,7 +18,7 @@ The model is organized around three separable ideas:
 ```text
 .
 |-- README.md
-|-- docs/SCHEMA_DESIGN.md
+|-- ../docs/SCHEMA_DESIGN.md
 |-- pyproject.toml
 |-- Makefile
 |-- schema/
@@ -35,30 +39,44 @@ The model is organized around three separable ideas:
 |-- examples/
 |   |-- example_literature_annotation.yaml
 |   |-- example_dataset_resource.yaml
+|   |-- example_spatiotemporal_exposure.yaml
+|   |-- publication_resource.yaml
+|   |-- survey_instrument.yaml
+|   |-- survey_dataset.yaml
+|   |-- tool_resource.yaml
+|   |-- resource_collection.yaml
+|   |-- environmental_variable.yaml
+|   |-- amadeus_covariate_calculation.yaml
+|   |-- omop_gaia_external_exposure_linkage.yaml
 |   `-- example_program_project_people.yaml
 |-- scripts/
 |   `-- validate_examples.sh
-|-- docs/
+|-- ../docs/
 |   |-- ontology_alignment_notes.md
-|   `-- people_projects_programs.md
-`-- .github/workflows/
-    `-- ci.yml
+|   |-- people_projects_programs.md
+|   |-- exposome_alignment.md
+|   |-- amadeus_alignment.md
+|   |-- envar_profile.md
+|   `-- omop_gaia_external_exposure.md
+`-- HEW Geospatial Metadata Enhancement Strategy.md
 ```
 
 The consolidated schema design, geospatial architecture, and EnVar integration
-are documented in [`docs/SCHEMA_DESIGN.md`](../docs/SCHEMA_DESIGN.md).
+are documented in [`docs/SCHEMA_DESIGN.md`](../docs/SCHEMA_DESIGN.md). The longer
+geospatial strategy is in [`HEW Geospatial Metadata Enhancement Strategy.md`](HEW%20Geospatial%20Metadata%20Enhancement%20Strategy.md).
 
 ## Quick start
 
 ```bash
-python -m pip install linkml
+python3 -m pip install -e .
 make validate
 make jsonschema
+make jsonld-context
 ```
 
 ## Current scope
 
-Version 0.1 focuses on literature resources, LaserAI/manual systematic-review annotations, coding guide fields, free-text `Other/Specify` values, annotation provenance, and a path for promoting mentioned datasets, cohorts, surveys, tools, software, and models into first-class HEW commons resources.
+Version 1.3.0 supports catalog resources, survey and tool metadata, structured geospatial and temporal extents, EnVar-aligned environmental variables, optional exposure estimates and covariate methods, OMOP/Gaia linkage status, systematic-review annotations, and coordination/provenance entities.
 
 ## Design stance
 

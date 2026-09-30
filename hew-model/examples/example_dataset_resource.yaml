@@ -7,6 +7,10 @@ access_rights: public
 license: CC-BY-4.0
 spatial_coverage: United States
 temporal_coverage: 2010/2020
+temporal_extent:
+  start_time: '2010-01-01T00:00:00Z'
+  end_time: '2020-12-31T23:59:59Z'
+  temporal_resolution: P1D
 spatial_resolution: 1 km
 coordinate_reference_system: EPSG:4326
 spatial_extent:
@@ -21,6 +25,9 @@ spatial_extent:
     south: 24.0
     east: -66.0
     north: 50.0
+  geometry:
+    geometry_type: polygon
+    wkt: POLYGON((-125 24, -66 24, -66 50, -125 50, -125 24))
   coordinate_reference_system_uri: epsg:4326
 measured_variables:
   - daily_maximum_temperature

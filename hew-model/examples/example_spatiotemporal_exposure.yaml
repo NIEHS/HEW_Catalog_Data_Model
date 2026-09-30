@@ -1,0 +1,60 @@
+id: HEWEXP:maricopa-heat-2020-2025
+title: Daily maximum temperature exposure in Maricopa County, 2020-2025
+exposure_concept: ECTO:example_extreme_heat_exposure
+measured_property: ENVO:example_air_temperature
+source_dataset: HEWRES:era5-land-daily-temperature
+processing_level: exposure_assigned
+environmental_context:
+  - ENVO:urban_environment
+exposure_location:
+  location_id: geonames:5303754
+  name: Maricopa County
+  location_type: administrative_area
+  latitude: 33.35
+  longitude: -112.49
+spatial_support:
+  support_type: raster_grid_cell
+  spatial_resolution: 1 km
+  quantitative_spatial_resolution:
+    resolution_value: 1
+    resolution_unit: km
+    resolution_axis: nominal
+temporal_extent:
+  start_time: '2020-01-01T00:00:00Z'
+  end_time: '2025-12-31T23:59:59Z'
+  temporal_resolution: P1D
+temporal_support:
+  temporal_resolution: P1D
+  aggregation_window: P1D
+  temporal_alignment: interval
+value_specification:
+  unit: degC
+  value_type: derived_value
+  statistic: maximum
+calculation_method:
+  id: HEWMETHOD:amadeus-daily-max-temp
+  name: Amadeus daily maximum temperature extraction
+  method_type: reanalysis_extraction
+  software: HEWRES:amadeus
+  software_version: TBD
+  function_name: calculate_covariates
+  input_resources:
+    - HEWRES:era5-land-daily-temperature
+  extraction_method: zonal_mean
+  aggregation_method: maximum
+  target_crs: epsg:4326
+omop_concept_binding:
+  concept_status: candidate_mapping
+  omop_concept_name: Extreme heat exposure
+  omop_vocabulary_id: TBD
+external_exposure_linkage:
+  id: HEWLINK:maricopa-heat-2020-2025
+  exposure_estimate: HEWEXP:maricopa-heat-2020-2025
+  omop_concept_binding:
+    concept_status: candidate_mapping
+    omop_concept_name: Extreme heat exposure
+  exposure_start_date: '2020-01-01'
+  exposure_end_date: '2025-12-31'
+  spatial_join_method: within
+  temporal_join_method: same_day
+  privacy_preserving_geography: Census tract or approved location-history aggregate

@@ -1,0 +1,17 @@
+id: HEWVAR:daily-temperature
+name: daily_maximum_temperature
+title: Daily maximum air temperature
+data_type: float
+unit: degC
+measured_property: ENVO:example_air_temperature
+aggregation_method: maximum
+processing_level: raw
+spatial_support:
+  support_type: raster_grid_cell
+  quantitative_spatial_resolution:
+    resolution_value: 1
+    resolution_unit: km
+    resolution_axis: nominal
+temporal_support:
+  temporal_resolution: P1D
+  aggregation_window: P1D

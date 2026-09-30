@@ -1,0 +1,9 @@
+{
+  "@context": {
+    "hew": "https://w3id.org/hew/",
+    "schema": "http://schema.org/",
+    "HEWResource": "schema:CreativeWork",
+    "DatasetResource": "schema:Dataset",
+    "LiteratureResource": "schema:ScholarlyArticle"
+  }
+}

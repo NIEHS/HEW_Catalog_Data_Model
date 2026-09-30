@@ -1,0 +1,17 @@
+id: HEWRES:heat-health-survey-data
+title: Heat and health symptoms survey responses
+resource_type: dataset
+survey_instruments:
+  - HEWRES:heat-health-survey
+population_or_cohort: HEWPOP:adult-community-sample
+variables:
+  - id: HEWVAR:heat-symptom
+    name: heat_symptom_reported
+    data_type: boolean
+data_dictionary:
+  id: HEWDD:heat-health-survey
+  title: Survey response data dictionary
+  variables:
+    - id: HEWVAR:heat-symptom
+      name: heat_symptom_reported
+      data_type: boolean

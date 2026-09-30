@@ -1,0 +1,8 @@
+projection: CAFE Dataverse
+hew_id: HEWRES:heat-health-survey-data
+resource_type: dataset
+title: Heat and health symptoms survey responses
+spatial_coverage: Community survey sample
+temporal_coverage: 2020/2025
+access_rights: controlled_access
+license: https://creativecommons.org/licenses/by/4.0/

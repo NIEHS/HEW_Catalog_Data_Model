@@ -1,0 +1,11 @@
+schema: ../../hew-model/schema/hew-geospatial.yaml
+classes:
+  HEWResource: schema:CreativeWork
+  DatasetResource: schema:Dataset
+  LiteratureResource: schema:ScholarlyArticle
+  SoftwareResource: schema:SoftwareSourceCode
+  Person: schema:Person
+  Organization: schema:Organization
+  Project: schema:Project
+  Program: schema:Project
+  FundingSource: schema:Grant

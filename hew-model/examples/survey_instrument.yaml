@@ -1,0 +1,15 @@
+id: HEWRES:heat-health-survey
+title: Heat and health symptoms survey
+resource_type: survey_instrument
+survey_constructs:
+  - id: HEWCONSTRUCT:heat-symptoms
+    name: Heat-related symptoms
+    description: Self-reported symptoms associated with heat exposure.
+survey_questions:
+  - id: HEWQUESTION:heat-symptoms-01
+    text: Did you experience heat-related symptoms in the last seven days?
+    response_type: boolean
+    construct: HEWCONSTRUCT:heat-symptoms
+target_population: HEWPOP:adult-community-sample
+administration_mode: web
+language: en
