@@ -2,6 +2,8 @@
 
 This model is early and should evolve carefully.
 
+Read the [HEW Schema Handbook](docs/schema_handbook.md) before changing the schema.
+
 ## Principles
 
 - Preserve the distinction between HEW resources, review annotations, and domain concepts.

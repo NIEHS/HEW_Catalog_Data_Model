@@ -6,7 +6,7 @@
 > not carry a geometry; explicit shapes are on `SpatialExtent.geometry` and
 > `SpatiotemporalExposure.exposure_geometry`. Structured spatial fields such as
 > `spatial_extent` belong to `GeospatialResource`. See
-> [`docs/SCHEMA_DESIGN.md`](../docs/SCHEMA_DESIGN.md) for the current model.
+> the [schema handbook](../docs/schema_handbook.md#8-geospatial-and-exposure-extension) for the current model.
 
 ## Overview
 
