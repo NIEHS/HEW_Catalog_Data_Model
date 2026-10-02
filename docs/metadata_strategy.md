@@ -40,7 +40,8 @@ graph semantics in the canonical model.
 | Provenance | project, generator, curator, reviewer |
 | External links | DOI, PMID, repository, website, related resources |
 
-The first mapping artifacts live under `mappings/dataverse/`. Nested graph
+The Dataverse projection is implemented by the publication crosswalk in the
+`accel-dataverse-hew` repository (`assets/crosswalks/publication/v1/`). Nested graph
 associations should remain in the canonical model rather than being flattened
 into Dataverse fields.
 

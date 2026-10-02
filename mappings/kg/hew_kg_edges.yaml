@@ -1,27 +1,29 @@
+# Design note for a planned projection; no code reads this file yet.
+# Slot and class names refer to hew-model/schema/hew-extended.yaml.
 schema: ../../hew-model/schema/hew-extended.yaml
 assertion_policy: catalog_assertions_only
 edges:
-  - subject: Resource
+  - subject: LiteratureResource
     predicate: about_exposure
-    object: ExposureConcept
-  - subject: Resource
+    object: annotations.exposure_annotations.coded_concept
+  - subject: LiteratureResource
     predicate: about_health_impact
-    object: HealthImpactConcept
-  - subject: Resource
+    object: annotations.health_impact_annotations.coded_concept
+  - subject: LiteratureResource
     predicate: has_geographic_scope
-    object: GeographicLocation
-  - subject: Resource
+    object: annotations.geography_annotations.locations
+  - subject: GeospatialResource
     predicate: has_environmental_variable
-    object: EnvironmentalVariable
+    object: environmental_variables
   - subject: ToolResource
     predicate: computes
-    object: EnvironmentalVariable
-  - subject: SoftwareResource
-    predicate: implements
-    object: CovariateCalculation
+    object: output_variables
+  - subject: CovariateCalculation
+    predicate: implemented_by
+    object: software
   - subject: Project
     predicate: produced
-    object: Resource
+    object: produces_resources
   - subject: Project
     predicate: used
-    object: Resource
+    object: uses_resources

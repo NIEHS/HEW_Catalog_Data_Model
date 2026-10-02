@@ -165,6 +165,14 @@ HEW LinkML provides structural validation. External standards are projections:
 - DataCite and Schema.org support DOI and web-facing metadata exports.
 - OMOP/Gaia support clinical and external-exposure workflows.
 
+Term-level alignment lives in the schema itself: `class_uri`, `slot_uri`, and
+`*_mappings` annotations flow into the generated `hew.context.jsonld`, so HEW
+JSON-LD is already readable as Schema.org, DCAT, Dublin Core, and PROV-O RDF.
+The CAFE Dataverse projection is implemented by the publication crosswalk in
+`accel-dataverse-hew`. The files under `mappings/` (DataCite, STAC,
+knowledge-graph edges, and OMOP/Gaia) are design notes for projections that are
+not yet implemented; no code reads them.
+
 ## Compatibility fields
 
 Version 2.0.0 is a breaking release; see the changes listed below. Within the

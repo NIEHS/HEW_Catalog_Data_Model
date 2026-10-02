@@ -6,6 +6,7 @@ resource type, exposure and health-impact concepts, geography, time,
 environmental variables, access, license, provenance, and external links.
 
 Nested geometries, derivation graphs, role associations, and rich ontology
-context remain in the canonical model. The mapping template in
-`mappings/dataverse/` is intentionally compact and preserves the HEW identifier
-for round-tripping to the source knowledge base.
+context remain in the canonical model. The projection is implemented by the
+publication crosswalk in the `accel-dataverse-hew` repository
+(`assets/crosswalks/publication/v1/`), which preserves the HEW identifier for
+round-tripping to the source knowledge base.

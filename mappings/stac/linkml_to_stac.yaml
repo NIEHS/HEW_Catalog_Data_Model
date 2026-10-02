@@ -1,6 +1,7 @@
+# Design note for a planned projection; no code reads this file yet.
+# Slot and class names refer to hew-model/schema/hew-extended.yaml.
 schema: ../../hew-model/schema/hew-extended.yaml
 classes:
-  DatasetResource: STAC Collection
   GeospatialResource: STAC Collection
   Distribution: STAC Asset
 slots:

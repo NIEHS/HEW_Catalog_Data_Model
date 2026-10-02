@@ -1,3 +1,5 @@
+# Design note for a planned projection; no code reads this file yet.
+# Slot and class names refer to hew-model/schema/hew-extended.yaml.
 schema: ../../hew-model/schema/hew-extended.yaml
 classes:
   ExternalExposureLinkage: OMOP/Gaia external exposure linkage profile

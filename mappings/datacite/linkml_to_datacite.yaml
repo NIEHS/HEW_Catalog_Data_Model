@@ -1,3 +1,5 @@
+# Design note for a planned projection; no code reads this file yet.
+# Slot and class names refer to hew-model/schema/hew-extended.yaml.
 schema: ../../hew-model/schema/hew-extended.yaml
 notes: >-
   Project DOI-bearing HEW resources to DataCite while preserving HEW IDs and
@@ -22,4 +24,4 @@ fields:
       affiliation: affiliations
   publicationYear: publication_date
   identifier: doi
-  geoLocation: spatial_extent
+  geoLocation: spatial_extent  # GeospatialResource only
