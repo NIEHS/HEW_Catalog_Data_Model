@@ -1,6 +1,6 @@
 id: HEWEXP:optional-heat-exposure
 title: Optional structured heat exposure estimate
-exposure_concept: ECTO:example_extreme_heat_exposure
+exposure_concept: ecto:example_extreme_heat_exposure
 source_dataset: HEWRES:geospatial-heat-grid
 temporal_extent:
   start_time: '2020-01-01T00:00:00Z'

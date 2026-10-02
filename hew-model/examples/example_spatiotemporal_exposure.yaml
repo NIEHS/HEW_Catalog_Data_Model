@@ -1,11 +1,11 @@
 id: HEWEXP:maricopa-heat-2020-2025
 title: Daily maximum temperature exposure in Maricopa County, 2020-2025
-exposure_concept: ECTO:example_extreme_heat_exposure
-measured_property: ENVO:example_air_temperature
+exposure_concept: ecto:example_extreme_heat_exposure
+measured_property: envo:example_air_temperature
 source_dataset: HEWRES:era5-land-daily-temperature
 processing_level: exposure_assigned
 environmental_context:
-  - ENVO:urban_environment
+  - envo:urban_environment
 exposure_location:
   location_id: geonames:5303754
   name: Maricopa County

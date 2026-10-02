@@ -2,34 +2,13 @@
   "@context": {
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "HEW": "https://w3id.org/hew/",
-    "HEWANN": "https://w3id.org/hew/annotation/",
-    "HEWRES": "https://w3id.org/hew/resource/",
     "biolink": "https://w3id.org/biolink/vocab/",
     "dcat": "http://www.w3.org/ns/dcat#",
     "dcterms": "http://purl.org/dc/terms/",
-    "ecto": {
-      "@id": "http://purl.obolibrary.org/obo/ECTO_",
-      "@prefix": true
-    },
-    "envo": {
-      "@id": "http://purl.obolibrary.org/obo/ENVO_",
-      "@prefix": true
-    },
-    "epsg": "http://www.opengis.net/def/crs/EPSG/0/",
     "geo": "http://www.opengis.net/ont/geosparql#",
-    "geonames": "https://www.geonames.org/ontology#",
-    "hp": {
-      "@id": "http://purl.obolibrary.org/obo/HP_",
-      "@prefix": true
-    },
     "linkml": "https://w3id.org/linkml/",
-    "mondo": {
-      "@id": "http://purl.obolibrary.org/obo/MONDO_",
-      "@prefix": true
-    },
     "prov": "http://www.w3.org/ns/prov#",
     "schema": "http://schema.org/",
-    "sf": "http://www.opengis.net/ont/sf#",
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "@vocab": "https://w3id.org/hew/",
     "abstract": {
@@ -47,6 +26,11 @@
       "@id": "access_statement"
     },
     "administration_mode": {
+      "@context": {
+        "text": "skos:notation",
+        "description": "skos:prefLabel",
+        "meaning": "@id"
+      },
       "@id": "administration_mode"
     },
     "administrative_level": {
@@ -61,16 +45,19 @@
       "@id": "affiliation_context"
     },
     "affiliations": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "schema:affiliation"
     },
     "agent": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "prov:agent"
     },
     "agent_associations": {
       "@type": "@id",
       "@id": "prov:qualifiedAssociation"
+    },
+    "agent_type": {
+      "@id": "agent_type"
     },
     "aggregation_method": {
       "@context": {
@@ -100,7 +87,7 @@
       "@id": "associated_with"
     },
     "authors": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "schema:author"
     },
     "availability": {
@@ -112,7 +99,7 @@
       "@id": "availability"
     },
     "award_number": {
-      "@id": "schema:identifier"
+      "@id": "award_number"
     },
     "bounding_box": {
       "@type": "@id",
@@ -139,8 +126,11 @@
     "citation": {
       "@id": "schema:citation"
     },
+    "code": {
+      "@id": "code"
+    },
     "coded_by": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "coded_by"
     },
     "coded_concept": {
@@ -192,18 +182,18 @@
       "@id": "confidence"
     },
     "construct": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "construct"
     },
     "contacts": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "schema:contactPoint"
     },
     "contribution_description": {
       "@id": "contribution_description"
     },
     "contributors": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "schema:contributor"
     },
     "coordinate_reference_system": {
@@ -214,7 +204,7 @@
       "@id": "coordinate_reference_system_uri"
     },
     "curator": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "curator"
     },
     "data_dictionary": {
@@ -329,7 +319,7 @@
       "@id": "function_name"
     },
     "funder": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "schema:funder"
     },
     "funding_mechanism": {
@@ -389,10 +379,6 @@
     "given_name": {
       "@id": "schema:givenName"
     },
-    "has_projects": {
-      "@type": "xsd:anyURI",
-      "@id": "has_projects"
-    },
     "health_impact_annotations": {
       "@type": "@id",
       "@id": "health_impact_annotations"
@@ -430,8 +416,11 @@
     "keywords": {
       "@id": "schema:keywords"
     },
+    "label": {
+      "@id": "label"
+    },
     "language": {
-      "@id": "language"
+      "@id": "dcterms:language"
     },
     "latitude": {
       "@type": "xsd:float",
@@ -468,12 +457,8 @@
       "@id": "biolink:longitude"
     },
     "maintainers": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "schema:maintainer"
-    },
-    "mappings": {
-      "@type": "xsd:anyURI",
-      "@id": "mappings"
     },
     "measured_property": {
       "@type": "xsd:anyURI",
@@ -488,10 +473,6 @@
     },
     "media_type": {
       "@id": "dcat:mediaType"
-    },
-    "members": {
-      "@type": "xsd:anyURI",
-      "@id": "schema:member"
     },
     "mentioned_resources": {
       "@type": "@id",
@@ -595,20 +576,16 @@
       "@id": "parent_concept"
     },
     "parent_organization": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "schema:parentOrganization"
     },
     "part_of_programs": {
       "@type": "xsd:anyURI",
-      "@id": "schema:isPartOf"
+      "@id": "part_of_programs"
     },
     "part_of_project": {
       "@type": "xsd:anyURI",
       "@id": "part_of_project"
-    },
-    "participating_organizations": {
-      "@type": "xsd:anyURI",
-      "@id": "participating_organizations"
     },
     "person_or_cohort_reference": {
       "@type": "xsd:anyURI",
@@ -620,13 +597,17 @@
     "pmid": {
       "@id": "pmid"
     },
+    "population": {
+      "@type": "@id",
+      "@id": "population"
+    },
     "population_or_cohort": {
       "@type": "xsd:anyURI",
       "@id": "population_or_cohort"
     },
-    "principal_investigators": {
-      "@type": "xsd:anyURI",
-      "@id": "principal_investigators"
+    "position": {
+      "@type": "xsd:integer",
+      "@id": "position"
     },
     "privacy_preserving_geography": {
       "@id": "privacy_preserving_geography"
@@ -639,10 +620,6 @@
       },
       "@id": "processing_level"
     },
-    "produced_by_projects": {
-      "@type": "xsd:anyURI",
-      "@id": "produced_by_projects"
-    },
     "produces_resources": {
       "@type": "xsd:anyURI",
       "@id": "produces_resources"
@@ -651,7 +628,6 @@
       "@id": "schema:programmingLanguage"
     },
     "publication_date": {
-      "@type": "xsd:date",
       "@id": "schema:datePublished"
     },
     "publication_type": {
@@ -723,13 +699,23 @@
       "@id": "resource_type"
     },
     "response_options": {
+      "@type": "@id",
       "@id": "response_options"
     },
     "response_type": {
+      "@context": {
+        "text": "skos:notation",
+        "description": "skos:prefLabel",
+        "meaning": "@id"
+      },
       "@id": "response_type"
     },
+    "response_variables": {
+      "@type": "@id",
+      "@id": "response_variables"
+    },
     "reviewed_by": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "reviewed_by"
     },
     "role": {
@@ -739,14 +725,6 @@
         "meaning": "@id"
       },
       "@id": "prov:hadRole"
-    },
-    "roles": {
-      "@context": {
-        "text": "skos:notation",
-        "description": "skos:prefLabel",
-        "meaning": "@id"
-      },
-      "@id": "roles"
     },
     "ror_id": {
       "@type": "xsd:anyURI",
@@ -804,7 +782,7 @@
     },
     "spatial_extent": {
       "@type": "@id",
-      "@id": "dcterms:spatial"
+      "@id": "spatial_extent"
     },
     "spatial_join_method": {
       "@context": {
@@ -824,10 +802,6 @@
     "spatial_text": {
       "@id": "spatial_text"
     },
-    "spatiotemporal_exposures": {
-      "@type": "@id",
-      "@id": "spatiotemporal_exposures"
-    },
     "special_topic_annotations": {
       "@type": "@id",
       "@id": "special_topic_annotations"
@@ -835,12 +809,8 @@
     "specified_text": {
       "@id": "specified_text"
     },
-    "sponsor": {
-      "@type": "xsd:anyURI",
-      "@id": "schema:sponsor"
-    },
     "sponsoring_organizations": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "schema:sponsor"
     },
     "start_date": {
@@ -887,7 +857,7 @@
       "@id": "survey_constructs"
     },
     "survey_instruments": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "survey_instruments"
     },
     "survey_questions": {
@@ -899,7 +869,7 @@
       "@id": "target_crs"
     },
     "target_population": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "target_population"
     },
     "temporal_alignment": {
@@ -953,7 +923,7 @@
       "@id": "timezone"
     },
     "title": {
-      "@id": "schema:name"
+      "@id": "dcterms:title"
     },
     "tool_type": {
       "@context": {
@@ -972,10 +942,6 @@
     "url": {
       "@type": "xsd:anyURI",
       "@id": "schema:url"
-    },
-    "used_by_projects": {
-      "@type": "xsd:anyURI",
-      "@id": "used_by_projects"
     },
     "uses_resources": {
       "@type": "xsd:anyURI",
@@ -1001,7 +967,7 @@
       "@id": "variables"
     },
     "version": {
-      "@id": "version"
+      "@id": "schema:version"
     },
     "west": {
       "@type": "xsd:float",
@@ -1025,6 +991,9 @@
     "CohortResource": {
       "@id": "CohortResource"
     },
+    "ConceptAnnotation": {
+      "@id": "ConceptAnnotation"
+    },
     "CovariateCalculation": {
       "@id": "CovariateCalculation"
     },
@@ -1043,9 +1012,6 @@
     "EnvironmentalVariable": {
       "@id": "EnvironmentalVariable"
     },
-    "ExposureAnnotation": {
-      "@id": "ExposureAnnotation"
-    },
     "ExternalExposureLinkage": {
       "@id": "ExternalExposureLinkage"
     },
@@ -1063,9 +1029,6 @@
     },
     "GeospatialResource": {
       "@id": "GeospatialResource"
-    },
-    "HealthImpactAnnotation": {
-      "@id": "HealthImpactAnnotation"
     },
     "HEWResource": {
       "@id": "schema:CreativeWork"
@@ -1094,6 +1057,9 @@
     "Person": {
       "@id": "schema:Person"
     },
+    "Population": {
+      "@id": "Population"
+    },
     "Program": {
       "@id": "schema:Project"
     },
@@ -1105,6 +1071,9 @@
     },
     "ResourceCollection": {
       "@id": "ResourceCollection"
+    },
+    "ResponseOption": {
+      "@id": "ResponseOption"
     },
     "SoftwareAgent": {
       "@id": "prov:SoftwareAgent"
@@ -1120,9 +1089,6 @@
     },
     "SpatiotemporalExposure": {
       "@id": "SpatiotemporalExposure"
-    },
-    "SpecialTopicAnnotation": {
-      "@id": "SpecialTopicAnnotation"
     },
     "SurveyConstruct": {
       "@id": "SurveyConstruct"
@@ -1150,6 +1116,33 @@
     },
     "Variable": {
       "@id": "Variable"
-    }
+    },
+    "shex": "http://www.w3.org/ns/shex#",
+    "HEWRES": "https://w3id.org/hew/resource/",
+    "HEWANN": "https://w3id.org/hew/annotation/",
+    "HEWVAR": "https://w3id.org/hew/variable/",
+    "HEWDD": "https://w3id.org/hew/data-dictionary/",
+    "HEWEXP": "https://w3id.org/hew/exposure/",
+    "HEWLINK": "https://w3id.org/hew/linkage/",
+    "HEWMETHOD": "https://w3id.org/hew/method/",
+    "HEWPOP": "https://w3id.org/hew/population/",
+    "HEWCONSTRUCT": "https://w3id.org/hew/construct/",
+    "HEWQUESTION": "https://w3id.org/hew/question/",
+    "HEWCOLLECTION": "https://w3id.org/hew/collection/",
+    "HEWPROGRAM": "https://w3id.org/hew/program/",
+    "HEWPROJECT": "https://w3id.org/hew/project/",
+    "HEWFUND": "https://w3id.org/hew/funding/",
+    "HEWASSOC": "https://w3id.org/hew/association/",
+    "PERSON": "https://w3id.org/hew/person/",
+    "ORG": "https://w3id.org/hew/organization/",
+    "AGENT": "https://w3id.org/hew/agent/",
+    "UCUM": "https://units-of-measurement.org/",
+    "ecto": "http://purl.obolibrary.org/obo/ECTO_",
+    "envo": "http://purl.obolibrary.org/obo/ENVO_",
+    "mondo": "http://purl.obolibrary.org/obo/MONDO_",
+    "hp": "http://purl.obolibrary.org/obo/HP_",
+    "sf": "http://www.opengis.net/ont/sf#",
+    "epsg": "http://www.opengis.net/def/crs/EPSG/0/",
+    "geonames": "https://www.geonames.org/ontology#"
   }
 }

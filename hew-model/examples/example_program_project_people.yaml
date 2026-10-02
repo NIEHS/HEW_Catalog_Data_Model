@@ -1,17 +1,11 @@
 id: HEWPROJECT:laserai_systematic_review
-name: LaserAI HEW Literature Systematic Review
 title: LaserAI HEW Literature Systematic Review
 description: Systematic review project cataloging literature resources on health and extreme weather.
 status: active
 part_of_programs:
   - HEWPROGRAM:hew_data_commons
-principal_investigators:
-  - PERSON:example_pi
 contributors:
   - PERSON:example_curator
-participating_organizations:
-  - ORG:example_university
-  - ORG:laser_ai
 funding_sources:
   - HEWFUND:example_award
 uses_resources:
@@ -34,3 +28,11 @@ agent_associations:
     associated_with: HEWPROJECT:laserai_systematic_review
     role: software_agent
     contribution_description: Generated initial coding suggestions for human review.
+  - id: HEWASSOC:000004
+    agent: ORG:example_university
+    associated_with: HEWPROJECT:laserai_systematic_review
+    role: participating_organization
+  - id: HEWASSOC:000005
+    agent: ORG:laser_ai
+    associated_with: HEWPROJECT:laserai_systematic_review
+    role: participating_organization

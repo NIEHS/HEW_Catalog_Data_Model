@@ -1,17 +1,20 @@
 id: HEWRES:heat-health-survey-data
 title: Heat and health symptoms survey responses
-resource_type: dataset
+resource_type: survey_dataset
+access_rights: controlled_access
 survey_instruments:
   - HEWRES:heat-health-survey
-population_or_cohort: HEWPOP:adult-community-sample
-variables:
-  - id: HEWVAR:heat-symptom
-    name: heat_symptom_reported
-    data_type: boolean
+population: HEWPOP:adult-community-sample
 data_dictionary:
   id: HEWDD:heat-health-survey
   title: Survey response data dictionary
   variables:
     - id: HEWVAR:heat-symptom
       name: heat_symptom_reported
-      data_type: boolean
+      title: Heat-related symptoms in the last seven days
+      data_type: integer
+distributions:
+  - id: HEWRES:heat-health-survey-data-csv
+    title: Survey responses (CSV)
+    media_type: text/csv
+    access_rights: controlled_access

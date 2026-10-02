@@ -1,0 +1,201 @@
+id: https://w3id.org/hew/schema/modules/ext-projects
+name: hew_ext_projects
+title: 'HEW extension: programs, projects, and funding'
+description: >-
+  Programs, projects, funding sources, and role-bearing agent associations.
+version: 2.0.0
+license: CC-BY-4.0
+
+prefixes:
+  HEW: https://w3id.org/hew/
+  linkml: https://w3id.org/linkml/
+  schema: http://schema.org/
+  prov: http://www.w3.org/ns/prov#
+  biolink: https://w3id.org/biolink/vocab/
+default_prefix: HEW
+default_range: string
+
+imports:
+  - linkml:types
+  - ./hew_core
+  - ./hew_review_coding
+
+classes:
+  Program:
+    class_uri: schema:Project
+    close_mappings:
+      - prov:Activity
+    description: >-
+      A coordinated HEW initiative, funding program, consortium, center, or strategic activity
+      that may contain projects and produce resources.
+    slots:
+      - id
+      - title
+      - description
+      - identifiers
+      - same_as
+      - url
+      - start_date
+      - end_date
+      - status
+      - sponsoring_organizations
+      - contacts
+      - agent_associations
+      - produces_resources
+      - themes
+    slot_usage:
+      status:
+        range: ProjectStatusEnum
+
+  Project:
+    class_uri: schema:Project
+    close_mappings:
+      - prov:Activity
+    description: >-
+      A bounded HEW research, infrastructure, curation, data generation, software, analysis,
+      translation, or community-engagement effort.
+    slots:
+      - id
+      - title
+      - description
+      - identifiers
+      - same_as
+      - url
+      - start_date
+      - end_date
+      - status
+      - part_of_programs
+      - agent_associations
+      - contributors
+      - funding_sources
+      - uses_resources
+      - produces_resources
+      - annotations
+      - themes
+    slot_usage:
+      status:
+        range: ProjectStatusEnum
+
+  AgentAssociation:
+    class_uri: prov:Association
+    close_mappings:
+      - schema:Role
+      - schema:OrganizationRole
+      - biolink:Association
+    description: >-
+      A role-bearing association between an agent and another HEW entity, such as a project,
+      program, resource, annotation, activity, or funding source.
+    slots:
+      - id
+      - agent
+      - associated_with
+      - role
+      - start_date
+      - end_date
+      - affiliation_context
+      - contribution_description
+      - source
+
+  FundingSource:
+    class_uri: schema:Grant
+    description: A funding award, mechanism, contract, cooperative agreement, or sponsor.
+    slots:
+      - id
+      - title
+      - description
+      - award_number
+      - funder
+      - sponsoring_organizations
+      - funding_mechanism
+      - start_date
+      - end_date
+      - url
+      - identifiers
+
+slots:
+  start_date:
+    slot_uri: schema:startDate
+    range: date
+  end_date:
+    slot_uri: schema:endDate
+    range: date
+  sponsoring_organizations:
+    slot_uri: schema:sponsor
+    multivalued: true
+    range: Organization
+  agent_associations:
+    slot_uri: prov:qualifiedAssociation
+    multivalued: true
+    range: AgentAssociation
+    inlined_as_list: true
+    description: 'Who did what: each association pairs an agent with a role.'
+  part_of_programs:
+    multivalued: true
+    range: uriorcurie
+    close_mappings:
+      - schema:isPartOf
+  uses_resources:
+    close_mappings:
+      - prov:used
+    multivalued: true
+    range: uriorcurie
+  produces_resources:
+    close_mappings:
+      - prov:generated
+    multivalued: true
+    range: uriorcurie
+  agent:
+    slot_uri: prov:agent
+    range: Agent
+  associated_with:
+    description: >-
+      CURIE for the program, project, resource, annotation, activity, or funding source.
+    range: uriorcurie
+  role:
+    slot_uri: prov:hadRole
+    range: AgentRoleEnum
+  affiliation_context:
+    range: uriorcurie
+  contribution_description:
+    range: string
+  source:
+    range: uriorcurie
+  award_number:
+    range: string
+  funder:
+    slot_uri: schema:funder
+    range: Organization
+  funding_mechanism:
+    range: string
+
+enums:
+  ProjectStatusEnum:
+    permissible_values:
+      planned:
+      active:
+      completed:
+      suspended:
+      unknown:
+  AgentRoleEnum:
+    permissible_values:
+      principal_investigator:
+      co_investigator:
+      researcher:
+      curator:
+      coder:
+      reviewer:
+      software_developer:
+      data_steward:
+      data_contributor:
+      project_manager:
+      program_officer:
+      scientific_contact:
+      community_partner:
+      funder:
+      sponsor:
+      author:
+      corresponding_author:
+      maintainer:
+      software_agent:
+      other:
+      participating_organization:

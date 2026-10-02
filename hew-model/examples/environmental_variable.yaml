@@ -3,7 +3,7 @@ name: daily_maximum_temperature
 title: Daily maximum air temperature
 data_type: float
 unit: degC
-measured_property: ENVO:example_air_temperature
+measured_property: envo:example_air_temperature
 aggregation_method: maximum
 processing_level: raw
 spatial_support:

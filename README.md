@@ -7,23 +7,29 @@ resources, cohorts, data dictionaries, people, projects, programs, and
 provenance for researchers studying human health and extreme weather as a
 domain-specific subset of the broader exposome.
 
-The canonical schema is [`hew-model/schema/hew-geospatial.yaml`](hew-model/schema/hew-geospatial.yaml).
-See the [consolidated schema design](docs/SCHEMA_DESIGN.md) for the resource,
+The model is split into a small core and opt-in extensions:
+
+| Schema | Contents |
+|---|---|
+| [`hew-model/schema/hew.yaml`](hew-model/schema/hew.yaml) | **Core.** Publications with systematic-review coding, survey instruments and survey datasets, agents, variables, and data dictionaries. |
+| [`hew-model/schema/hew-extended.yaml`](hew-model/schema/hew-extended.yaml) | Core plus extensions: geospatial and exposure metadata, programs and projects, and cohort, software, model, tool, and collection resources. |
+
+Each schema composes modules from `hew-model/schema/modules/`. See the
+[consolidated schema design](docs/SCHEMA_DESIGN.md) for the resource,
 review-coding, geospatial, EnVar, and interoperability model.
 
-The current schema version is `1.3.0`. Install the project and run the checks with:
+The current schema version is `2.0.0`. Install the project and run the checks with:
 
 ```bash
 python3 -m pip install -e .
 make validate
-make jsonschema
-make jsonld-context
+make artifacts   # regenerate hew.schema.json, hew-extended.schema.json, hew.context.jsonld
 ```
 
 ## Exposome and Geo-Temporal Exposure Alignment
 
-The HEW schema supports exposome-facing metadata through environmental
-variables, structured spatial and temporal support, exposure concepts,
+The extended schema (`hew-extended.yaml`) supports exposome-facing metadata
+through environmental variables, structured spatial and temporal support, exposure concepts,
 covariate calculation methods, and optional OMOP/Gaia external exposure
 bindings. The profile is designed to interoperate with EnVar, Amadeus-derived
 covariates, ENVO, ECTO, GeoSPARQL, STAC, DCAT, Schema.org, DataCite, and PROV-O.

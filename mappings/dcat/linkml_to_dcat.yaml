@@ -1,4 +1,4 @@
-schema: ../../hew-model/schema/hew-geospatial.yaml
+schema: ../../hew-model/schema/hew-extended.yaml
 classes:
   DatasetResource: dcat:Dataset
   Distribution: dcat:Distribution

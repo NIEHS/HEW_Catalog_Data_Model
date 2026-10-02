@@ -1,5 +1,13 @@
 # HEW Geospatial Metadata Enhancement Strategy
 
+> **Status (schema 2.0.0):** This strategy is implemented in the geospatial
+> extension, `schema/modules/hew_ext_geospatial.yaml`, which validates through
+> `schema/hew-extended.yaml`. `GeographicLocation` is in the core module and does
+> not carry a geometry; explicit shapes are on `SpatialExtent.geometry` and
+> `SpatiotemporalExposure.exposure_geometry`. Structured spatial fields such as
+> `spatial_extent` belong to `GeospatialResource`. See
+> [`docs/SCHEMA_DESIGN.md`](../docs/SCHEMA_DESIGN.md) for the current model.
+
 ## Overview
 
 The HEW LinkML schema is being extended to support richer, machine-actionable geospatial metadata while preserving compatibility with the existing ontology and systematic-review model.
@@ -689,7 +697,7 @@ objects for exposome-facing estimates, including Amadeus-derived covariates,
 structured temporal extents, value semantics, processing levels, and optional
 OMOP/Gaia external exposure linkage.
 
-The next logical enhancement is a **spatiotemporal exposure model** connecting:
+The `SpatiotemporalExposure` model connects:
 
 ```text
 ECTO exposure
@@ -703,9 +711,10 @@ ECTO exposure
     +-- population or cohort
 ```
 
-This would provide a strong semantic foundation for representing extreme-weather exposures and linking them directly to health outcomes.
+This provides a semantic foundation for representing extreme-weather exposures and linking them to health outcomes.
 
-In practical terms, the HEW model would then support queries such as:
+The next step is to put these objects into active catalog use so that the model
+supports queries such as:
 
 ```text
 Find studies involving extreme heat exposure

@@ -1,7 +1,8 @@
 # Amadeus alignment
 
 Amadeus-derived environmental covariates are represented with
-`SpatiotemporalExposure` and `CovariateCalculation`.
+`SpatiotemporalExposure` and `CovariateCalculation` from the geospatial
+extension; records validate against `hew-model/schema/hew-extended.yaml`.
 
 `SpatiotemporalExposure` identifies the exposure concept, source dataset,
 location or geometry, temporal extent, support, value semantics, and optional

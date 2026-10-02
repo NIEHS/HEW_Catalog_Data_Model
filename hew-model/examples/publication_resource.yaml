@@ -4,3 +4,19 @@ resource_type: literature
 publication_type: research_article
 doi: 10.0000/hew-example
 abstract: Example publication resource for HEW catalog discovery.
+authors:
+  - id: PERSON:example_pi
+    agent_type: Person
+    name: Carberry, Josiah
+    given_name: Josiah
+    family_name: Carberry
+    orcid: https://orcid.org/0000-0002-1825-0097
+    affiliations:
+      - ORG:example_university
+  - id: PERSON:example_curator
+    agent_type: Person
+    given_name: Alex
+    family_name: Example
+  - id: ORG:example_university
+    agent_type: Organization
+    name: Example University Heat and Health Consortium

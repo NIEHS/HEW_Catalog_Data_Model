@@ -1,6 +1,6 @@
 # People, Organizations, Programs, Projects, and Funding
 
-The HEW model represents coordination and provenance separately from the LaserAI systematic-review coding profile.
+The HEW model represents coordination and provenance separately from the LaserAI systematic-review coding profile. `Agent` and its subclasses are in the core schema; `Program`, `Project`, `FundingSource`, and `AgentAssociation` are in the projects extension (`modules/hew_ext_projects.yaml`).
 
 ## Core pattern
 
@@ -11,9 +11,11 @@ Agent
   SoftwareAgent
 
 Program
-  has_projects -> Project
+  agent_associations -> AgentAssociation
 
 Project
+  part_of_programs -> Program
+  agent_associations -> AgentAssociation
   uses_resources -> HEWResource
   produces_resources -> HEWResource
 

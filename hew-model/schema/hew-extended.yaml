@@ -1,0 +1,22 @@
+id: https://w3id.org/hew/schema/extended
+name: hew-extended
+title: Health and Extreme Weather Data Commons Schema (core + extensions)
+description: >-
+  The HEW core model plus extension modules for geospatial and exposure metadata,
+  programs and projects, and additional resource types.
+license: CC-BY-4.0
+version: 2.0.0
+
+prefixes:
+  HEW: https://w3id.org/hew/
+  linkml: https://w3id.org/linkml/
+
+default_prefix: HEW
+default_range: string
+
+imports:
+  - linkml:types
+  - hew
+  - modules/hew_ext_geospatial
+  - modules/hew_ext_projects
+  - modules/hew_ext_resources

@@ -1,0 +1,150 @@
+id: https://w3id.org/hew/schema/modules/survey
+name: hew_survey
+title: 'HEW schema module: surveys'
+description: >-
+  Survey instruments, questions, constructs, populations, and survey datasets.
+version: 2.0.0
+license: CC-BY-4.0
+
+prefixes:
+  HEW: https://w3id.org/hew/
+  linkml: https://w3id.org/linkml/
+  dcterms: http://purl.org/dc/terms/
+default_prefix: HEW
+default_range: string
+
+imports:
+  - linkml:types
+  - ./hew_core
+
+classes:
+  SurveyInstrument:
+    is_a: HEWResource
+    description: >-
+      A questionnaire, interview guide, assessment instrument, scale, or protocol used to
+      collect HEW-relevant survey data.
+    slots:
+      - version
+      - survey_constructs
+      - survey_questions
+      - target_population
+      - administration_mode
+      - language
+    slot_usage:
+      resource_type:
+        range: string
+        equals_string: survey_instrument
+
+  SurveyConstruct:
+    description: A construct, domain, or scale measured by a survey instrument.
+    slots:
+      - id
+      - name
+      - description
+      - concept_mappings
+
+  SurveyQuestion:
+    description: A question, item, or prompt in a survey instrument.
+    slots:
+      - id
+      - position
+      - text
+      - response_type
+      - response_options
+      - construct
+      - response_variables
+
+  ResponseOption:
+    description: One coded answer choice for a survey question.
+    slots:
+      - code
+      - label
+
+  SurveyDataset:
+    is_a: DatasetResource
+    description: >-
+      A dataset containing survey responses or derived survey measures collected using one
+      or more survey instruments.
+    slots:
+      - survey_instruments
+      - population
+    slot_usage:
+      resource_type:
+        range: string
+        equals_string: survey_dataset
+
+  Population:
+    description: A target population, cohort, or study sample for a survey.
+    slots:
+      - id
+      - name
+      - description
+
+slots:
+  survey_constructs:
+    multivalued: true
+    range: SurveyConstruct
+    inlined_as_list: true
+  survey_questions:
+    multivalued: true
+    range: SurveyQuestion
+    inlined_as_list: true
+    description: Questions in instrument order.
+  target_population:
+    range: Population
+  administration_mode:
+    range: AdministrationModeEnum
+  language:
+    slot_uri: dcterms:language
+    range: string
+    pattern: ^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$
+    description: BCP 47 language tag, such as en or es-MX.
+  position:
+    range: integer
+    minimum_value: 1
+    description: 1-based order of the question within the instrument.
+  text:
+    range: string
+  response_type:
+    range: ResponseTypeEnum
+  response_options:
+    multivalued: true
+    range: ResponseOption
+    inlined_as_list: true
+  construct:
+    range: SurveyConstruct
+  response_variables:
+    multivalued: true
+    range: Variable
+    description: Dataset variables that record responses to this question.
+  code:
+    range: string
+    required: true
+  label:
+    range: string
+  survey_instruments:
+    multivalued: true
+    range: SurveyInstrument
+  population:
+    range: Population
+
+enums:
+  AdministrationModeEnum:
+    permissible_values:
+      web:
+      telephone:
+      in_person_interview:
+      paper:
+      mail:
+      mixed_mode:
+      other:
+  ResponseTypeEnum:
+    permissible_values:
+      boolean:
+      single_choice:
+      multiple_choice:
+      likert_scale:
+      numeric:
+      free_text:
+      date:
+      other:

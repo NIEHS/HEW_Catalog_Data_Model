@@ -29,10 +29,16 @@ class TestJsonLdRoundTrip(unittest.TestCase):
             ],
         }
 
+        instance["authors"] = [
+            {"id": "PERSON:example_pi", "agent_type": "Person", "name": "Carberry, Josiah"}
+        ]
+
         document = to_jsonld(instance)
         graph = jsonld_graph(document)
 
         self.assertIn("@context", document)
+        self.assertEqual(document["authors"][0]["@type"], "Person")
+        self.assertEqual(document["annotations"][0]["@type"], "HEWSystematicReviewAnnotation")
         self.assertIn(
             URIRef("https://w3id.org/hew/resource/laserai_3541"),
             set(graph.subjects()),
@@ -72,6 +78,35 @@ class TestJsonLdRoundTrip(unittest.TestCase):
         )
         self.assertEqual(
             document["environmental_variables"][0]["@type"], "EnvironmentalVariable"
+        )
+        self.assertTrue(round_trip_jsonld(document))
+
+
+    def test_survey_instrument_nested_objects_receive_types(self):
+        instance = {
+            "id": "HEWRES:heat-health-survey",
+            "title": "Heat and health symptoms survey",
+            "resource_type": "survey_instrument",
+            "survey_questions": [
+                {
+                    "id": "HEWQUESTION:heat-symptoms-01",
+                    "position": 1,
+                    "text": "Did you experience heat-related symptoms?",
+                    "response_options": [{"code": "1", "label": "Yes"}],
+                    "response_variables": ["HEWVAR:heat-symptom"],
+                }
+            ],
+        }
+
+        document = to_jsonld(instance, class_name="SurveyInstrument")
+        graph = jsonld_graph(document)
+
+        question = document["survey_questions"][0]
+        self.assertEqual(question["@type"], "SurveyQuestion")
+        self.assertEqual(question["response_options"][0]["@type"], "ResponseOption")
+        self.assertIn(
+            URIRef("https://w3id.org/hew/question/heat-symptoms-01"),
+            set(graph.subjects()),
         )
         self.assertTrue(round_trip_jsonld(document))
 

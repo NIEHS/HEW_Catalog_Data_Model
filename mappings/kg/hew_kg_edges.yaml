@@ -1,4 +1,4 @@
-schema: ../../hew-model/schema/hew-geospatial.yaml
+schema: ../../hew-model/schema/hew-extended.yaml
 assertion_policy: catalog_assertions_only
 edges:
   - subject: Resource

@@ -3,9 +3,11 @@
 ## Purpose and scope
 
 The Health and Extreme Weather (HEW) Data Commons model is a LinkML schema for
-cataloging literature, datasets, cohorts, surveys, software, models, geospatial
-resources, environmental variables, projects, and provenance-bearing
-annotations. The canonical schema is `hew-model/schema/hew-geospatial.yaml`.
+cataloging resources relevant to health and extreme weather. The core schema,
+`hew-model/schema/hew.yaml`, covers publications with systematic-review coding
+and survey instruments with their datasets. `hew-model/schema/hew-extended.yaml`
+adds extension modules for geospatial and exposure metadata, programs and
+projects, and cohort, software, model, tool, and collection resources.
 
 The model begins with systematic-review coding and remains extensible enough to
 support exposure-health research and machine-actionable environmental datasets.
@@ -28,32 +30,73 @@ HEW keeps these questions separate:
 
 ## Resource and annotation model
 
-`HEWResource` is the root class for literature, datasets, cohorts, surveys,
-software, models, and related catalog resources. `DatasetResource` supports
-legacy human-readable metadata as well as structured data dictionaries and
-environmental variables. `GeospatialResource` adds spatial resolution and CRS
-metadata.
+`HEWResource` is the abstract root for every cataloged resource. It carries only
+the descriptive, rights, and attribution slots shared by all resource types:
+identifiers, title, description, keywords, themes, catalog `status`, license,
+access rights, authors, contributors, contacts, funding sources, related
+resources, and free-text spatial and temporal coverage. Each subclass adds its
+own slots, and every concrete subclass pins its `resource_type` value.
+
+| Class | Module | `resource_type` |
+|---|---|---|
+| `LiteratureResource` | `hew_publication` | `literature` |
+| `DatasetResource` | `hew_core` | not pinned; normally `dataset` or `exposome_dataset` |
+| `SurveyInstrument` | `hew_survey` | `survey_instrument` |
+| `SurveyDataset` | `hew_survey` | `survey_dataset` |
+| `GeospatialResource` | `hew_ext_geospatial` | `geospatial_dataset` |
+| `CohortResource`, `SoftwareResource`, `ModelResource`, `ToolResource`, `ResourceCollection` | `hew_ext_resources` | `cohort`, `software_code_library`, `model`, `tool`, `resource_collection` |
+
+`DatasetResource` adds a `DataDictionary` of `Variable`s and `Distribution`s.
+`authors` are inlined `Agent`s whose `agent_type` (`Person`, `Organization`, or
+`SoftwareAgent`) selects the class they validate against; other agent slots
+reference agents by identifier.
 
 `HEWSystematicReviewAnnotation` records a coding pass over a literature
-resource. Exposure, health impact, geography, data-tool/method, and special
-topic annotations preserve coding context, evidence, confidence, and review
-status. Review coding values such as `not_reported` remain distinct from
-real-world domain concepts.
+resource. Exposure, health-impact, and special-topic coding share one
+`ConceptAnnotation` class, distinguished by the slot that holds them;
+geography and data-tool/method coding have their own classes. Annotations
+preserve coding context, evidence, confidence, and review status. Review coding
+values such as `not_reported` remain distinct from real-world domain concepts.
 
-The coordination layer represents `Agent`, `Person`, `Organization`,
-`SoftwareAgent`, `Program`, `Project`, `FundingSource`, and
-`AgentAssociation`. Role-bearing associations preserve who created, reviewed,
-funded, maintained, or used a resource without adding dozens of fixed slots.
+The projects extension represents `Program`, `Project`, `FundingSource`, and
+`AgentAssociation`. Role-bearing associations record who led, curated,
+participated in, or funded work without adding a fixed slot per role.
+
+## Survey model
+
+```text
+SurveyInstrument
+  survey_constructs -> SurveyConstruct
+  survey_questions  -> SurveyQuestion (ordered by position)
+                         response_options   -> ResponseOption (code, label)
+                         construct          -> SurveyConstruct
+                         response_variables -> Variable
+  target_population -> Population
+
+SurveyDataset (a DatasetResource)
+  survey_instruments -> SurveyInstrument
+  population         -> Population
+  data_dictionary    -> DataDictionary -> Variable
+```
+
+`response_variables` links each question to the dataset variables that hold its
+answers, so an instrument and the data collected with it can be joined.
+`administration_mode` uses `AdministrationModeEnum`, `response_type` uses
+`ResponseTypeEnum`, and `language` is a BCP 47 tag.
 
 ## Geospatial model
 
-The schema introduces four reusable resource-geography objects:
+`GeographicLocation` is in the core because geography annotations use it. The
+other geospatial classes are in the `hew_ext_geospatial` extension, where
+`GeospatialResource` carries `spatial_extent`, `temporal_extent`,
+`environmental_variables`, spatial resolution, and CRS metadata.
 
 ### `GeographicLocation`
 
 A named or coordinate-defined place associated with a resource, study, exposure,
 observation, project, or annotation. It may contain a gazetteer identifier,
-coordinates, geometry, additional identifiers, and ENVO context.
+coordinates, additional identifiers, and ENVO context. Explicit shapes belong on
+`SpatialExtent.geometry` or `SpatiotemporalExposure.exposure_geometry`.
 
 ### `Geometry`
 
@@ -71,13 +114,15 @@ The overall geographic footprint of a resource. It can contain named locations,
 geometry, a bounding box, centroid, environmental context, spatial resolution,
 and a normalized CRS identifier.
 
-The legacy `spatial_coverage` and `coordinate_reference_system` strings remain
-valid for backward compatibility. New records should prefer `spatial_extent`
-and `coordinate_reference_system_uri` when structured metadata is available.
+Free-text `spatial_coverage` is available on every resource.
+`GeospatialResource` also accepts the free-text `coordinate_reference_system`;
+new records should prefer `spatial_extent` and `coordinate_reference_system_uri`
+when structured metadata is available.
 
 ## Environmental-variable model
 
-`EnvironmentalVariable` specializes `Variable` with EnVar-aligned metadata:
+`EnvironmentalVariable` (geospatial extension) specializes `Variable` with
+EnVar-aligned metadata:
 
 - `measured_property` identifies the primary environmental quantity or phenomenon;
 - `measurement_method` identifies how it was measured or derived;
@@ -120,39 +165,82 @@ HEW LinkML provides structural validation. External standards are projections:
 - DataCite and Schema.org support DOI and web-facing metadata exports.
 - OMOP/Gaia support clinical and external-exposure workflows.
 
-## Backward compatibility
+## Compatibility fields
 
-The geospatial enhancement is additive. Existing fields remain supported:
-`spatial_coverage`, `spatial_resolution`, `coordinate_reference_system`,
-`measured_variables`, `geographic_locations`, `geographic_features`,
-`spatial_text`, and generic `Variable`. New records may progressively add
-structured extents, locations, geometries, environmental variables, support
-objects, semantic mappings, and OMOP status.
+Version 2.0.0 is a breaking release; see the changes listed below. Within the
+geospatial extension, human-readable fields are kept alongside their structured
+companions: `spatial_resolution` and `coordinate_reference_system` on
+`GeospatialResource`, `measured_variables` alongside `environmental_variables`,
+and `geographic_locations`, `geographic_features`, and `spatial_text` on
+`GeographyAnnotation`. New records may progressively add structured extents,
+locations, geometries, environmental variables, support objects, semantic
+mappings, and OMOP status.
 
 ## Module organization
 
-The combined schema is the validation entry point. Reusable schema fragments are
-kept in `hew-model/schema/modules/`; the geospatial module imports the shared core
-module and can also be loaded independently:
+The model has two validation entry points in `hew-model/schema/`:
+
+- `hew.yaml` is the **core**: publications, systematic-review coding, surveys,
+  agents, variables, and data dictionaries.
+- `hew-extended.yaml` imports the core plus the extension modules.
 
 ```text
-hew_core.yaml
-hew_literature.yaml
-hew_review_coding.yaml
-hew_resource_types.yaml
-hew_agents_projects.yaml
-hew_geospatial.yaml
+modules/hew_core.yaml            HEWResource, DatasetResource, Distribution, DataDictionary,
+                                 Variable, GeographicLocation, Agent and its subclasses
+modules/hew_review_coding.yaml   HEWSystematicReviewAnnotation, ConceptAnnotation,
+                                 GeographyAnnotation, DataToolMethodAnnotation, MentionedResource
+modules/hew_publication.yaml     LiteratureResource
+modules/hew_survey.yaml          SurveyInstrument, SurveyConstruct, SurveyQuestion,
+                                 ResponseOption, SurveyDataset, Population
+modules/hew_ext_geospatial.yaml  GeospatialResource, EnvironmentalVariable, extents, supports,
+                                 SpatiotemporalExposure, CovariateCalculation, OMOP/Gaia linkage
+modules/hew_ext_projects.yaml    Program, Project, FundingSource, AgentAssociation
+modules/hew_ext_resources.yaml   CohortResource, SoftwareResource, ModelResource,
+                                 ToolResource, ResourceCollection
 ```
 
-The geospatial module owns the location, geometry, extent, support, temporal,
-environmental-variable, and OMOP binding structures. The core module owns the
-generic `Variable` and `DataDictionary` structures used by those additions.
+Every module imports `hew_core`; each class and slot is defined in exactly one
+module. New capabilities should be added as extension modules rather than as
+slots on `HEWResource`.
 
-The consolidated schema additionally defines `SpatiotemporalExposure`,
-`CovariateCalculation`, `TemporalExtent`, `ValueSpecification`, structured
-resolution classes, processing-level metadata, and `ExternalExposureLinkage`.
+## Version 2.0.0 changes
+
+Version 2.0.0 restructures the 1.3.0 single-file schema into the core and
+extensions above. Breaking changes for existing records:
+
+- `HEWResource` is abstract and carries only shared descriptive, rights, and
+  attribution slots. Type-specific slots (for example `doi`, `programming_language`,
+  `spatial_extent`) are accepted only on the matching subclass.
+- `resource_type` is required, and each resource class pins its value
+  (`LiteratureResource` requires `literature`, `SurveyDataset` requires
+  `survey_dataset`, `GeospatialResource` requires `geospatial_dataset`).
+  `program`, `project`, `funding_source`, `data_dictionary`, `tutorial`, and
+  `notebook` are no longer resource types; `survey_dataset` and
+  `resource_collection` were added.
+- `status` on resources uses `CatalogStatusEnum` (`draft`, `active`, `archived`);
+  `ProjectStatusEnum` applies only to programs and projects.
+- `publication_date` accepts `YYYY`, `YYYY-MM`, or `YYYY-MM-DD`.
+- `ExposureAnnotation`, `HealthImpactAnnotation`, and `SpecialTopicAnnotation` are
+  merged into `ConceptAnnotation`; the slot names are unchanged.
+- Surveys: questions have `position`, `ResponseTypeEnum` `response_type`, coded
+  `response_options`, and `response_variables` linking to dataset variables.
+  `administration_mode` is an enum, `language` is a BCP 47 tag, and
+  `SurveyDataset.population_or_cohort` is renamed `population`.
+- Removed duplicates: resource `name` (use `title`), `produced_by_projects`,
+  `used_by_projects`, `has_projects` (use the project-side slots),
+  `spatiotemporal_exposures` (use `SpatiotemporalExposure.source_dataset`),
+  `principal_investigators` and `participating_organizations` (use
+  `agent_associations` with a role), `Person.roles`, `Organization.members`
+  (inverse of `affiliations`), `FundingSource.sponsor` (use
+  `sponsoring_organizations`), `Variable.mappings` (use `concept_mappings`), and
+  `SurveyDataset.variables` (use `data_dictionary`).
+- RDF property collisions removed: `title` maps to `dcterms:title`;
+  `spatial_extent`, `part_of_programs`, and `award_number` no longer share a
+  `slot_uri` with another slot.
 
 ## Example integrated resource
+
+This record validates against `hew-extended.yaml` as a `GeospatialResource`.
 
 ```yaml
 id: HEWRES:example-heat-dataset
@@ -191,8 +279,12 @@ environmental_variables:
 
 ## Implementation priorities
 
-1. Validate the core geospatial objects and geographic constraints.
-2. Validate EnVar-aligned variable semantics and OMOP status handling.
-3. Establish ontology and gazetteer mapping practices.
-4. Add explicit exposure, study-geography, observation-location, and temporal relationships.
-5. Develop GeoSPARQL, STAC, DCAT, DataCite, Schema.org, and OMOP/Gaia projections.
+1. Stabilize the core: publication and survey records, their Dataverse
+   projection, and JSON-LD round-tripping.
+2. Grow survey support from real instruments: constructs, response scales, and
+   question-to-variable links.
+3. Promote extension content into the core only when a catalog workflow needs
+   it, cleaning up its remaining duplicate fields at that point.
+4. Establish ontology and gazetteer mapping practices.
+5. Develop GeoSPARQL, STAC, DCAT, DataCite, Schema.org, and OMOP/Gaia
+   projections from the extensions.

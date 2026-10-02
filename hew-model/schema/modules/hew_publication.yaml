@@ -1,0 +1,66 @@
+id: https://w3id.org/hew/schema/modules/publication
+name: hew_publication
+title: 'HEW schema module: publications'
+description: Bibliographic literature resources.
+version: 2.0.0
+license: CC-BY-4.0
+
+prefixes:
+  HEW: https://w3id.org/hew/
+  linkml: https://w3id.org/linkml/
+  schema: http://schema.org/
+  biolink: https://w3id.org/biolink/vocab/
+default_prefix: HEW
+default_range: string
+
+imports:
+  - linkml:types
+  - ./hew_core
+  - ./hew_review_coding
+
+classes:
+  LiteratureResource:
+    is_a: HEWResource
+    class_uri: schema:ScholarlyArticle
+    close_mappings:
+      - biolink:Publication
+    description: A bibliographic resource relevant to health and extreme weather.
+    slots:
+      - doi
+      - pmid
+      - pmcid
+      - abstract
+      - citation
+      - publication_type
+      - journal
+      - publication_date
+      - study_objective
+      - annotations
+    slot_usage:
+      resource_type:
+        range: string
+        equals_string: literature
+
+slots:
+  doi:
+    range: string
+  pmid:
+    range: string
+  pmcid:
+    range: string
+  abstract:
+    slot_uri: schema:abstract
+    range: string
+  citation:
+    slot_uri: schema:citation
+    range: string
+  publication_type:
+    range: ReferenceTypeEnum
+  journal:
+    slot_uri: schema:isPartOf
+    range: string
+  publication_date:
+    slot_uri: schema:datePublished
+    range: string
+    pattern: ^\d{4}(-\d{2}(-\d{2})?)?$
+    description: Publication date as YYYY, YYYY-MM, or YYYY-MM-DD.

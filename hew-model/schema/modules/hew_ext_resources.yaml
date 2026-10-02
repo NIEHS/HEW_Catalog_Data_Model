@@ -1,0 +1,141 @@
+id: https://w3id.org/hew/schema/modules/ext-resources
+name: hew_ext_resources
+title: 'HEW extension: additional resource types'
+description: Cohort, software, model, tool, and collection resources.
+version: 2.0.0
+license: CC-BY-4.0
+
+prefixes:
+  HEW: https://w3id.org/hew/
+  linkml: https://w3id.org/linkml/
+  schema: http://schema.org/
+default_prefix: HEW
+default_range: string
+
+imports:
+  - linkml:types
+  - ./hew_core
+  - ./hew_review_coding
+
+classes:
+  CohortResource:
+    is_a: DatasetResource
+    description: >-
+      A cohort or cohort-derived resource relevant to exposure-health research.
+    slot_usage:
+      resource_type:
+        range: string
+        equals_string: cohort
+
+  SoftwareResource:
+    is_a: HEWResource
+    class_uri: schema:SoftwareSourceCode
+    description: >-
+      Software, code, library, workflow, notebook, or computational tool relevant to HEW.
+    slots:
+      - repository
+      - programming_language
+      - software_type
+      - maintainers
+    slot_usage:
+      resource_type:
+        range: string
+        equals_string: software_code_library
+
+  ModelResource:
+    is_a: HEWResource
+    description: >-
+      A computational, exposure, geospatial, statistical, or AI/ML model resource.
+    slots:
+      - model_type
+      - input_variables
+      - output_variables
+    slot_usage:
+      resource_type:
+        range: string
+        equals_string: model
+
+  ToolResource:
+    is_a: HEWResource
+    description: >-
+      A tool used to collect, compute, analyze, visualize, interpret, or translate health
+      and extreme weather information. Tools may include computational tools, survey tools,
+      decision-support tools, calculators, dashboards, notebooks, workflows, or educational
+      tools.
+    slots:
+      - tool_type
+      - repository
+      - maintainers
+      - input_variables
+      - output_variables
+    slot_usage:
+      resource_type:
+        range: string
+        equals_string: tool
+
+  ResourceCollection:
+    is_a: HEWResource
+    description: >-
+      A curated collection of HEW resources, such as the HEW Resource Library, a systematic-review
+      corpus, a Dataverse collection, or a covariate collection.
+    slots:
+      - collection_members
+      - collection_scope
+      - curator
+      - source_project
+      - version
+    slot_usage:
+      resource_type:
+        range: string
+        equals_string: resource_collection
+
+slots:
+  repository:
+    slot_uri: schema:codeRepository
+    range: uri
+  programming_language:
+    slot_uri: schema:programmingLanguage
+    range: string
+  software_type:
+    range: SoftwareTypeEnum
+  maintainers:
+    slot_uri: schema:maintainer
+    multivalued: true
+    range: Agent
+  model_type:
+    range: ModelTypeEnum
+  tool_type:
+    range: ToolTypeEnum
+  collection_members:
+    multivalued: true
+    range: uriorcurie
+  collection_scope:
+    range: string
+  curator:
+    range: Agent
+  source_project:
+    range: uriorcurie
+
+enums:
+  SoftwareTypeEnum:
+    permissible_values:
+      software_package:
+      code_library:
+      workflow:
+      notebook:
+      web_tool:
+      command_line_tool:
+      other:
+  ToolTypeEnum:
+    permissible_values:
+      computational_tool:
+      survey_tool:
+      decision_support_tool:
+      visualization_tool:
+      data_collection_tool:
+      educational_tool:
+      calculator:
+      dashboard:
+      workflow:
+      notebook:
+      other:

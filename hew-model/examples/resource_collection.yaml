@@ -1,6 +1,6 @@
 id: HEWCOLLECTION:hew-resource-library
 title: HEW Resource Library collection
-resource_type: other
+resource_type: resource_collection
 collection_scope: Curated publications, datasets, tools, and related HEW resources.
 collection_members:
   - HEWRES:publication-heat-health

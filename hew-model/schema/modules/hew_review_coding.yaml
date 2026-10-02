@@ -1,7 +1,282 @@
-# Placeholder module for future split-out schema content.
-# Current compact schema lives in ../hew-geospatial.yaml.
-id: https://w3id.org/hew/schema/modules/hew_review_coding
+id: https://w3id.org/hew/schema/modules/review-coding
 name: hew_review_coding
-title: "HEW schema module: hew_review_coding"
+title: 'HEW schema module: systematic-review coding'
+description: >-
+  Systematic-review coding annotations applied to HEW literature resources.
+version: 2.0.0
+license: CC-BY-4.0
+
+prefixes:
+  HEW: https://w3id.org/hew/
+  linkml: https://w3id.org/linkml/
+  prov: http://www.w3.org/ns/prov#
+  schema: http://schema.org/
+default_prefix: HEW
+default_range: string
+
 imports:
   - linkml:types
+  - ./hew_core
+
+classes:
+  HEWSystematicReviewAnnotation:
+    class_uri: prov:Entity
+    description: A systematic-review coding annotation for a HEW literature resource.
+    slots:
+      - id
+      - subject
+      - coding_scheme
+      - coding_scheme_version
+      - annotation_date
+      - coded_by
+      - reviewed_by
+      - generated_by
+      - part_of_project
+      - coding_method
+      - information_source
+      - reference_type
+      - study_objective
+      - exposure_annotations
+      - health_impact_annotations
+      - geography_annotations
+      - data_tool_method_annotations
+      - special_topic_annotations
+      - related_resources
+      - notes
+      - confidence
+      - needs_human_review
+
+  ConceptAnnotation:
+    description: >-
+      A coded concept from a HEW coding-guide vocabulary (exposure pathway, health impact,
+      or special topic). The containing slot identifies the vocabulary.
+    slots:
+      - coded_concept
+      - parent_concept
+      - specified_text
+      - evidence_text
+      - coding_depth
+      - is_not_reported
+
+  GeographyAnnotation:
+    description: Coding of broad geographic location and geographic feature.
+    slots:
+      - geographic_locations
+      - geographic_features
+      - locations
+      - environmental_context
+      - spatial_text
+      - is_global_or_unspecified
+      - is_not_reported
+
+  DataToolMethodAnnotation:
+    description: >-
+      Coding of data resource types and model types used, created, or described by a literature
+      resource.
+    slots:
+      - data_resource_types
+      - model_types
+      - mentioned_resources
+      - evidence_text
+      - is_not_reported
+
+  MentionedResource:
+    description: >-
+      A data, software, model, cohort, survey, or tool resource mentioned in a literature
+      resource.
+    slots:
+      - name
+      - resource_type
+      - url
+      - relationship_to_literature
+      - availability
+      - access_statement
+
+slots:
+  annotations:
+    multivalued: true
+    range: HEWSystematicReviewAnnotation
+    inlined_as_list: true
+  subject:
+    slot_uri: schema:about
+    range: uriorcurie
+    required: true
+  coding_scheme:
+    range: string
+  coding_scheme_version:
+    range: string
+  annotation_date:
+    range: date
+  coded_by:
+    description: >-
+      Agents (people or software) that coded the annotation, referenced by identifier.
+    range: Agent
+    multivalued: true
+  reviewed_by:
+    description: >-
+      Agents (people or groups) that reviewed the annotation, referenced by identifier.
+    range: Agent
+    multivalued: true
+  part_of_project:
+    description: Project in which the annotation was produced or reviewed.
+    range: uriorcurie
+  coding_method:
+    range: CodingMethodEnum
+  information_source:
+    range: InformationSourceEnum
+  reference_type:
+    range: ReferenceTypeEnum
+    description: >-
+      Reference type as coded by the reviewer, with the annotation's provenance. The resource's
+      own publication_type is the catalog value.
+  study_objective:
+    range: string
+  exposure_annotations:
+    multivalued: true
+    range: ConceptAnnotation
+    inlined_as_list: true
+    description: Coded exposure pathway concepts.
+  health_impact_annotations:
+    multivalued: true
+    range: ConceptAnnotation
+    inlined_as_list: true
+    description: Coded health impact concepts.
+  geography_annotations:
+    multivalued: true
+    range: GeographyAnnotation
+    inlined_as_list: true
+  data_tool_method_annotations:
+    multivalued: true
+    range: DataToolMethodAnnotation
+    inlined_as_list: true
+  special_topic_annotations:
+    multivalued: true
+    range: ConceptAnnotation
+    inlined_as_list: true
+    description: Coded special topic concepts.
+  confidence:
+    range: float
+  needs_human_review:
+    range: boolean
+  coded_concept:
+    range: uriorcurie
+  parent_concept:
+    range: uriorcurie
+  specified_text:
+    range: string
+  coding_depth:
+    range: integer
+  is_not_reported:
+    range: boolean
+  geographic_locations:
+    multivalued: true
+    range: GeographicLocationEnum
+  geographic_features:
+    multivalued: true
+    range: GeographicFeatureEnum
+  locations:
+    multivalued: true
+    range: GeographicLocation
+    inlined_as_list: true
+    description: >-
+      Structured named or coordinate-defined locations extracted or curated for the annotation.
+      This complements broad geographic coding enums.
+  spatial_text:
+    range: string
+  is_global_or_unspecified:
+    range: boolean
+  data_resource_types:
+    multivalued: true
+    range: DataResourceTypeEnum
+  model_types:
+    multivalued: true
+    range: ModelTypeEnum
+  mentioned_resources:
+    multivalued: true
+    range: MentionedResource
+    inlined_as_list: true
+  relationship_to_literature:
+    range: ResourceRelationshipEnum
+  availability:
+    range: AvailabilityEnum
+  access_statement:
+    range: string
+
+enums:
+  ReferenceTypeEnum:
+    permissible_values:
+      research_article:
+      review_article:
+      commentary_opinion:
+      assessment_book_report:
+  InformationSourceEnum:
+    permissible_values:
+      complete_resource:
+      abstract_and_title_only:
+  CodingMethodEnum:
+    permissible_values:
+      human_curated:
+      laser_ai_generated:
+      laser_ai_assisted_human_curated:
+      imported_from_legacy_spreadsheet:
+  DataResourceTypeEnum:
+    permissible_values:
+      cohort:
+      source_cohort_publication:
+      dataset:
+      software_code_library:
+      survey:
+      other:
+  ModelTypeEnum:
+    permissible_values:
+      artificial_intelligence_machine_learning:
+      exposure_modeling:
+      geospatial_modeling:
+      other:
+  ResourceRelationshipEnum:
+    permissible_values:
+      uses:
+      creates:
+      describes:
+      evaluates:
+      deposits:
+      cites:
+      derived_from:
+  AvailabilityEnum:
+    permissible_values:
+      open_access:
+      controlled_access:
+      available_upon_request:
+      unavailable:
+      unknown:
+  GeographicLocationEnum:
+    permissible_values:
+      global_or_unspecified_location:
+      africa:
+      antarctica:
+      asia:
+      australasia:
+      central_south_america:
+      europe:
+      non_us_north_america:
+      united_states:
+  GeographicFeatureEnum:
+    permissible_values:
+      general_geographic_feature:
+      built_environment:
+      desert:
+      forest:
+      freshwater:
+      grassland:
+      island:
+      mountain:
+      ocean_coastal:
+      polar:
+      rainforest:
+      rural:
+      temperate:
+      tropical:
+      urban:
+      valley:
+      wetland:
+      other:

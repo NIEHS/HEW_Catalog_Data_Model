@@ -1,0 +1,708 @@
+id: https://w3id.org/hew/schema/modules/ext-geospatial
+name: hew_ext_geospatial
+title: 'HEW extension: geospatial and exposure'
+description: >-
+  Geospatial datasets, EnVar-aligned environmental variables, exposure estimates, covariate
+  calculations, and OMOP/Gaia linkage. Phases 2-5 of the expansion plan.
+version: 2.0.0
+license: CC-BY-4.0
+
+prefixes:
+  HEW: https://w3id.org/hew/
+  linkml: https://w3id.org/linkml/
+  geo: http://www.opengis.net/ont/geosparql#
+  sf: http://www.opengis.net/ont/sf#
+  biolink: https://w3id.org/biolink/vocab/
+  prov: http://www.w3.org/ns/prov#
+  dcterms: http://purl.org/dc/terms/
+  epsg: http://www.opengis.net/def/crs/EPSG/0/
+default_prefix: HEW
+default_range: string
+
+imports:
+  - linkml:types
+  - ./hew_core
+
+classes:
+  GeospatialResource:
+    is_a: DatasetResource
+    description: >-
+      A geospatial dataset, layer, raster, vector file, map service, or spatial data product.
+    slots:
+      - spatial_extent
+      - temporal_extent
+      - environmental_variables
+      - measured_variables
+      - spatial_resolution
+      - quantitative_spatial_resolution
+      - administrative_spatial_resolution
+      - coordinate_reference_system
+      - coordinate_reference_system_uri
+      - processing_level
+      - external_exposure_linkage
+    slot_usage:
+      resource_type:
+        range: string
+        equals_string: geospatial_dataset
+
+  Geometry:
+    class_uri: geo:Geometry
+    description: >-
+      A machine-readable geometry. GeoJSON is recommended for application and API interchange;
+      WKT is recommended for GeoSPARQL/RDF interchange.
+    slots:
+      - geometry_type
+      - wkt
+      - geojson
+      - coordinate_reference_system_uri
+
+  SpatialExtent:
+    description: >-
+      Structured spatial coverage of a resource. This complements the legacy spatial_coverage
+      string and supports geometry, bounding boxes, centroids, named places, environmental
+      context, and resolution.
+    slots:
+      - geometry
+      - bounding_box
+      - centroid
+      - named_locations
+      - environmental_context
+      - spatial_resolution
+      - quantitative_spatial_resolution
+      - administrative_spatial_resolution
+      - coordinate_reference_system_uri
+
+  BoundingBox:
+    description: >-
+      An axis-aligned geographic bounding box expressed as west, south, east, and north coordinates,
+      normally in WGS84 longitude/latitude.
+    slots:
+      - west
+      - south
+      - east
+      - north
+
+  EnvironmentalVariable:
+    is_a: Variable
+    description: >-
+      An environmental variable described with EnVar-aligned metadata sufficient to interpret
+      what was measured or derived, how it was summarized, where and when values apply, and
+      how the variable maps to environmental and clinical vocabularies. This is an HEW integration
+      profile, not a copy of the authoritative EnVar micro-schema.
+    slots:
+      - measured_property
+      - measurement_method
+      - aggregation_method
+      - spatial_support
+      - temporal_support
+      - concept_mappings
+      - omop_concept_binding
+      - processing_level
+      - external_exposure_linkage
+
+  SpatialSupport:
+    description: >-
+      The geographic support over which a single environmental variable value is defined.
+      This is distinct from the overall spatial extent of the dataset.
+    slots:
+      - support_type
+      - spatial_resolution
+      - administrative_level
+      - quantitative_spatial_resolution
+      - administrative_spatial_resolution
+      - geometry_type
+      - coordinate_reference_system_uri
+
+  TemporalSupport:
+    description: >-
+      The temporal support and aggregation semantics of an environmental variable. ISO 8601
+      duration strings are recommended for resolution and window fields.
+    slots:
+      - temporal_resolution
+      - aggregation_window
+      - temporal_alignment
+
+  OMOPConceptBinding:
+    description: >-
+      Optional mapping of an environmental variable to an OMOP vocabulary concept, including
+      an explicit status so vocabulary gaps can be represented without inventing identifiers.
+    slots:
+      - omop_concept_id
+      - omop_concept_name
+      - omop_vocabulary_id
+      - omop_domain_id
+      - omop_standard_concept
+      - concept_status
+
+  SpatiotemporalExposure:
+    close_mappings:
+      - prov:Entity
+    description: >-
+      A measured, modeled, derived, assigned, or summarized environmental exposure estimate
+      with explicit exposure semantics, spatial support, temporal support, environmental context,
+      value semantics, provenance, and optional linkage to a population, cohort, study, health
+      resource, or OMOP/Gaia external exposure workflow.
+    slots:
+      - id
+      - title
+      - description
+      - exposure_concept
+      - exposure_variable
+      - measured_property
+      - environmental_context
+      - source_dataset
+      - source_variables
+      - exposure_location
+      - exposure_geometry
+      - spatial_extent
+      - spatial_support
+      - temporal_extent
+      - temporal_support
+      - value_specification
+      - value_unit
+      - aggregation_method
+      - calculation_method
+      - generated_by
+      - software
+      - software_version
+      - population_or_cohort
+      - associated_health_outcomes
+      - omop_concept_binding
+      - external_exposure_linkage
+      - evidence_text
+      - quality_flags
+      - uncertainty
+      - processing_level
+      - access_rights
+      - license
+
+  CovariateCalculation:
+    close_mappings:
+      - prov:Activity
+    description: >-
+      A method or computational process used to derive an exposure covariate from environmental,
+      geospatial, climate, weather, social-context, or other health-relevant data.
+    slots:
+      - id
+      - name
+      - description
+      - method_type
+      - software
+      - software_version
+      - function_name
+      - parameters
+      - input_resources
+      - output_variables
+      - spatial_join_method
+      - temporal_join_method
+      - buffer_radius
+      - buffer_unit
+      - extraction_method
+      - aggregation_method
+      - source_crs
+      - target_crs
+      - temporal_window
+      - generated_outputs
+
+  ParameterValue:
+    description: >-
+      A named parameter used in a calculation, workflow, model, or software function.
+    slots:
+      - parameter_name
+      - parameter_value
+      - parameter_unit
+      - parameter_description
+
+  TemporalExtent:
+    description: >-
+      Structured temporal interval for a resource, exposure estimate, variable, observation,
+      model run, or derived covariate.
+    slots:
+      - start_time
+      - end_time
+      - temporal_resolution
+      - calendar
+      - timezone
+
+  ValueSpecification:
+    description: >-
+      Unit, statistic, threshold, uncertainty, and value semantics for an environmental variable
+      or exposure estimate.
+    slots:
+      - unit
+      - value_type
+      - statistic
+      - threshold
+      - threshold_unit
+      - uncertainty
+      - quality_flag
+
+  QuantitativeSpatialResolution:
+    description: Quantitative spatial resolution, such as 1 km, 250 m, or 30 arc-second.
+    slots:
+      - resolution_value
+      - resolution_unit
+      - resolution_axis
+      - resolution_description
+
+  AdministrativeSpatialResolution:
+    description: >-
+      Administrative or statistical geography level used as spatial resolution.
+    slots:
+      - administrative_level
+      - coding_system
+      - example_units
+
+  ExternalExposureLinkage:
+    description: >-
+      Metadata describing how an exposure estimate, variable, or dataset can be linked to
+      OMOP/Gaia-style external exposure workflows, including spatial and temporal join assumptions
+      and privacy-preserving location references.
+    slots:
+      - id
+      - exposure_estimate
+      - omop_concept_binding
+      - location_history_reference
+      - person_or_cohort_reference
+      - exposure_start_date
+      - exposure_end_date
+      - spatial_join_method
+      - temporal_join_method
+      - privacy_preserving_geography
+      - linkage_notes
+
+slots:
+  spatial_extent:
+    range: SpatialExtent
+    inlined: true
+    description: Structured spatial extent or footprint of a dataset or resource.
+    close_mappings:
+      - dcterms:spatial
+  measured_variables:
+    multivalued: true
+    range: string
+  environmental_variables:
+    multivalued: true
+    range: EnvironmentalVariable
+    inlined_as_list: true
+    description: >-
+      Structured environmental variables using the HEW EnVar integration profile. This complements
+      the legacy measured_variables string list.
+  measured_property:
+    range: uriorcurie
+    description: >-
+      Ontology identifier for the environmental property, phenomenon, substance, or exposure-related
+      quantity represented by the variable. ENVO, ECTO, CHEBI, or other appropriate ontology
+      terms may be used.
+  measurement_method:
+    range: uriorcurie
+    description: >-
+      Identifier for the measurement, observation, assay, retrieval, or derivation method
+      when a suitable controlled term exists.
+  aggregation_method:
+    range: AggregationMethodEnum
+    description: Statistical or temporal aggregation used to derive each reported value.
+  spatial_support:
+    range: SpatialSupport
+    inlined: true
+    description: >-
+      Spatial unit over which an individual variable value applies; distinct from the complete
+      spatial extent of the parent dataset.
+  temporal_support:
+    range: TemporalSupport
+    inlined: true
+    description: >-
+      Temporal resolution, aggregation window, and alignment for individual values.
+  omop_concept_binding:
+    range: OMOPConceptBinding
+    inlined: true
+    description: >-
+      Optional OMOP vocabulary mapping and mapping status for downstream Gaia or external-exposure
+      workflows.
+  support_type:
+    range: SpatialSupportTypeEnum
+  administrative_level:
+    range: string
+    description: >-
+      Administrative or statistical geography level when values are reported by units such
+      as state, county, ZIP code, census tract, or block group.
+  temporal_resolution:
+    range: string
+    description: >-
+      Temporal spacing or nominal resolution of values; ISO 8601 duration syntax such as PT1H,
+      P1D, or P1M is recommended where applicable.
+  aggregation_window:
+    range: string
+    description: >-
+      Time window over which a reported environmental value is aggregated; ISO 8601 duration
+      syntax is recommended.
+  temporal_alignment:
+    range: TemporalAlignmentEnum
+  omop_concept_id:
+    range: integer
+  omop_concept_name:
+    range: string
+  omop_vocabulary_id:
+    range: string
+  omop_domain_id:
+    range: string
+  omop_standard_concept:
+    range: string
+    description: OMOP standard-concept indicator when available.
+  concept_status:
+    range: ConceptStatusEnum
+    description: >-
+      Status of the OMOP concept mapping, including explicit representation of a vocabulary
+      gap.
+  spatial_resolution:
+    range: string
+    description: >-
+      Human-readable spatial resolution, retained for compatibility. Examples include 1 km,
+      30 arc-second, county, or census tract.
+  coordinate_reference_system:
+    range: string
+    description: >-
+      Legacy free-text coordinate reference system. Prefer coordinate_reference_system_uri
+      for normalized new metadata.
+  coordinate_reference_system_uri:
+    range: uriorcurie
+    description: >-
+      Identifier for the coordinate reference system, preferably an OGC CRS URI or EPSG identifier
+      such as epsg:4326.
+  geometry:
+    slot_uri: geo:hasGeometry
+    range: Geometry
+    inlined: true
+  geometry_type:
+    range: GeometryTypeEnum
+  wkt:
+    slot_uri: geo:asWKT
+    range: string
+    description: >-
+      Well-Known Text geometry serialization. For RDF export this may be emitted as a GeoSPARQL
+      geo:wktLiteral.
+  geojson:
+    slot_uri: geo:asGeoJSON
+    range: string
+    description: GeoJSON geometry serialized as a JSON string.
+  bounding_box:
+    range: BoundingBox
+    inlined: true
+  centroid:
+    range: GeographicLocation
+    inlined: true
+  named_locations:
+    multivalued: true
+    range: GeographicLocation
+    inlined_as_list: true
+  west:
+    range: float
+    minimum_value: -180
+    maximum_value: 180
+  east:
+    range: float
+    minimum_value: -180
+    maximum_value: 180
+  south:
+    range: float
+    minimum_value: -90
+    maximum_value: 90
+  north:
+    range: float
+    minimum_value: -90
+    maximum_value: 90
+  temporal_extent:
+    range: TemporalExtent
+    inlined: true
+    description: Structured temporal interval for a resource or exposure estimate.
+  processing_level:
+    range: DatasetProcessingLevelEnum
+    description: Processing or derivation level of a dataset or exposure resource.
+  external_exposure_linkage:
+    range: ExternalExposureLinkage
+    inlined: true
+    description: Optional OMOP/Gaia external exposure linkage metadata.
+  exposure_concept:
+    range: uriorcurie
+    description: >-
+      Ontology identifier for the exposure concept. ECTO terms are preferred when available;
+      local HEW exposure terms may be used when needed.
+  exposure_variable:
+    range: EnvironmentalVariable
+    inlined: true
+    description: Environmental variable representing or operationalizing the exposure.
+  source_dataset:
+    range: uriorcurie
+    description: Dataset or resource from which the exposure estimate was derived.
+  source_variables:
+    multivalued: true
+    range: uriorcurie
+    description: Variables used as inputs to create this exposure estimate.
+  exposure_location:
+    range: GeographicLocation
+    inlined: true
+    description: Named or coordinate-defined location where exposure applies.
+  exposure_geometry:
+    range: Geometry
+    inlined: true
+    description: Explicit geometry where exposure applies.
+  value_specification:
+    range: ValueSpecification
+    inlined: true
+    description: Unit, statistic, threshold, uncertainty, and value semantics.
+  value_unit:
+    range: string
+    description: Human-readable unit string retained for compatibility.
+  calculation_method:
+    range: CovariateCalculation
+    inlined: true
+    description: Computational or methodological process used to derive the exposure.
+  software:
+    range: uriorcurie
+    description: Software resource or software agent used to generate the exposure.
+  population_or_cohort:
+    range: uriorcurie
+    description: Population, cohort, study sample, or resource linked to the exposure.
+  associated_health_outcomes:
+    multivalued: true
+    range: uriorcurie
+    description: Health outcome concepts or resources associated with this exposure.
+  quality_flags:
+    multivalued: true
+    range: string
+  uncertainty:
+    range: string
+    description: Human-readable uncertainty statement.
+  method_type:
+    range: CovariateCalculationMethodEnum
+  function_name:
+    range: string
+    description: Name of the function or workflow step used to derive the covariate.
+  parameters:
+    multivalued: true
+    range: ParameterValue
+    inlined_as_list: true
+  input_resources:
+    multivalued: true
+    range: uriorcurie
+  spatial_join_method:
+    range: SpatialJoinMethodEnum
+  temporal_join_method:
+    range: TemporalJoinMethodEnum
+  buffer_radius:
+    range: float
+  buffer_unit:
+    range: string
+  extraction_method:
+    range: ExtractionMethodEnum
+  source_crs:
+    range: uriorcurie
+    description: CRS of source data, preferably an EPSG or OGC CRS identifier.
+  target_crs:
+    range: uriorcurie
+    description: >-
+      CRS used for calculation output, preferably an EPSG or OGC CRS identifier.
+  temporal_window:
+    range: string
+    description: ISO 8601 duration or human-readable temporal window.
+  generated_outputs:
+    multivalued: true
+    range: uriorcurie
+  parameter_name:
+    range: string
+  parameter_value:
+    range: string
+  parameter_unit:
+    range: string
+  parameter_description:
+    range: string
+  start_time:
+    range: datetime
+  end_time:
+    range: datetime
+  calendar:
+    range: string
+    description: Calendar system if relevant; Gregorian is assumed when omitted.
+  timezone:
+    range: string
+    description: Timezone identifier if local time is relevant.
+  quantitative_spatial_resolution:
+    range: QuantitativeSpatialResolution
+    inlined: true
+  administrative_spatial_resolution:
+    range: AdministrativeSpatialResolution
+    inlined: true
+  resolution_value:
+    range: float
+  resolution_unit:
+    range: string
+  resolution_axis:
+    range: ResolutionAxisEnum
+  resolution_description:
+    range: string
+  coding_system:
+    range: string
+  example_units:
+    multivalued: true
+    range: string
+  exposure_estimate:
+    range: uriorcurie
+  location_history_reference:
+    range: uriorcurie
+  person_or_cohort_reference:
+    range: uriorcurie
+  exposure_start_date:
+    range: date
+  exposure_end_date:
+    range: date
+  privacy_preserving_geography:
+    range: string
+  linkage_notes:
+    range: string
+  value_type:
+    range: ValueTypeEnum
+  statistic:
+    range: AggregationMethodEnum
+  threshold:
+    range: float
+  threshold_unit:
+    range: string
+  quality_flag:
+    range: string
+
+enums:
+  AggregationMethodEnum:
+    permissible_values:
+      instantaneous:
+      mean:
+      minimum:
+      maximum:
+      median:
+      sum:
+      count:
+      percentile:
+      cumulative:
+      other:
+  SpatialSupportTypeEnum:
+    permissible_values:
+      point:
+      monitoring_station:
+      raster_grid_cell:
+      polygon:
+      administrative_area:
+      statistical_area:
+      model_grid_cell:
+      other:
+  TemporalAlignmentEnum:
+    permissible_values:
+      start:
+      center:
+      end:
+      interval:
+      unknown:
+  ConceptStatusEnum:
+    permissible_values:
+      mapped_standard:
+      mapped_nonstandard:
+      candidate_mapping:
+      vocabulary_gap:
+      not_evaluated:
+  GeometryTypeEnum:
+    permissible_values:
+      point:
+        meaning: sf:Point
+      multipoint:
+        meaning: sf:MultiPoint
+      linestring:
+        meaning: sf:LineString
+      multilinestring:
+        meaning: sf:MultiLineString
+      polygon:
+        meaning: sf:Polygon
+      multipolygon:
+        meaning: sf:MultiPolygon
+  CovariateCalculationMethodEnum:
+    permissible_values:
+      buffer_extraction:
+      point_extraction:
+      zonal_statistics:
+      raster_summary:
+      spatial_overlay:
+      interpolation:
+      model_prediction:
+      reanalysis_extraction:
+      monitor_assignment:
+      nearest_monitor:
+      distance_weighted_assignment:
+      administrative_area_summary:
+      other:
+  SpatialJoinMethodEnum:
+    permissible_values:
+      within:
+      contains:
+      intersects:
+      nearest:
+      distance_weighted:
+      centroid_within:
+      overlap_area_weighted:
+      none:
+      other:
+  TemporalJoinMethodEnum:
+    permissible_values:
+      exact_date:
+      nearest_time:
+      same_day:
+      same_month:
+      same_year:
+      moving_average:
+      lagged_window:
+      cumulative_window:
+      event_window:
+      none:
+      other:
+  ExtractionMethodEnum:
+    permissible_values:
+      point_sample:
+      bilinear_interpolation:
+      nearest_cell:
+      zonal_mean:
+      zonal_sum:
+      zonal_minimum:
+      zonal_maximum:
+      zonal_percentile:
+      majority_class:
+      area_weighted:
+      distance_weighted:
+      other:
+  ValueTypeEnum:
+    permissible_values:
+      measured_value:
+      modeled_value:
+      derived_value:
+      index_value:
+      categorical_value:
+      binary_indicator:
+      threshold_exceedance:
+      percentile:
+      anomaly:
+      other:
+  ResolutionAxisEnum:
+    permissible_values:
+      x:
+      y:
+      z:
+      temporal:
+      nominal:
+      other:
+  DatasetProcessingLevelEnum:
+    permissible_values:
+      raw:
+      cleaned:
+      harmonized:
+      derived:
+      modeled:
+      summarized:
+      exposure_assigned:
+      analysis_ready:
+      publication_ready:
+      other:

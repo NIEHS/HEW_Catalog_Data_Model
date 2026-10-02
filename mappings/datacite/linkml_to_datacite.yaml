@@ -1,11 +1,25 @@
-schema: ../../hew-model/schema/hew-geospatial.yaml
+schema: ../../hew-model/schema/hew-extended.yaml
 notes: >-
   Project DOI-bearing HEW resources to DataCite while preserving HEW IDs and
   structured spatial and temporal metadata as related geoLocation fields.
 fields:
   title: title
   description: description
-  creators: authors
+  creators:
+    source: authors
+    item_fields:
+      name: name, else "family_name, given_name"
+      nameType: agent_type (Person -> Personal, Organization -> Organizational)
+      givenName: given_name
+      familyName: family_name
+      nameIdentifiers:
+        - nameIdentifier: orcid
+          nameIdentifierScheme: ORCID
+          schemeURI: https://orcid.org
+        - nameIdentifier: ror_id
+          nameIdentifierScheme: ROR
+          schemeURI: https://ror.org
+      affiliation: affiliations
   publicationYear: publication_date
   identifier: doi
   geoLocation: spatial_extent

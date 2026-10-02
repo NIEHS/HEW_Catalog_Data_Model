@@ -10,8 +10,8 @@ annotations:
     coding_scheme_version: draft
     annotation_date: "2026-08-11"
     coded_by:
-      - LaserAI
-      - human_curator_placeholder
+      - AGENT:laserai
+      - PERSON:example_curator
     coding_method: laser_ai_assisted_human_curated
     information_source: complete_resource
     reference_type: research_article

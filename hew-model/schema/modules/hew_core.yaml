@@ -1,13 +1,121 @@
-# Core resource-independent data structures shared by HEW modules.
-id: https://w3id.org/hew/schema/modules/hew_core
+# Core HEW module: every other module imports this one.
+id: https://w3id.org/hew/schema/modules/core
 name: hew_core
-title: "HEW schema module: hew_core"
+title: 'HEW schema module: core'
+description: >-
+  Shared resource base classes, agents, variables, data dictionaries, and locations.
+version: 2.0.0
+license: CC-BY-4.0
+
 prefixes:
+  HEW: https://w3id.org/hew/
+  linkml: https://w3id.org/linkml/
+  HEWRES: https://w3id.org/hew/resource/
+  HEWANN: https://w3id.org/hew/annotation/
+  HEWVAR: https://w3id.org/hew/variable/
+  HEWDD: https://w3id.org/hew/data-dictionary/
+  HEWEXP: https://w3id.org/hew/exposure/
+  HEWLINK: https://w3id.org/hew/linkage/
+  HEWMETHOD: https://w3id.org/hew/method/
+  HEWPOP: https://w3id.org/hew/population/
+  HEWCONSTRUCT: https://w3id.org/hew/construct/
+  HEWQUESTION: https://w3id.org/hew/question/
+  HEWCOLLECTION: https://w3id.org/hew/collection/
+  HEWPROGRAM: https://w3id.org/hew/program/
+  HEWPROJECT: https://w3id.org/hew/project/
+  HEWFUND: https://w3id.org/hew/funding/
+  HEWASSOC: https://w3id.org/hew/association/
+  PERSON: https://w3id.org/hew/person/
+  ORG: https://w3id.org/hew/organization/
+  AGENT: https://w3id.org/hew/agent/
+  UCUM: https://units-of-measurement.org/
+  biolink: https://w3id.org/biolink/vocab/
+  ecto: http://purl.obolibrary.org/obo/ECTO_
+  envo: http://purl.obolibrary.org/obo/ENVO_
+  mondo: http://purl.obolibrary.org/obo/MONDO_
+  hp: http://purl.obolibrary.org/obo/HP_
+  dcterms: http://purl.org/dc/terms/
   schema: http://schema.org/
+  prov: http://www.w3.org/ns/prov#
+  dcat: http://www.w3.org/ns/dcat#
+  geo: http://www.opengis.net/ont/geosparql#
+  sf: http://www.opengis.net/ont/sf#
+  epsg: http://www.opengis.net/def/crs/EPSG/0/
+  geonames: https://www.geonames.org/ontology#
+default_prefix: HEW
+default_range: string
+
 imports:
   - linkml:types
 
 classes:
+  HEWResource:
+    abstract: true
+    class_uri: schema:CreativeWork
+    close_mappings:
+      - biolink:InformationContentEntity
+    description: >-
+      A cataloged resource relevant to health and extreme weather. Holds only the descriptive,
+      rights, and attribution fields shared by every resource type; type-specific fields live
+      on subclasses.
+    slots:
+      - id
+      - resource_type
+      - title
+      - description
+      - url
+      - identifiers
+      - same_as
+      - keywords
+      - themes
+      - status
+      - license
+      - access_rights
+      - authors
+      - contributors
+      - contacts
+      - funding_sources
+      - related_resources
+      - spatial_coverage
+      - temporal_coverage
+
+  DatasetResource:
+    is_a: HEWResource
+    class_uri: schema:Dataset
+    close_mappings:
+      - dcat:Dataset
+    description: >-
+      A dataset relevant to health and extreme weather. Specialized dataset kinds (survey,
+      geospatial, cohort) are subclasses.
+    slots:
+      - data_dictionary
+      - distributions
+
+  Distribution:
+    class_uri: dcat:Distribution
+    description: >-
+      A concrete downloadable, API, service, or object distribution of a dataset or resource.
+    slots:
+      - id
+      - title
+      - description
+      - url
+      - access_rights
+      - license
+      - media_type
+      - format
+
+  DataDictionary:
+    class_uri: schema:Dataset
+    description: >-
+      A structured description of variables, fields, measures, or data elements.
+    slots:
+      - id
+      - title
+      - description
+      - variables
+      - source_resource
+
   Variable:
     description: A variable, field, measure, or data element in a HEW-relevant resource.
     slots:
@@ -17,44 +125,325 @@ classes:
       - description
       - data_type
       - unit
-      - mappings
+      - concept_mappings
 
-  DataDictionary:
-    class_uri: schema:Dataset
-    description: A structured description of variables, fields, measures, or data elements.
+  GeographicLocation:
+    class_uri: biolink:GeographicLocation
+    description: >-
+      A named or coordinate-defined geographic location associated with a HEW resource, study,
+      exposure, observation, project, or annotation. Named locations should use authoritative
+      identifiers when available.
+    slots:
+      - location_id
+      - name
+      - location_type
+      - latitude
+      - longitude
+      - geographic_identifiers
+      - environmental_context
+
+  Agent:
+    abstract: true
+    class_uri: prov:Agent
+    description: >-
+      A person, organization, group, or software agent associated with a HEW resource, program,
+      project, annotation, funding source, or activity.
     slots:
       - id
-      - title
+      - agent_type
+      - name
       - description
-      - variables
-      - environmental_variables
-      - source_resource
+      - identifiers
+      - same_as
+      - url
+      - email
+
+  Person:
+    is_a: Agent
+    class_uri: schema:Person
+    exact_mappings:
+      - biolink:Person
+      - prov:Person
+    description: >-
+      A human agent, such as a researcher, curator, contact, PI, or contributor.
+    slots:
+      - given_name
+      - family_name
+      - orcid
+      - affiliations
+
+  Organization:
+    is_a: Agent
+    class_uri: schema:Organization
+    exact_mappings:
+      - biolink:Organization
+      - prov:Organization
+    description: >-
+      An organization associated with HEW work, such as a university, NIH institute, agency,
+      funder, center, consortium, healthcare system, or community partner.
+    slots:
+      - ror_id
+      - organization_type
+      - parent_organization
+
+  SoftwareAgent:
+    is_a: Agent
+    class_uri: prov:SoftwareAgent
+    description: >-
+      A software system or AI agent that performs curation, extraction, analysis, or annotation.
+    slots:
+      - software_version
 
 slots:
   id:
     identifier: true
     range: uriorcurie
     required: true
-  name:
-    range: string
   title:
+    slot_uri: dcterms:title
+    range: string
+  name:
+    slot_uri: schema:name
     range: string
   description:
+    slot_uri: schema:description
     range: string
-  data_type:
-    range: string
-  unit:
-    range: string
-  mappings:
+  resource_type:
+    range: ResourceTypeEnum
+    required: true
+    description: >-
+      Catalog resource type. Each resource class pins the value it accepts, so the type and
+      the class cannot disagree.
+  url:
+    slot_uri: schema:url
+    range: uri
+  identifiers:
+    slot_uri: schema:identifier
     multivalued: true
+    range: string
+  same_as:
+    slot_uri: schema:sameAs
+    multivalued: true
+    range: uriorcurie
+  keywords:
+    slot_uri: schema:keywords
+    multivalued: true
+    range: string
+  themes:
+    multivalued: true
+    range: uriorcurie
+  status:
+    description: Catalog record lifecycle status.
+    range: CatalogStatusEnum
+  license:
+    slot_uri: dcterms:license
+    range: string
+  access_rights:
+    slot_uri: dcterms:accessRights
+    range: AccessRightsEnum
+  authors:
+    slot_uri: schema:author
+    description: >-
+      Ordered list of people or organizations credited as authors of the resource.
+    multivalued: true
+    range: Agent
+    inlined_as_list: true
+  contributors:
+    slot_uri: schema:contributor
+    multivalued: true
+    range: Agent
+    description: Agents who contributed to the resource, referenced by identifier.
+  contacts:
+    slot_uri: schema:contactPoint
+    multivalued: true
+    range: Agent
+    description: Agents to contact about the resource, referenced by identifier.
+  funding_sources:
+    slot_uri: schema:funding
+    multivalued: true
+    range: uriorcurie
+    description: Funding awards that supported the resource, referenced by identifier.
+  related_resources:
+    multivalued: true
+    range: uriorcurie
+  spatial_coverage:
+    slot_uri: dcterms:spatial
+    range: string
+    description: >-
+      Free-text spatial coverage. Geospatial resources add structured spatial_extent.
+  temporal_coverage:
+    slot_uri: dcterms:temporal
+    range: string
+  version:
+    range: string
+    slot_uri: schema:version
+  notes:
+    range: string
+  evidence_text:
+    range: string
+  generated_by:
+    slot_uri: prov:wasGeneratedBy
+    description: Project, software agent, or activity that generated the record.
+    range: uriorcurie
+  software_version:
+    slot_uri: schema:softwareVersion
+    range: string
+  input_variables:
+    multivalued: true
+    range: string
+  output_variables:
+    multivalued: true
+    range: string
+  data_dictionary:
+    range: DataDictionary
+    inlined: true
+  distributions:
+    slot_uri: dcat:distribution
+    multivalued: true
+    range: Distribution
+    inlined_as_list: true
+  media_type:
+    slot_uri: dcat:mediaType
+    range: string
+  format:
+    slot_uri: dcterms:format
+    range: string
+  source_resource:
     range: uriorcurie
   variables:
     multivalued: true
     range: Variable
     inlined_as_list: true
-  environmental_variables:
+  data_type:
+    range: string
+  unit:
+    range: string
+  concept_mappings:
     multivalued: true
-    range: EnvironmentalVariable
-    inlined_as_list: true
-  source_resource:
     range: uriorcurie
+    description: >-
+      Ontology or vocabulary terms that the variable or construct maps to, such as ENVO, ECTO,
+      CHEBI, LOINC, or SNOMED CT.
+  location_id:
+    range: uriorcurie
+    description: >-
+      Stable identifier for a geographic location when available, for example a GeoNames,
+      Wikidata, GAZ, or other authoritative gazetteer identifier.
+  location_type:
+    range: GeographicLocationTypeEnum
+  latitude:
+    slot_uri: biolink:latitude
+    range: float
+    minimum_value: -90
+    maximum_value: 90
+  longitude:
+    slot_uri: biolink:longitude
+    range: float
+    minimum_value: -180
+    maximum_value: 180
+  geographic_identifiers:
+    multivalued: true
+    range: uriorcurie
+    description: >-
+      Additional identifiers for the named geographic entity, such as GeoNames, Wikidata,
+      GAZ, GNIS, or other authoritative geographic identifiers.
+  environmental_context:
+    multivalued: true
+    range: uriorcurie
+    description: >-
+      Ontology identifiers describing environmental features, systems, biomes, or materials
+      associated with a location or extent; ENVO terms are preferred where applicable.
+  agent_type:
+    designates_type: true
+    description: >-
+      Concrete agent class (Person, Organization, or SoftwareAgent) for an inlined agent,
+      used to select its schema during validation and serialization.
+    range: string
+    required: true
+  email:
+    slot_uri: schema:email
+    range: string
+  given_name:
+    slot_uri: schema:givenName
+    range: string
+  family_name:
+    slot_uri: schema:familyName
+    range: string
+  orcid:
+    range: uriorcurie
+  ror_id:
+    range: uriorcurie
+  affiliations:
+    slot_uri: schema:affiliation
+    multivalued: true
+    range: Organization
+  organization_type:
+    range: OrganizationTypeEnum
+  parent_organization:
+    slot_uri: schema:parentOrganization
+    range: Organization
+
+enums:
+  ResourceTypeEnum:
+    description: Catalog resource types. Each value corresponds to one resource class.
+    permissible_values:
+      literature:
+        description: LiteratureResource
+      dataset:
+        description: DatasetResource
+      exposome_dataset:
+        description: DatasetResource with exposome content
+      survey_instrument:
+        description: SurveyInstrument
+      survey_dataset:
+        description: SurveyDataset
+      cohort:
+        description: CohortResource (extension)
+      geospatial_dataset:
+        description: GeospatialResource (extension)
+      software_code_library:
+        description: SoftwareResource (extension)
+      model:
+        description: ModelResource (extension)
+      tool:
+        description: ToolResource (extension)
+      resource_collection:
+        description: ResourceCollection (extension)
+      other:
+  CatalogStatusEnum:
+    permissible_values:
+      draft:
+      active:
+      archived:
+  AccessRightsEnum:
+    permissible_values:
+      public:
+      registered_access:
+      controlled_access:
+      embargoed:
+      restricted:
+      unknown:
+  GeographicLocationTypeEnum:
+    permissible_values:
+      named_place:
+      point:
+      administrative_area:
+      study_area:
+      observation_location:
+      exposure_location:
+      other:
+  OrganizationTypeEnum:
+    permissible_values:
+      university:
+      nih_institute_or_center:
+      federal_agency:
+      state_agency:
+      local_agency:
+      non_governmental_organization:
+      community_organization:
+      healthcare_system:
+      research_institute:
+      consortium:
+      private_company:
+      funder:
+      other:

@@ -1,4 +1,4 @@
 assertion_policy: catalog_assertions_only
 subject: HEWRES:publication-heat-health
 predicate: about_exposure
-object: ECTO:example_extreme_heat_exposure
+object: ecto:example_extreme_heat_exposure

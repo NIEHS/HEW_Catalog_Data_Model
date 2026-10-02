@@ -1,9 +1,13 @@
 # Expansion plan
 
-## Phase 1: Catalog and Dataverse
+The core schema (`hew.yaml`) covers Phase 1. Phases 2–5 are already drafted as
+extension modules composed in `hew-extended.yaml`; each phase moves into active
+use, and into the core where needed, when a catalog workflow depends on it.
 
-Stabilize resource, annotation, survey, tool, collection, provenance, and
-Dataverse projection support.
+## Phase 1: Core catalog and Dataverse
+
+Stabilize publications with systematic-review annotations, survey instruments
+and survey datasets, authorship, and the Dataverse publication projection.
 
 ## Phase 2: Exposome compatibility
 
@@ -12,7 +16,7 @@ processing levels, and ENVO/ECTO/OMOP mappings.
 
 ## Phase 3: Covariate workflows
 
-Catalog Amadeus and other software resources, and describe derivation methods,
+Catalog tools, collections, Amadeus and other software resources, and describe derivation methods,
 parameters, source data, spatial joins, temporal windows, CRS, and outputs.
 
 ## Phase 4: Optional exposure estimates

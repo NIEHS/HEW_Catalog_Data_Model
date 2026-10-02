@@ -1,0 +1,23 @@
+id: https://w3id.org/hew/schema
+name: hew
+title: Health and Extreme Weather Data Commons Schema (core)
+description: >-
+  Core HEW catalog model: publications with systematic-review coding, and survey
+  instruments with their datasets. Extension modules are composed in
+  hew-extended.yaml.
+license: CC-BY-4.0
+version: 2.0.0
+
+prefixes:
+  HEW: https://w3id.org/hew/
+  linkml: https://w3id.org/linkml/
+
+default_prefix: HEW
+default_range: string
+
+imports:
+  - linkml:types
+  - modules/hew_core
+  - modules/hew_review_coding
+  - modules/hew_publication
+  - modules/hew_survey

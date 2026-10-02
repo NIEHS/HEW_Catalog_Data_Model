@@ -12,7 +12,7 @@ temporal_extent:
   end_time: '2020-12-31T23:59:59Z'
   temporal_resolution: P1D
 spatial_resolution: 1 km
-coordinate_reference_system: EPSG:4326
+coordinate_reference_system: epsg:4326
 spatial_extent:
   named_locations:
     - location_id: geonames:6252001
@@ -83,28 +83,5 @@ data_dictionary:
       name: tmax
       title: Daily maximum temperature
       description: Daily maximum near-surface air temperature.
-      data_type: float
-      unit: degree Celsius
-  environmental_variables:
-    - id: HEWVAR:00000001
-      name: tmax
-      title: Daily Maximum Air Temperature
-      data_type: float
-      unit: UCUM:Cel
-      measured_property: envo:01000254
-      aggregation_method: maximum
-      spatial_support:
-        support_type: raster_grid_cell
-        spatial_resolution: 1 km
-        geometry_type: polygon
-        coordinate_reference_system_uri: epsg:4326
-      temporal_support:
-        temporal_resolution: P1D
-        aggregation_window: P1D
-        temporal_alignment: end
-    - id: HEWVAR:00000002
-      name: heat_index
-      title: Heat index
-      description: Apparent temperature derived from temperature and relative humidity.
       data_type: float
       unit: degree Celsius
