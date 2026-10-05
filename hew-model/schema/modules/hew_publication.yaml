@@ -33,7 +33,6 @@ classes:
       - citation
       - publication_type
       - journal
-      - publication_date
       - study_objective
       - annotations
     slot_usage:
@@ -59,8 +58,3 @@ slots:
   journal:
     slot_uri: schema:isPartOf
     range: string
-  publication_date:
-    slot_uri: schema:datePublished
-    range: string
-    pattern: ^\d{4}(-\d{2}(-\d{2})?)?$
-    description: Publication date as YYYY, YYYY-MM, or YYYY-MM-DD.

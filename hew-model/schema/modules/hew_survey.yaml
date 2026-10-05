@@ -28,8 +28,22 @@ classes:
       - survey_constructs
       - survey_questions
       - target_population
+      - population_tags
+      - administered_by
       - administration_mode
+      - administration_time
+      - ease_of_use
+      - electronic_data_capture
+      - readability_level
+      - question_count
       - language
+      - cde_integration
+      - adapted_from
+      - research_program
+      - event_types
+      - exposure_agents
+      - health_impacts
+      - special_topics
     slot_usage:
       resource_type:
         range: string
@@ -92,13 +106,59 @@ slots:
     description: Questions in instrument order.
   target_population:
     range: Population
+  population_tags:
+    multivalued: true
+    range: uriorcurie
+    description: Controlled population tags selected for the resource.
+  administered_by:
+    range: AdministeredByEnum
   administration_mode:
     range: AdministrationModeEnum
+  administration_time:
+    range: string
+    description: Expected time required to complete or administer the resource.
+  ease_of_use:
+    range: EaseOfUseEnum
+  electronic_data_capture:
+    range: ElectronicDataCaptureEnum
+  readability_level:
+    range: float
+    description: Flesch-Kincaid grade level, when available.
+  question_count:
+    range: string
+    description: Number or number range of questions in the instrument.
   language:
     slot_uri: dcterms:language
     range: string
     pattern: ^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$
     description: BCP 47 language tag, such as en or es-MX.
+  cde_integration:
+    range: boolean
+    description: Whether the instrument integrates Common Data Elements.
+  adapted_from:
+    multivalued: true
+    range: uriorcurie
+    description: Resources, templates, or instruments from which this resource was adapted.
+  research_program:
+    multivalued: true
+    range: uriorcurie
+    description: Research programs or funding initiatives associated with the resource.
+  event_types:
+    multivalued: true
+    range: uriorcurie
+    description: Event or disaster concepts for which the resource is appropriate.
+  exposure_agents:
+    multivalued: true
+    range: uriorcurie
+    description: Exposure-agent concepts addressed by the resource.
+  health_impacts:
+    multivalued: true
+    range: uriorcurie
+    description: Health-impact concepts addressed by the resource.
+  special_topics:
+    multivalued: true
+    range: uriorcurie
+    description: Special-topic concepts addressed by the resource.
   position:
     range: integer
     minimum_value: 1
@@ -129,6 +189,16 @@ slots:
     range: Population
 
 enums:
+  AdministeredByEnum:
+    permissible_values:
+      medical_professional:
+      parent_or_teacher:
+      researcher_or_professional_interviewer:
+      self:
+      trained_non_expert:
+      untrained_non_expert:
+      not_applicable:
+      other:
   AdministrationModeEnum:
     permissible_values:
       web:
@@ -137,6 +207,19 @@ enums:
       paper:
       mail:
       mixed_mode:
+      other:
+  EaseOfUseEnum:
+    permissible_values:
+      easy:
+      moderate:
+      difficult:
+  ElectronicDataCaptureEnum:
+    permissible_values:
+      epi_info:
+      github:
+      qualtrics:
+      redcap:
+      not_applicable:
       other:
   ResponseTypeEnum:
     permissible_values:

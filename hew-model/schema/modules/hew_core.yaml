@@ -62,8 +62,10 @@ classes:
       - id
       - resource_type
       - title
+      - subtitle
       - description
       - url
+      - publication_date
       - identifiers
       - same_as
       - keywords
@@ -76,6 +78,8 @@ classes:
       - contacts
       - funding_sources
       - related_resources
+      - source_organization
+      - distributions
       - spatial_coverage
       - temporal_coverage
 
@@ -89,7 +93,6 @@ classes:
       geospatial, cohort) are subclasses.
     slots:
       - data_dictionary
-      - distributions
 
   Distribution:
     class_uri: dcat:Distribution
@@ -202,6 +205,9 @@ slots:
   title:
     slot_uri: dcterms:title
     range: string
+  subtitle:
+    range: string
+    description: Secondary title or subtitle supplied by the resource owner.
   name:
     slot_uri: schema:name
     range: string
@@ -217,6 +223,11 @@ slots:
   url:
     slot_uri: schema:url
     range: uri
+  publication_date:
+    slot_uri: schema:datePublished
+    range: string
+    pattern: ^\d{4}(-\d{2}(-\d{2})?)?$
+    description: Date the resource was originally published or posted.
   identifiers:
     slot_uri: schema:identifier
     multivalued: true
@@ -266,6 +277,14 @@ slots:
   related_resources:
     multivalued: true
     range: uriorcurie
+  source_organization:
+    range: Organization
+    description: Organization where the resource was created or originated.
+  distributions:
+    slot_uri: dcat:distribution
+    multivalued: true
+    range: Distribution
+    inlined_as_list: true
   spatial_coverage:
     slot_uri: dcterms:spatial
     range: string

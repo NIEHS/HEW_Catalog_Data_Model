@@ -147,9 +147,10 @@ own slots, and every concrete subclass pins its `resource_type` value.
 | `CohortResource`, `SoftwareResource`, `ModelResource`, `ToolResource`, `ResourceCollection` | `hew_ext_resources` | `cohort`, `software_code_library`, `model`, `tool`, `resource_collection` |
 
 - `LiteratureResource` adds DOI, PMID, PMCID, abstract, citation, publication
-  type, journal, `publication_date` (`YYYY`, `YYYY-MM`, or `YYYY-MM-DD`), study
-  objective, and review annotations.
-- `DatasetResource` adds a `DataDictionary` of `Variable`s and `Distribution`s.
+  type, journal, study objective, and review annotations. `publication_date` is
+  shared by all resources and accepts `YYYY`, `YYYY-MM`, or `YYYY-MM-DD`.
+- `DatasetResource` adds a `DataDictionary` of `Variable`s. `Distribution`s are
+  shared by all resources so instruments can expose uploaded files as well.
 - `status` is the catalog record lifecycle: `draft`, `active`, or `archived`.
 
 See `hew-model/examples/publication_resource.yaml` for a publication record.
@@ -216,6 +217,15 @@ SurveyInstrument
                          construct          -> SurveyConstruct
                          response_variables -> Variable
   target_population -> Population
+  population_tags   -> controlled population concepts
+  source_organization -> Organization
+  distributions     -> Distribution
+
+  administered_by, administration_mode, administration_time
+  ease_of_use, electronic_data_capture, readability_level
+  question_count, language, cde_integration
+  adapted_from, research_program
+  event_types, exposure_agents, health_impacts, special_topics
 
 SurveyDataset (a DatasetResource)
   survey_instruments -> SurveyInstrument
@@ -225,8 +235,10 @@ SurveyDataset (a DatasetResource)
 
 `response_variables` links each question to the dataset variables that hold its
 answers, so an instrument and the data collected with it can be joined.
-`administration_mode` uses `AdministrationModeEnum`, `response_type` uses
-`ResponseTypeEnum`, and `language` is a BCP 47 tag. See
+`administration_mode` uses `AdministrationModeEnum`, `administered_by` uses
+`AdministeredByEnum`, `ease_of_use` uses `EaseOfUseEnum`, and
+`electronic_data_capture` uses `ElectronicDataCaptureEnum`. `response_type`
+uses `ResponseTypeEnum`, and `language` is a BCP 47 tag. See
 `hew-model/examples/survey_instrument.yaml` and `survey_dataset.yaml`.
 
 ## 8. Geospatial and exposure extension
@@ -458,7 +470,8 @@ extensions above. Breaking changes for existing records:
   `resource_collection` were added.
 - `status` on resources uses `CatalogStatusEnum` (`draft`, `active`, `archived`);
   `ProjectStatusEnum` applies only to programs and projects.
-- `publication_date` accepts `YYYY`, `YYYY-MM`, or `YYYY-MM-DD`.
+- `publication_date` is shared by all resources and accepts `YYYY`, `YYYY-MM`,
+  or `YYYY-MM-DD`.
 - `authors` are inlined agents with a required `agent_type`.
 - `ExposureAnnotation`, `HealthImpactAnnotation`, and `SpecialTopicAnnotation` are
   merged into `ConceptAnnotation`; the slot names are unchanged.
