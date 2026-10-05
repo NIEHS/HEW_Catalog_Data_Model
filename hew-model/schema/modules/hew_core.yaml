@@ -316,11 +316,6 @@ slots:
   data_dictionary:
     range: DataDictionary
     inlined: true
-  distributions:
-    slot_uri: dcat:distribution
-    multivalued: true
-    range: Distribution
-    inlined_as_list: true
   media_type:
     slot_uri: dcat:mediaType
     range: string
