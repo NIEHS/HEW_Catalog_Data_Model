@@ -194,7 +194,7 @@ enums:
       medical_professional:
       parent_or_teacher:
       researcher_or_professional_interviewer:
-      self:
+      self_administered:
       trained_non_expert:
       untrained_non_expert:
       not_applicable:
