@@ -27,5 +27,13 @@ survey_questions:
     response_variables:
       - HEWVAR:heat-symptom
 target_population: HEWPOP:adult-community-sample
+geographic_locations:
+  - united_states
+geographic_features:
+  - urban
+exposure_agents:
+  - ECTO:0000147
+health_impacts:
+  - MONDO:0005010
 administration_mode: web
 language: en

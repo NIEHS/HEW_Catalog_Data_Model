@@ -30,10 +30,24 @@ prefixes:
   AGENT: https://w3id.org/hew/agent/
   UCUM: https://units-of-measurement.org/
   biolink: https://w3id.org/biolink/vocab/
+  ECTO: http://purl.obolibrary.org/obo/ECTO_
   ecto: http://purl.obolibrary.org/obo/ECTO_
+  ENVO: http://purl.obolibrary.org/obo/ENVO_
   envo: http://purl.obolibrary.org/obo/ENVO_
+  MONDO: http://purl.obolibrary.org/obo/MONDO_
   mondo: http://purl.obolibrary.org/obo/MONDO_
+  HP: http://purl.obolibrary.org/obo/HP_
   hp: http://purl.obolibrary.org/obo/HP_
+  CHEBI: http://purl.obolibrary.org/obo/CHEBI_
+  chebi: http://purl.obolibrary.org/obo/CHEBI_
+  NCIT: http://purl.obolibrary.org/obo/NCIT_
+  ncit: http://purl.obolibrary.org/obo/NCIT_
+  MESH: http://id.nlm.nih.gov/mesh/
+  mesh: http://id.nlm.nih.gov/mesh/
+  LOINC: http://loinc.org/rdf/
+  loinc: http://loinc.org/rdf/
+  SNOMED: http://snomed.info/id/
+  snomed: http://snomed.info/id/
   dcterms: http://purl.org/dc/terms/
   schema: http://schema.org/
   prov: http://www.w3.org/ns/prov#
@@ -396,6 +410,14 @@ slots:
   parent_organization:
     slot_uri: schema:parentOrganization
     range: Organization
+  geographic_locations:
+    multivalued: true
+    range: GeographicLocationEnum
+    description: Broad geographic locations (continents, global, or country-level).
+  geographic_features:
+    multivalued: true
+    range: GeographicFeatureEnum
+    description: Resource-level or location-level geographic features such as urban or rural.
 
 enums:
   ResourceTypeEnum:
@@ -460,4 +482,37 @@ enums:
       consortium:
       private_company:
       funder:
+      other:
+  GeographicLocationEnum:
+    description: Broad geographic locations (continents or global regions).
+    permissible_values:
+      global_or_unspecified_location:
+      africa:
+      antarctica:
+      asia:
+      australasia:
+      central_south_america:
+      europe:
+      non_us_north_america:
+      united_states:
+  GeographicFeatureEnum:
+    description: Resource-level or location-level geographic features.
+    permissible_values:
+      general_geographic_feature:
+      built_environment:
+      desert:
+      forest:
+      freshwater:
+      grassland:
+      island:
+      mountain:
+      ocean_coastal:
+      polar:
+      rainforest:
+      rural:
+      temperate:
+      tropical:
+      urban:
+      valley:
+      wetland:
       other:

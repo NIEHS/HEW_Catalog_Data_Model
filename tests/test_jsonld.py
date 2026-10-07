@@ -87,6 +87,10 @@ class TestJsonLdRoundTrip(unittest.TestCase):
             "id": "HEWRES:heat-health-survey",
             "title": "Heat and health symptoms survey",
             "resource_type": "survey_instrument",
+            "geographic_locations": ["united_states"],
+            "geographic_features": ["urban"],
+            "exposure_agents": ["ECTO:0000147"],
+            "health_impacts": ["MONDO:0005010"],
             "survey_questions": [
                 {
                     "id": "HEWQUESTION:heat-symptoms-01",
@@ -108,6 +112,8 @@ class TestJsonLdRoundTrip(unittest.TestCase):
             URIRef("https://w3id.org/hew/question/heat-symptoms-01"),
             set(graph.subjects()),
         )
+        self.assertIn("ECTO", document["@context"])
+        self.assertIn("MONDO", document["@context"])
         self.assertTrue(round_trip_jsonld(document))
 
 

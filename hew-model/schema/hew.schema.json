@@ -13,6 +13,21 @@
             "title": "AccessRightsEnum",
             "type": "string"
         },
+        "AdministeredByEnum": {
+            "description": "",
+            "enum": [
+                "medical_professional",
+                "parent_or_teacher",
+                "researcher_or_professional_interviewer",
+                "self_administered",
+                "trained_non_expert",
+                "untrained_non_expert",
+                "not_applicable",
+                "other"
+            ],
+            "title": "AdministeredByEnum",
+            "type": "string"
+        },
         "AdministrationModeEnum": {
             "description": "",
             "enum": [
@@ -379,6 +394,14 @@
                         "null"
                     ]
                 },
+                "publication_date": {
+                    "description": "Date the resource was originally published or posted.",
+                    "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "related_resources": {
                     "items": {
                         "type": "string"
@@ -401,6 +424,13 @@
                         "null"
                     ]
                 },
+                "source_organization": {
+                    "description": "Organization where the resource was created or originated.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "spatial_coverage": {
                     "description": "Free-text spatial coverage. Geospatial resources add structured spatial_extent.",
                     "type": [
@@ -411,6 +441,13 @@
                 "status": {
                     "$ref": "#/$defs/CatalogStatusEnum",
                     "description": "Catalog record lifecycle status."
+                },
+                "subtitle": {
+                    "description": "Secondary title or subtitle supplied by the resource owner.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
                 },
                 "temporal_coverage": {
                     "type": [
@@ -502,8 +539,31 @@
             "title": "Distribution",
             "type": "object"
         },
-        "GeographicFeatureEnum": {
+        "EaseOfUseEnum": {
             "description": "",
+            "enum": [
+                "easy",
+                "moderate",
+                "difficult"
+            ],
+            "title": "EaseOfUseEnum",
+            "type": "string"
+        },
+        "ElectronicDataCaptureEnum": {
+            "description": "",
+            "enum": [
+                "epi_info",
+                "github",
+                "qualtrics",
+                "redcap",
+                "not_applicable",
+                "other"
+            ],
+            "title": "ElectronicDataCaptureEnum",
+            "type": "string"
+        },
+        "GeographicFeatureEnum": {
+            "description": "Resource-level or location-level geographic features.",
             "enum": [
                 "general_geographic_feature",
                 "built_environment",
@@ -588,7 +648,7 @@
             "type": "object"
         },
         "GeographicLocationEnum": {
-            "description": "",
+            "description": "Broad geographic locations (continents or global regions).",
             "enum": [
                 "global_or_unspecified_location",
                 "africa",
@@ -632,6 +692,7 @@
                     ]
                 },
                 "geographic_features": {
+                    "description": "Resource-level or location-level geographic features such as urban or rural.",
                     "items": {
                         "$ref": "#/$defs/GeographicFeatureEnum"
                     },
@@ -641,6 +702,7 @@
                     ]
                 },
                 "geographic_locations": {
+                    "description": "Broad geographic locations (continents, global, or country-level).",
                     "items": {
                         "$ref": "#/$defs/GeographicLocationEnum"
                     },
@@ -734,6 +796,15 @@
                         "null"
                     ]
                 },
+                "distributions": {
+                    "items": {
+                        "$ref": "#/$defs/Distribution"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
                 "funding_sources": {
                     "description": "Funding awards that supported the resource, referenced by identifier.",
                     "items": {
@@ -771,6 +842,14 @@
                         "null"
                     ]
                 },
+                "publication_date": {
+                    "description": "Date the resource was originally published or posted.",
+                    "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "related_resources": {
                     "items": {
                         "type": "string"
@@ -793,6 +872,13 @@
                         "null"
                     ]
                 },
+                "source_organization": {
+                    "description": "Organization where the resource was created or originated.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "spatial_coverage": {
                     "description": "Free-text spatial coverage. Geospatial resources add structured spatial_extent.",
                     "type": [
@@ -803,6 +889,13 @@
                 "status": {
                     "$ref": "#/$defs/CatalogStatusEnum",
                     "description": "Catalog record lifecycle status."
+                },
+                "subtitle": {
+                    "description": "Secondary title or subtitle supplied by the resource owner.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
                 },
                 "temporal_coverage": {
                     "type": [
@@ -1085,6 +1178,15 @@
                         "null"
                     ]
                 },
+                "distributions": {
+                    "items": {
+                        "$ref": "#/$defs/Distribution"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
                 "doi": {
                     "type": [
                         "string",
@@ -1147,7 +1249,7 @@
                     ]
                 },
                 "publication_date": {
-                    "description": "Publication date as YYYY, YYYY-MM, or YYYY-MM-DD.",
+                    "description": "Date the resource was originally published or posted.",
                     "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$",
                     "type": [
                         "string",
@@ -1180,6 +1282,13 @@
                         "null"
                     ]
                 },
+                "source_organization": {
+                    "description": "Organization where the resource was created or originated.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "spatial_coverage": {
                     "description": "Free-text spatial coverage. Geospatial resources add structured spatial_extent.",
                     "type": [
@@ -1192,6 +1301,13 @@
                     "description": "Catalog record lifecycle status."
                 },
                 "study_objective": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "subtitle": {
+                    "description": "Secondary title or subtitle supplied by the resource owner.",
                     "type": [
                         "string",
                         "null"
@@ -1770,6 +1886,26 @@
                         "null"
                     ]
                 },
+                "geographic_features": {
+                    "description": "Resource-level or location-level geographic features such as urban or rural.",
+                    "items": {
+                        "$ref": "#/$defs/GeographicFeatureEnum"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "geographic_locations": {
+                    "description": "Broad geographic locations (continents, global, or country-level).",
+                    "items": {
+                        "$ref": "#/$defs/GeographicLocationEnum"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
                 "id": {
                     "type": "string"
                 },
@@ -1803,6 +1939,14 @@
                         "null"
                     ]
                 },
+                "publication_date": {
+                    "description": "Date the resource was originally published or posted.",
+                    "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "related_resources": {
                     "items": {
                         "type": "string"
@@ -1826,6 +1970,13 @@
                         "null"
                     ]
                 },
+                "source_organization": {
+                    "description": "Organization where the resource was created or originated.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "spatial_coverage": {
                     "description": "Free-text spatial coverage. Geospatial resources add structured spatial_extent.",
                     "type": [
@@ -1836,6 +1987,13 @@
                 "status": {
                     "$ref": "#/$defs/CatalogStatusEnum",
                     "description": "Catalog record lifecycle status."
+                },
+                "subtitle": {
+                    "description": "Secondary title or subtitle supplied by the resource owner.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
                 },
                 "survey_instruments": {
                     "items": {
@@ -1889,8 +2047,28 @@
                 "access_rights": {
                     "$ref": "#/$defs/AccessRightsEnum"
                 },
+                "adapted_from": {
+                    "description": "Resources, templates, or instruments from which this resource was adapted.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "administered_by": {
+                    "$ref": "#/$defs/AdministeredByEnum"
+                },
                 "administration_mode": {
                     "$ref": "#/$defs/AdministrationModeEnum"
+                },
+                "administration_time": {
+                    "description": "Expected time required to complete or administer the resource.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
                 },
                 "authors": {
                     "description": "Ordered list of people or organizations credited as authors of the resource.",
@@ -1909,6 +2087,13 @@
                     },
                     "type": [
                         "array",
+                        "null"
+                    ]
+                },
+                "cde_integration": {
+                    "description": "Whether the instrument integrates Common Data Elements.",
+                    "type": [
+                        "boolean",
                         "null"
                     ]
                 },
@@ -1938,8 +2123,73 @@
                         "null"
                     ]
                 },
+                "distributions": {
+                    "items": {
+                        "$ref": "#/$defs/Distribution"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "ease_of_use": {
+                    "$ref": "#/$defs/EaseOfUseEnum"
+                },
+                "electronic_data_capture": {
+                    "$ref": "#/$defs/ElectronicDataCaptureEnum"
+                },
+                "event_types": {
+                    "description": "Event or disaster concepts for which the resource is appropriate.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "exposure_agents": {
+                    "description": "Exposure-agent concepts addressed by the resource.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
                 "funding_sources": {
                     "description": "Funding awards that supported the resource, referenced by identifier.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "geographic_features": {
+                    "description": "Resource-level or location-level geographic features such as urban or rural.",
+                    "items": {
+                        "$ref": "#/$defs/GeographicFeatureEnum"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "geographic_locations": {
+                    "description": "Broad geographic locations (continents, global, or country-level).",
+                    "items": {
+                        "$ref": "#/$defs/GeographicLocationEnum"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "health_impacts": {
+                    "description": "Health-impact concepts addressed by the resource.",
                     "items": {
                         "type": "string"
                     },
@@ -1983,7 +2233,49 @@
                         "null"
                     ]
                 },
+                "population_tags": {
+                    "description": "Controlled population tags selected for the resource.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "publication_date": {
+                    "description": "Date the resource was originally published or posted.",
+                    "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "question_count": {
+                    "description": "Number or number range of questions in the instrument.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "readability_level": {
+                    "description": "Flesch-Kincaid grade level, when available.",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
                 "related_resources": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "research_program": {
+                    "description": "Research programs or funding initiatives associated with the resource.",
                     "items": {
                         "type": "string"
                     },
@@ -2006,6 +2298,13 @@
                         "null"
                     ]
                 },
+                "source_organization": {
+                    "description": "Organization where the resource was created or originated.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
                 "spatial_coverage": {
                     "description": "Free-text spatial coverage. Geospatial resources add structured spatial_extent.",
                     "type": [
@@ -2013,9 +2312,26 @@
                         "null"
                     ]
                 },
+                "special_topics": {
+                    "description": "Special-topic concepts addressed by the resource.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
                 "status": {
                     "$ref": "#/$defs/CatalogStatusEnum",
                     "description": "Catalog record lifecycle status."
+                },
+                "subtitle": {
+                    "description": "Secondary title or subtitle supplied by the resource owner.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
                 },
                 "survey_constructs": {
                     "items": {

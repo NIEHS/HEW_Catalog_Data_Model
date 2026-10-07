@@ -25,6 +25,18 @@
     "access_statement": {
       "@id": "access_statement"
     },
+    "adapted_from": {
+      "@type": "xsd:anyURI",
+      "@id": "adapted_from"
+    },
+    "administered_by": {
+      "@context": {
+        "text": "skos:notation",
+        "description": "skos:prefLabel",
+        "meaning": "@id"
+      },
+      "@id": "administered_by"
+    },
     "administration_mode": {
       "@context": {
         "text": "skos:notation",
@@ -32,6 +44,9 @@
         "meaning": "@id"
       },
       "@id": "administration_mode"
+    },
+    "administration_time": {
+      "@id": "administration_time"
     },
     "administrative_level": {
       "@id": "administrative_level"
@@ -118,6 +133,10 @@
     },
     "calendar": {
       "@id": "calendar"
+    },
+    "cde_integration": {
+      "@type": "xsd:boolean",
+      "@id": "cde_integration"
     },
     "centroid": {
       "@type": "@id",
@@ -236,9 +255,25 @@
     "doi": {
       "@id": "doi"
     },
+    "ease_of_use": {
+      "@context": {
+        "text": "skos:notation",
+        "description": "skos:prefLabel",
+        "meaning": "@id"
+      },
+      "@id": "ease_of_use"
+    },
     "east": {
       "@type": "xsd:float",
       "@id": "east"
+    },
+    "electronic_data_capture": {
+      "@context": {
+        "text": "skos:notation",
+        "description": "skos:prefLabel",
+        "meaning": "@id"
+      },
+      "@id": "electronic_data_capture"
     },
     "email": {
       "@id": "schema:email"
@@ -259,11 +294,19 @@
       "@type": "@id",
       "@id": "environmental_variables"
     },
+    "event_types": {
+      "@type": "xsd:anyURI",
+      "@id": "event_types"
+    },
     "evidence_text": {
       "@id": "evidence_text"
     },
     "example_units": {
       "@id": "example_units"
+    },
+    "exposure_agents": {
+      "@type": "xsd:anyURI",
+      "@id": "exposure_agents"
     },
     "exposure_annotations": {
       "@type": "@id",
@@ -382,6 +425,10 @@
     "health_impact_annotations": {
       "@type": "@id",
       "@id": "health_impact_annotations"
+    },
+    "health_impacts": {
+      "@type": "xsd:anyURI",
+      "@id": "health_impacts"
     },
     "id": "@id",
     "identifiers": {
@@ -605,6 +652,10 @@
       "@type": "xsd:anyURI",
       "@id": "population_or_cohort"
     },
+    "population_tags": {
+      "@type": "xsd:anyURI",
+      "@id": "population_tags"
+    },
     "position": {
       "@type": "xsd:integer",
       "@id": "position"
@@ -648,6 +699,13 @@
       "@type": "@id",
       "@id": "quantitative_spatial_resolution"
     },
+    "question_count": {
+      "@id": "question_count"
+    },
+    "readability_level": {
+      "@type": "xsd:float",
+      "@id": "readability_level"
+    },
     "reference_type": {
       "@context": {
         "text": "skos:notation",
@@ -671,6 +729,10 @@
     "repository": {
       "@type": "xsd:anyURI",
       "@id": "schema:codeRepository"
+    },
+    "research_program": {
+      "@type": "xsd:anyURI",
+      "@id": "research_program"
     },
     "resolution_axis": {
       "@context": {
@@ -761,6 +823,10 @@
       "@type": "xsd:anyURI",
       "@id": "source_dataset"
     },
+    "source_organization": {
+      "@type": "@id",
+      "@id": "source_organization"
+    },
     "source_project": {
       "@type": "xsd:anyURI",
       "@id": "source_project"
@@ -806,6 +872,10 @@
       "@type": "@id",
       "@id": "special_topic_annotations"
     },
+    "special_topics": {
+      "@type": "xsd:anyURI",
+      "@id": "special_topics"
+    },
     "specified_text": {
       "@id": "specified_text"
     },
@@ -843,6 +913,9 @@
     "subject": {
       "@type": "xsd:anyURI",
       "@id": "schema:about"
+    },
+    "subtitle": {
+      "@id": "subtitle"
     },
     "support_type": {
       "@context": {
@@ -1137,10 +1210,24 @@
     "ORG": "https://w3id.org/hew/organization/",
     "AGENT": "https://w3id.org/hew/agent/",
     "UCUM": "https://units-of-measurement.org/",
+    "ECTO": "http://purl.obolibrary.org/obo/ECTO_",
     "ecto": "http://purl.obolibrary.org/obo/ECTO_",
+    "ENVO": "http://purl.obolibrary.org/obo/ENVO_",
     "envo": "http://purl.obolibrary.org/obo/ENVO_",
+    "MONDO": "http://purl.obolibrary.org/obo/MONDO_",
     "mondo": "http://purl.obolibrary.org/obo/MONDO_",
+    "HP": "http://purl.obolibrary.org/obo/HP_",
     "hp": "http://purl.obolibrary.org/obo/HP_",
+    "CHEBI": "http://purl.obolibrary.org/obo/CHEBI_",
+    "chebi": "http://purl.obolibrary.org/obo/CHEBI_",
+    "NCIT": "http://purl.obolibrary.org/obo/NCIT_",
+    "ncit": "http://purl.obolibrary.org/obo/NCIT_",
+    "MESH": "http://id.nlm.nih.gov/mesh/",
+    "mesh": "http://id.nlm.nih.gov/mesh/",
+    "LOINC": "http://loinc.org/rdf/",
+    "loinc": "http://loinc.org/rdf/",
+    "SNOMED": "http://snomed.info/id/",
+    "snomed": "http://snomed.info/id/",
     "sf": "http://www.opengis.net/ont/sf#",
     "epsg": "http://www.opengis.net/def/crs/EPSG/0/",
     "geonames": "https://www.geonames.org/ontology#"

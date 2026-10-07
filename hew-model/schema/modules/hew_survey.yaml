@@ -29,6 +29,8 @@ classes:
       - survey_questions
       - target_population
       - population_tags
+      - geographic_locations
+      - geographic_features
       - administered_by
       - administration_mode
       - administration_time
@@ -82,6 +84,8 @@ classes:
     slots:
       - survey_instruments
       - population
+      - geographic_locations
+      - geographic_features
     slot_usage:
       resource_type:
         range: string

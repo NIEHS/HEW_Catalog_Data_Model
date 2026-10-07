@@ -168,12 +168,6 @@ slots:
     range: integer
   is_not_reported:
     range: boolean
-  geographic_locations:
-    multivalued: true
-    range: GeographicLocationEnum
-  geographic_features:
-    multivalued: true
-    range: GeographicFeatureEnum
   locations:
     multivalued: true
     range: GeographicLocation
@@ -249,34 +243,3 @@ enums:
       available_upon_request:
       unavailable:
       unknown:
-  GeographicLocationEnum:
-    permissible_values:
-      global_or_unspecified_location:
-      africa:
-      antarctica:
-      asia:
-      australasia:
-      central_south_america:
-      europe:
-      non_us_north_america:
-      united_states:
-  GeographicFeatureEnum:
-    permissible_values:
-      general_geographic_feature:
-      built_environment:
-      desert:
-      forest:
-      freshwater:
-      grassland:
-      island:
-      mountain:
-      ocean_coastal:
-      polar:
-      rainforest:
-      rural:
-      temperate:
-      tropical:
-      urban:
-      valley:
-      wetland:
-      other:
