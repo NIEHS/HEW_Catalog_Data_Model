@@ -1,0 +1,41 @@
+id: HEWRES:heat-health-survey
+title: Heat and health symptoms survey
+resource_type: survey_instrument
+aliases:
+  - Heat-related illness questionnaire
+  - Heat illness and asthma survey
+source_vocabularies:
+  - https://NIEHS.github.io/HEW_Measures/dist/
+survey_constructs:
+  - id: HEWCONSTRUCT:asthma-symptoms
+    name: Asthma symptoms
+    description: Self-reported asthma symptoms during heat exposure.
+    concept_mappings:
+      - https://NIEHS.github.io/HEW_Measures/dist/Asthma
+    aliases:
+      - asthma
+      - asthmatic symptoms
+    exact_mappings:
+      - HP:0002099
+    related_mappings:
+      - HEW:respiratory_impact
+    source_vocabularies:
+      - https://NIEHS.github.io/HEW_Measures/dist/
+survey_questions:
+  - id: HEWQUESTION:asthma-symptoms-01
+    position: 1
+    text: Did you experience asthma symptoms during the recent heat event?
+    response_type: single_choice
+    response_options:
+      - code: "1"
+        label: "Yes"
+      - code: "0"
+        label: "No"
+    construct: HEWCONSTRUCT:asthma-symptoms
+target_population: HEWPOP:adult-community-sample
+exposure_agents:
+  - ECTO:0000147
+health_impacts:
+  - HP:0002099
+administration_mode: web
+language: en

@@ -63,6 +63,19 @@ imports:
   - linkml:types
 
 classes:
+  ConceptMappingMixin:
+    mixin: true
+    description: >-
+      Shared concept metadata for controlled vocabularies and external taxonomies. This is
+      designed for reuse across resource types, concepts, and annotations, including
+      HEW_Measures-derived terms.
+    slots:
+      - aliases
+      - exact_mappings
+      - close_mappings
+      - related_mappings
+      - source_vocabularies
+
   HEWResource:
     abstract: true
     class_uri: schema:CreativeWork
@@ -352,6 +365,36 @@ slots:
     description: >-
       Ontology or vocabulary terms that the variable or construct maps to, such as ENVO, ECTO,
       CHEBI, LOINC, or SNOMED CT.
+  aliases:
+    multivalued: true
+    range: string
+    description: >-
+      Alternate labels or synonyms for a concept, variable, or coded term. These are useful
+      for facets, search indexing, and user-facing displays without changing the canonical id.
+  exact_mappings:
+    multivalued: true
+    range: uriorcurie
+    description: >-
+      Canonical equivalent concept identifiers from authoritative vocabularies or external
+      schemas such as MESH, MONDO, ENVO, HEW_Measures, or other ontology-backed resources.
+  close_mappings:
+    multivalued: true
+    range: uriorcurie
+    description: >-
+      Near-equivalent concept identifiers that are likely to be semantically aligned but may
+      require human review or interpretation.
+  related_mappings:
+    multivalued: true
+    range: uriorcurie
+    description: >-
+      Semantically related concept identifiers for broader, narrower, or associated concepts
+      used in search, graph navigation, or faceting.
+  source_vocabularies:
+    multivalued: true
+    range: uriorcurie
+    description: >-
+      Schema or vocabulary URIs that define the coding authority for a concept, such as the
+      standalone HEW_Measures vocabulary or another external taxonomy.
   location_id:
     range: uriorcurie
     description: >-

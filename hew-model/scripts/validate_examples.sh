@@ -14,6 +14,7 @@ linkml-validate "$EXTENDED"
 linkml-validate -s "$CORE" -C LiteratureResource "$EXAMPLES/publication_resource.yaml"
 linkml-validate -s "$CORE" -C LiteratureResource "$EXAMPLES/example_literature_annotation.yaml"
 linkml-validate -s "$CORE" -C SurveyInstrument "$EXAMPLES/survey_instrument.yaml"
+linkml-validate -s "$CORE" -C SurveyInstrument "$EXAMPLES/survey_measure_mappings.yaml"
 linkml-validate -s "$CORE" -C SurveyDataset "$EXAMPLES/survey_dataset.yaml"
 
 # Extensions.

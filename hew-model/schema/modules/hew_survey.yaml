@@ -20,6 +20,8 @@ imports:
 classes:
   SurveyInstrument:
     is_a: HEWResource
+    mixins:
+      - ConceptMappingMixin
     description: >-
       A questionnaire, interview guide, assessment instrument, scale, or protocol used to
       collect HEW-relevant survey data.
@@ -52,6 +54,8 @@ classes:
         equals_string: survey_instrument
 
   SurveyConstruct:
+    mixins:
+      - ConceptMappingMixin
     description: A construct, domain, or scale measured by a survey instrument.
     slots:
       - id

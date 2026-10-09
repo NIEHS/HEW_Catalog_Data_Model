@@ -1,0 +1,40 @@
+name: Generate schema artifacts
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+    paths:
+      - "hew-model/**/*.yaml"
+      - "hew-model/**/*.yml"
+  push:
+    branches:
+      - develop
+    paths:
+      - "hew-model/**/*.yaml"
+      - "hew-model/**/*.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python3 -m pip install -e .
+      - run: make validate
+      - run: make artifacts
+      - name: Prepare JSON-LD distribution
+        run: |
+          mkdir -p dist
+          cp hew-model/schema/hew.context.jsonld dist/hew.context.jsonld
+      - uses: actions/upload-artifact@v4
+        with:
+          name: hew-jsonld
+          path: dist/hew.context.jsonld
+          if-no-files-found: error

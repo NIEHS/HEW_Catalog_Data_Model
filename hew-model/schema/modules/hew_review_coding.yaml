@@ -53,6 +53,11 @@ classes:
     slots:
       - coded_concept
       - parent_concept
+      - aliases
+      - exact_mappings
+      - close_mappings
+      - related_mappings
+      - source_vocabularies
       - specified_text
       - evidence_text
       - coding_depth

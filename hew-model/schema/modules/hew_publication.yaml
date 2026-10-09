@@ -21,6 +21,8 @@ imports:
 classes:
   LiteratureResource:
     is_a: HEWResource
+    mixins:
+      - ConceptMappingMixin
     class_uri: schema:ScholarlyArticle
     close_mappings:
       - biolink:Publication

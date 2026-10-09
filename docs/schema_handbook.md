@@ -62,6 +62,31 @@ The model is meant to answer researcher questions such as:
 | Operational storage | MongoDB BSON documents |
 | Knowledge-graph export | JSON-LD/RDF, SHACL, and ontology mappings |
 
+### Controlled vocabularies and concept mappings
+
+HEW keeps the catalog schema and controlled vocabularies separate. The
+`HEW_Measures` project remains a standalone schema/vocabulary and is referenced
+by HEW resources via reusable concept-mapping metadata rather than imported into
+HEW directly.
+
+The shared concept-mapping contract is a `ConceptMappingMixin` in the core schema:
+
+- `aliases`: display synonyms and user-facing search terms
+- `exact_mappings`: canonical equivalent identifiers from external vocabularies
+- `close_mappings`: near-equivalent identifiers that may need review
+- `related_mappings`: related concepts for search, navigation, and faceting
+- `source_vocabularies`: the URI(s) of the taxonomy providing the mapping
+
+This is intentionally reusable across resource types, survey constructs,
+annotations, and future concept-bearing classes. It lets downstream services
+project clean facet values such as canonical label, aliases, and equivalent
+URIs/CURIEs without flattening a separate measure taxonomy into the HEW core
+schema.
+
+For a complete, schema-validated example showing a survey construct mapped to a
+standalone HEW_Measures term, see
+[`survey_measure_mappings.yaml`](../hew-model/examples/survey_measure_mappings.yaml).
+
 ## 2. Schema layout
 
 There are two validation entry points in `hew-model/schema/`:

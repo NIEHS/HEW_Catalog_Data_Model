@@ -34,6 +34,16 @@ Core examples (`publication_resource.yaml`, `example_literature_annotation.yaml`
 rest validate against `hew-extended.yaml`. See
 `scripts/validate_examples.sh` for the class each example is checked as.
 
+## External vocabulary integration
+
+`HEW_Measures` remains a standalone LinkML vocabulary and is not imported directly
+into the core HEW schema. Instead, HEW resource records refer to its terms using
+`aliases`, `exact_mappings`, `close_mappings`, `related_mappings`, and
+`source_vocabularies` on the relevant concept-bearing slots. This keeps the HEW
+Catalog Data Model structurally independent while still exposing canonical
+measure identifiers and their matching aliases and URI/CURIE crosswalks for
+facet generation, search, and downstream endpoint projection.
+
 ## Quick start
 
 Run from the repository root:

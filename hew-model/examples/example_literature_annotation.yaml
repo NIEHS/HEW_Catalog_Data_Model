@@ -19,6 +19,15 @@ annotations:
     exposure_annotations:
       - coded_concept: HEW:wildfire_smoke
         parent_concept: HEW:air_pollution
+        aliases:
+          - wildfire smoke
+          - smoke from fires
+        exact_mappings:
+          - vocab:wildfire_smoke
+        related_mappings:
+          - HEW:particulate_matter
+        source_vocabularies:
+          - https://NIEHS.github.io/HEW_Measures/dist/
         coding_depth: 2
       - coded_concept: HEW:particulate_matter
         parent_concept: HEW:air_pollution
@@ -29,6 +38,10 @@ annotations:
     health_impact_annotations:
       - coded_concept: HEW:asthma
         parent_concept: HEW:respiratory_impact
+        aliases:
+          - asthma exacerbation
+        exact_mappings:
+          - mesh:D001249
         coding_depth: 2
       - coded_concept: HEW:medical_visit
         coding_depth: 1
