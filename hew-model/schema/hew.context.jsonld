@@ -85,6 +85,9 @@
     "aggregation_window": {
       "@id": "aggregation_window"
     },
+    "aliases": {
+      "@id": "aliases"
+    },
     "annotation_date": {
       "@type": "xsd:date",
       "@id": "annotation_date"
@@ -144,6 +147,10 @@
     },
     "citation": {
       "@id": "schema:citation"
+    },
+    "close_mappings": {
+      "@type": "xsd:anyURI",
+      "@id": "close_mappings"
     },
     "code": {
       "@id": "code"
@@ -300,6 +307,10 @@
     },
     "evidence_text": {
       "@id": "evidence_text"
+    },
+    "exact_mappings": {
+      "@type": "xsd:anyURI",
+      "@id": "exact_mappings"
     },
     "example_units": {
       "@id": "example_units"
@@ -714,6 +725,10 @@
       },
       "@id": "reference_type"
     },
+    "related_mappings": {
+      "@type": "xsd:anyURI",
+      "@id": "related_mappings"
+    },
     "related_resources": {
       "@type": "xsd:anyURI",
       "@id": "related_resources"
@@ -838,6 +853,10 @@
     "source_variables": {
       "@type": "xsd:anyURI",
       "@id": "source_variables"
+    },
+    "source_vocabularies": {
+      "@type": "xsd:anyURI",
+      "@id": "source_vocabularies"
     },
     "south": {
       "@type": "xsd:float",
@@ -1066,6 +1085,9 @@
     },
     "ConceptAnnotation": {
       "@id": "ConceptAnnotation"
+    },
+    "ConceptMappingMixin": {
+      "@id": "ConceptMappingMixin"
     },
     "CovariateCalculation": {
       "@id": "CovariateCalculation"
