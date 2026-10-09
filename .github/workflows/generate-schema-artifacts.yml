@@ -16,13 +16,16 @@ on:
       - "hew-model/**/*.yml"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   generate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref || github.ref }}
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -33,6 +36,18 @@ jobs:
         run: |
           mkdir -p dist
           cp hew-model/schema/hew.context.jsonld dist/hew.context.jsonld
+      - name: Commit generated schema
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          BRANCH: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.ref || github.ref_name }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add hew-model/schema/hew.schema.json hew-model/schema/hew-extended.schema.json hew-model/schema/hew.context.jsonld
+          if ! git diff --cached --quiet; then
+            git commit -m "Regenerate HEW schema artifacts"
+            git push origin "HEAD:refs/heads/$BRANCH"
+          fi
       - uses: actions/upload-artifact@v4
         with:
           name: hew-jsonld
