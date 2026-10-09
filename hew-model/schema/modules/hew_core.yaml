@@ -1,4 +1,4 @@
-# Core HEW module: every other module imports this one.
+# Core HEW module: every other module imports this one. v2.0.0
 id: https://w3id.org/hew/schema/modules/core
 name: hew_core
 title: 'HEW schema module: core'
