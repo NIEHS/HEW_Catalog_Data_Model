@@ -91,6 +91,13 @@ class TestJsonLdRoundTrip(unittest.TestCase):
             "geographic_features": ["urban"],
             "exposure_agents": ["ECTO:0000147"],
             "health_impacts": ["MONDO:0005010"],
+            "survey_constructs": [
+                {
+                    "id": "HEWCONSTRUCT:asthma",
+                    "name": "Asthma",
+                    "concept_mappings": ["HEWM:0000069"],
+                }
+            ],
             "survey_questions": [
                 {
                     "id": "HEWQUESTION:heat-symptoms-01",
@@ -114,6 +121,15 @@ class TestJsonLdRoundTrip(unittest.TestCase):
         )
         self.assertIn("ECTO", document["@context"])
         self.assertIn("MONDO", document["@context"])
+        self.assertIn("HEWM", document["@context"])
+        self.assertEqual(
+            document["survey_constructs"][0]["concept_mappings"],
+            ["HEWM:0000069"],
+        )
+        self.assertIn(
+            URIRef("https://w3id.org/hew/measures/term/0000069"),
+            set(graph.objects()),
+        )
         self.assertTrue(round_trip_jsonld(document))
 
 

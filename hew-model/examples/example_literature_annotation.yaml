@@ -23,11 +23,11 @@ annotations:
           - wildfire smoke
           - smoke from fires
         exact_mappings:
-          - vocab:wildfire_smoke
+          - HEWM:0000172
         related_mappings:
           - HEW:particulate_matter
         source_vocabularies:
-          - https://NIEHS.github.io/HEW_Measures/dist/
+          - https://w3id.org/hew/measures/schema
         coding_depth: 2
       - coded_concept: HEW:particulate_matter
         parent_concept: HEW:air_pollution
@@ -42,7 +42,10 @@ annotations:
           - asthma exacerbation
         exact_mappings:
           - mesh:D001249
+          - HEWM:0000069
         coding_depth: 2
+        source_vocabularies:
+          - https://w3id.org/hew/measures/schema
       - coded_concept: HEW:medical_visit
         coding_depth: 1
     geography_annotations:

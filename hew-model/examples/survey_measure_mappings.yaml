@@ -5,13 +5,13 @@ aliases:
   - Heat-related illness questionnaire
   - Heat illness and asthma survey
 source_vocabularies:
-  - https://NIEHS.github.io/HEW_Measures/dist/
+  - https://w3id.org/hew/measures/schema
 survey_constructs:
   - id: HEWCONSTRUCT:asthma-symptoms
     name: Asthma symptoms
     description: Self-reported asthma symptoms during heat exposure.
     concept_mappings:
-      - https://NIEHS.github.io/HEW_Measures/dist/Asthma
+      - HEWM:0000069
     aliases:
       - asthma
       - asthmatic symptoms
@@ -20,7 +20,7 @@ survey_constructs:
     related_mappings:
       - HEW:respiratory_impact
     source_vocabularies:
-      - https://NIEHS.github.io/HEW_Measures/dist/
+      - https://w3id.org/hew/measures/schema
 survey_questions:
   - id: HEWQUESTION:asthma-symptoms-01
     position: 1

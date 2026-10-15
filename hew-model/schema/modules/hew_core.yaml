@@ -9,6 +9,7 @@ license: CC-BY-4.0
 
 prefixes:
   HEW: https://w3id.org/hew/
+  HEWM: https://w3id.org/hew/measures/term/
   linkml: https://w3id.org/linkml/
   HEWRES: https://w3id.org/hew/resource/
   HEWANN: https://w3id.org/hew/annotation/

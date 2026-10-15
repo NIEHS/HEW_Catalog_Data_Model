@@ -44,6 +44,12 @@ Catalog Data Model structurally independent while still exposing canonical
 measure identifiers and their matching aliases and URI/CURIE crosswalks for
 facet generation, search, and downstream endpoint projection.
 
+Use the `HEWM` prefix for current term identifiers
+(`https://w3id.org/hew/measures/term/`); for example, `HEWM:0000069` identifies
+Asthma. Set `source_vocabularies` to the vocabulary schema URI
+`https://w3id.org/hew/measures/schema`. Do not use the legacy GitHub Pages
+`/dist/` URLs or treat labels as identifiers.
+
 ## Quick start
 
 Run from the repository root:

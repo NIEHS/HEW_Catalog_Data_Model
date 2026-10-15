@@ -24,9 +24,19 @@ def generate_context(schema_path: str | Path = SCHEMA_PATH) -> dict[str, Any]:
     # The generator only emits prefixes declared on the root schema; instance-data
     # prefixes such as HEWRES and PERSON are declared in imported modules.
     terms = context["@context"]
-    for schema in SchemaView(str(schema_path)).all_schema(imports=True):
+    schema_view = SchemaView(str(schema_path))
+    for schema in schema_view.all_schema(imports=True):
         for prefix in schema.prefixes.values():
             terms.setdefault(prefix.prefix_prefix, prefix.prefix_reference)
+    # CURIE-valued references must expand to RDF IRIs, not xsd:anyURI literals.
+    for slot in schema_view.all_slots().values():
+        definition = terms.get(slot.name)
+        if (
+            slot.range == "uriorcurie"
+            and isinstance(definition, dict)
+            and definition.get("@type") == "xsd:anyURI"
+        ):
+            definition["@type"] = "@id"
     return context
 
 

@@ -83,6 +83,12 @@ project clean facet values such as canonical label, aliases, and equivalent
 URIs/CURIEs without flattening a separate measure taxonomy into the HEW core
 schema.
 
+Current HEW_Measures terms use the `HEWM` prefix
+(`https://w3id.org/hew/measures/term/`), and `source_vocabularies` should name
+the vocabulary schema URI (`https://w3id.org/hew/measures/schema`). For example,
+`HEWM:0000069` is Asthma in the updated vocabulary. Legacy GitHub Pages
+`/dist/` term URLs are not canonical identifiers.
+
 For a complete, schema-validated example showing a survey construct mapped to a
 standalone HEW_Measures term, see
 [`survey_measure_mappings.yaml`](../hew-model/examples/survey_measure_mappings.yaml).

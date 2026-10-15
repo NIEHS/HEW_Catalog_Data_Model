@@ -26,7 +26,7 @@
       "@id": "access_statement"
     },
     "adapted_from": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "adapted_from"
     },
     "administered_by": {
@@ -56,7 +56,7 @@
       "@id": "administrative_spatial_resolution"
     },
     "affiliation_context": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "affiliation_context"
     },
     "affiliations": {
@@ -97,11 +97,11 @@
       "@id": "annotations"
     },
     "associated_health_outcomes": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "associated_health_outcomes"
     },
     "associated_with": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "associated_with"
     },
     "authors": {
@@ -149,7 +149,7 @@
       "@id": "schema:citation"
     },
     "close_mappings": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "close_mappings"
     },
     "code": {
@@ -160,7 +160,7 @@
       "@id": "coded_by"
     },
     "coded_concept": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "coded_concept"
     },
     "coding_depth": {
@@ -185,14 +185,14 @@
       "@id": "coding_system"
     },
     "collection_members": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "collection_members"
     },
     "collection_scope": {
       "@id": "collection_scope"
     },
     "concept_mappings": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "concept_mappings"
     },
     "concept_status": {
@@ -226,7 +226,7 @@
       "@id": "coordinate_reference_system"
     },
     "coordinate_reference_system_uri": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "coordinate_reference_system_uri"
     },
     "curator": {
@@ -294,7 +294,7 @@
       "@id": "end_time"
     },
     "environmental_context": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "environmental_context"
     },
     "environmental_variables": {
@@ -302,21 +302,21 @@
       "@id": "environmental_variables"
     },
     "event_types": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "event_types"
     },
     "evidence_text": {
       "@id": "evidence_text"
     },
     "exact_mappings": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "exact_mappings"
     },
     "example_units": {
       "@id": "example_units"
     },
     "exposure_agents": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "exposure_agents"
     },
     "exposure_annotations": {
@@ -324,7 +324,7 @@
       "@id": "exposure_annotations"
     },
     "exposure_concept": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "exposure_concept"
     },
     "exposure_end_date": {
@@ -332,7 +332,7 @@
       "@id": "exposure_end_date"
     },
     "exposure_estimate": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "exposure_estimate"
     },
     "exposure_geometry": {
@@ -380,15 +380,15 @@
       "@id": "funding_mechanism"
     },
     "funding_sources": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "schema:funding"
     },
     "generated_by": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "prov:wasGeneratedBy"
     },
     "generated_outputs": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "generated_outputs"
     },
     "geographic_features": {
@@ -400,7 +400,7 @@
       "@id": "geographic_features"
     },
     "geographic_identifiers": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "geographic_identifiers"
     },
     "geographic_locations": {
@@ -438,7 +438,7 @@
       "@id": "health_impact_annotations"
     },
     "health_impacts": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "health_impacts"
     },
     "id": "@id",
@@ -454,7 +454,7 @@
       "@id": "information_source"
     },
     "input_resources": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "input_resources"
     },
     "input_variables": {
@@ -491,11 +491,11 @@
       "@id": "linkage_notes"
     },
     "location_history_reference": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "location_history_reference"
     },
     "location_id": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "location_id"
     },
     "location_type": {
@@ -519,14 +519,14 @@
       "@id": "schema:maintainer"
     },
     "measured_property": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "measured_property"
     },
     "measured_variables": {
       "@id": "measured_variables"
     },
     "measurement_method": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "measurement_method"
     },
     "media_type": {
@@ -599,7 +599,7 @@
       "@id": "omop_vocabulary_id"
     },
     "orcid": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "orcid"
     },
     "organization_type": {
@@ -630,7 +630,7 @@
       "@id": "parameters"
     },
     "parent_concept": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "parent_concept"
     },
     "parent_organization": {
@@ -638,15 +638,15 @@
       "@id": "schema:parentOrganization"
     },
     "part_of_programs": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "part_of_programs"
     },
     "part_of_project": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "part_of_project"
     },
     "person_or_cohort_reference": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "person_or_cohort_reference"
     },
     "pmcid": {
@@ -660,11 +660,11 @@
       "@id": "population"
     },
     "population_or_cohort": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "population_or_cohort"
     },
     "population_tags": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "population_tags"
     },
     "position": {
@@ -683,7 +683,7 @@
       "@id": "processing_level"
     },
     "produces_resources": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "produces_resources"
     },
     "programming_language": {
@@ -726,11 +726,11 @@
       "@id": "reference_type"
     },
     "related_mappings": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "related_mappings"
     },
     "related_resources": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "related_resources"
     },
     "relationship_to_literature": {
@@ -746,7 +746,7 @@
       "@id": "schema:codeRepository"
     },
     "research_program": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "research_program"
     },
     "resolution_axis": {
@@ -804,15 +804,15 @@
       "@id": "prov:hadRole"
     },
     "ror_id": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "ror_id"
     },
     "same_as": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "schema:sameAs"
     },
     "software": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "software"
     },
     "software_type": {
@@ -827,15 +827,15 @@
       "@id": "schema:softwareVersion"
     },
     "source": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "source"
     },
     "source_crs": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "source_crs"
     },
     "source_dataset": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "source_dataset"
     },
     "source_organization": {
@@ -843,19 +843,19 @@
       "@id": "source_organization"
     },
     "source_project": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "source_project"
     },
     "source_resource": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "source_resource"
     },
     "source_variables": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "source_variables"
     },
     "source_vocabularies": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "source_vocabularies"
     },
     "south": {
@@ -892,7 +892,7 @@
       "@id": "special_topic_annotations"
     },
     "special_topics": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "special_topics"
     },
     "specified_text": {
@@ -930,7 +930,7 @@
       "@id": "study_objective"
     },
     "subject": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "schema:about"
     },
     "subtitle": {
@@ -957,7 +957,7 @@
       "@id": "survey_questions"
     },
     "target_crs": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "target_crs"
     },
     "target_population": {
@@ -1001,7 +1001,7 @@
       "@id": "text"
     },
     "themes": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "themes"
     },
     "threshold": {
@@ -1036,7 +1036,7 @@
       "@id": "schema:url"
     },
     "uses_resources": {
-      "@type": "xsd:anyURI",
+      "@type": "@id",
       "@id": "uses_resources"
     },
     "value_specification": {
@@ -1213,6 +1213,7 @@
       "@id": "Variable"
     },
     "shex": "http://www.w3.org/ns/shex#",
+    "HEWM": "https://w3id.org/hew/measures/term/",
     "HEWRES": "https://w3id.org/hew/resource/",
     "HEWANN": "https://w3id.org/hew/annotation/",
     "HEWVAR": "https://w3id.org/hew/variable/",
