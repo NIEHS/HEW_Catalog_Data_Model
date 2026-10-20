@@ -95,12 +95,11 @@ standalone HEW_Measures term, see
 
 ## 2. Schema layout
 
-There are two validation entry points in `hew-model/schema/`:
+There is one canonical validation entry point in `hew-model/schema/`:
 
 | Schema | Contents |
 |---|---|
-| `hew.yaml` | **Core**: publications, systematic-review coding, surveys, agents, variables, and data dictionaries. |
-| `hew-extended.yaml` | The core plus all extension modules. |
+| `hew.yaml` | **Canonical model**: publications, systematic-review coding, surveys, geospatial and exposure metadata, programs, projects, and additional resource types. |
 
 ```text
 modules/hew_core.yaml            HEWResource, DatasetResource, Distribution, DataDictionary,
@@ -127,11 +126,10 @@ Generated artifacts are committed next to the schemas and refreshed with
 | Artifact | Generated from |
 |---|---|
 | `hew.schema.json` | `hew.yaml` |
-| `hew-extended.schema.json` | `hew-extended.yaml` |
-| `hew.context.jsonld` | `hew-extended.yaml` (a superset, so it covers every module) |
+| `hew.context.jsonld` | `hew.yaml` |
 
-`make validate` validates both schemas and every example: core examples against
-`hew.yaml`, extension examples against `hew-extended.yaml`. Examples live in
+`make validate` validates the canonical schema and every example against
+`hew.yaml`. Examples live in
 `hew-model/examples/`; coding-guide vocabularies live in `hew-model/terms/`.
 
 ## 3. Model layers
@@ -274,8 +272,8 @@ uses `ResponseTypeEnum`, and `language` is a BCP 47 tag. See
 
 ## 8. Geospatial and exposure extension
 
-Everything in this section validates against `hew-extended.yaml`.
-`GeographicLocation` is the exception: it is in the core because geography
+Everything in this section validates against `hew.yaml`.
+`GeographicLocation` is defined in the core module because geography
 annotations use it. The design rationale is in the
 [geospatial strategy](../hew-model/HEW%20Geospatial%20Metadata%20Enhancement%20Strategy.md).
 
@@ -356,7 +354,7 @@ implementation notes. See `omop_gaia_external_exposure_linkage.yaml`.
 
 ### Example
 
-This record validates against `hew-extended.yaml` as a `GeospatialResource`.
+This record validates against `hew.yaml` as a `GeospatialResource`.
 
 ```yaml
 id: HEWRES:example-heat-dataset

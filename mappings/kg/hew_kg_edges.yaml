@@ -1,6 +1,6 @@
 # Design note for a planned projection; no code reads this file yet.
-# Slot and class names refer to hew-model/schema/hew-extended.yaml.
-schema: ../../hew-model/schema/hew-extended.yaml
+# Slot and class names refer to the canonical HEW schema.
+schema: ../../hew-model/schema/hew.yaml
 assertion_policy: catalog_assertions_only
 edges:
   - subject: LiteratureResource

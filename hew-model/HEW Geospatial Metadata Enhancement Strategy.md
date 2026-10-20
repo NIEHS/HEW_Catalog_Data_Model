@@ -1,10 +1,11 @@
 # HEW Geospatial Metadata Enhancement Strategy
 
 > **Status (schema 2.0.0):** This strategy is implemented in the geospatial
-> extension, `schema/modules/hew_ext_geospatial.yaml`, which validates through
-> `schema/hew-extended.yaml`. `GeographicLocation` is in the core module and does
-> not carry a geometry; explicit shapes are on `SpatialExtent.geometry` and
-> `SpatiotemporalExposure.exposure_geometry`. Structured spatial fields such as
+> module, `schema/modules/hew_ext_geospatial.yaml`, which is included in the
+> canonical schema, `schema/hew.yaml`. `GeographicLocation` is in the core
+> module and does not carry a geometry; explicit shapes are on
+> `SpatialExtent.geometry` and `SpatiotemporalExposure.exposure_geometry`.
+> Structured spatial fields such as
 > `spatial_extent` belong to `GeospatialResource`. See
 > the [schema handbook](../docs/schema_handbook.md#8-geospatial-and-exposure-extension) for the current model.
 

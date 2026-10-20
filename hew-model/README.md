@@ -9,11 +9,9 @@ the [HEW Schema Handbook](../docs/schema_handbook.md).
 ```text
 hew-model/
 |-- schema/
-|   |-- hew.yaml                  # core schema
-|   |-- hew-extended.yaml         # core + extensions
+|   |-- hew.yaml                  # canonical schema, composed from all modules
 |   |-- hew.schema.json           # generated from hew.yaml
-|   |-- hew-extended.schema.json  # generated from hew-extended.yaml
-|   |-- hew.context.jsonld        # generated from hew-extended.yaml
+|   |-- hew.context.jsonld        # generated from hew.yaml
 |   `-- modules/
 |       |-- hew_core.yaml            # resource base, agents, variables, locations
 |       |-- hew_review_coding.yaml   # systematic-review annotations
@@ -29,9 +27,7 @@ hew-model/
 `-- HEW Geospatial Metadata Enhancement Strategy.md
 ```
 
-Core examples (`publication_resource.yaml`, `example_literature_annotation.yaml`,
-`survey_instrument.yaml`, `survey_dataset.yaml`) validate against `hew.yaml`; the
-rest validate against `hew-extended.yaml`. See
+All examples validate against `hew.yaml`. See
 `scripts/validate_examples.sh` for the class each example is checked as.
 
 ## External vocabulary integration

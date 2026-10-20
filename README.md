@@ -12,15 +12,14 @@ Dataverse and other standards, and the 2.0.0 changes.
 
 ## Schemas
 
-The current schema version is `2.0.0`. The model is split into a small core and
-opt-in extensions:
+The current schema version is `2.0.0`. The canonical model is defined by one
+schema entry point, composed from the modules in `hew-model/schema/modules/`:
 
 | Schema | Contents |
 |---|---|
-| [`hew-model/schema/hew.yaml`](hew-model/schema/hew.yaml) | **Core.** Publications with systematic-review coding, survey instruments and survey datasets, agents, variables, and data dictionaries. |
-| [`hew-model/schema/hew-extended.yaml`](hew-model/schema/hew-extended.yaml) | Core plus extensions: geospatial and exposure metadata, programs and projects, and cohort, software, model, tool, and collection resources. |
+| [`hew-model/schema/hew.yaml`](hew-model/schema/hew.yaml) | **Canonical HEW model.** Publications with systematic-review coding, surveys, geospatial and exposure metadata, programs and projects, and additional resource types. |
 
-Each schema composes modules from `hew-model/schema/modules/`; see
+The schema composes modules from `hew-model/schema/modules/`; see
 [schema layout](docs/schema_handbook.md#2-schema-layout).
 
 ## Quick start
@@ -28,7 +27,7 @@ Each schema composes modules from `hew-model/schema/modules/`; see
 ```bash
 python3 -m pip install -e .
 make validate
-make artifacts   # regenerate hew.schema.json, hew-extended.schema.json, hew.context.jsonld
+make artifacts   # regenerate hew.schema.json and hew.context.jsonld
 ```
 
 ## Documentation
