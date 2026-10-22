@@ -46,14 +46,13 @@ serve as the quantity identity referenced by a delivery. The containing dataset
 provides the Amadeus Product reference during export. Legacy variable support
 must be reconciled explicitly before exporting through the strict profile.
 
-Duration-valued temporal_resolution retains its name and now validates ISO 8601
-syntax; temporal_resolution_category maps to the Amadeus enum. Calendar values
-and day boundaries use matching controlled values. Category/duration mappings
-are checked for hourly, three-hourly, daily, monthly and annual products.
-Subhourly and seasonal categories require source interpretation. P3D is valid
-HEW resolution, but no matching Amadeus category exists: an adapter must report
-this limitation rather than mislabel it. Timeless, instantaneous and irregular
-multi-year epochs do not receive fabricated regular durations.
+temporal_resolution exclusively uses Amadeus's TemporalResolutionEnum:
+instantaneous, subhourly, hourly, three_hourly, daily, monthly, seasonal, annual,
+multi_year_epoch and timeless. It maps directly to Amadeus temporal_resolution.
+There is no companion category or duration-valued resolution field. Duration
+strings such as P1D, PT1H and P3D are invalid resolution values. Aggregation
+windows, update cadence and latency continue to use ISO 8601 durations.
+Calendar values and day boundaries use matching controlled values.
 
 Datetime coverage uses [start, end). coverage_status distinguishes bounded,
 ongoing, unknown and timeless intervals. Distribution coverage represents the
@@ -75,7 +74,7 @@ as `AmadeusGeospatialResource`, then call
 The function returns errors without changing the record. Schema validation must
 run first. The general HEW schema does not require complete Amadeus metadata.
 
-Existing duration strings and calendars now receive stronger validation.
+Resolution values must use the enum; duration-valued resolution is not supported.
 BoundingBox requires all four bounds. Old end-of-day examples have been migrated
 to the following midnight for exclusive interval semantics; other existing
 records require the same review, never an automatic one-second adjustment.

@@ -1078,16 +1078,12 @@
       "@id": "temporal_join_method"
     },
     "temporal_resolution": {
-      "@type": "xsd:duration",
-      "@id": "temporal_resolution"
-    },
-    "temporal_resolution_category": {
       "@context": {
         "text": "skos:notation",
         "description": "skos:prefLabel",
         "meaning": "@id"
       },
-      "@id": "temporal_resolution_category"
+      "@id": "temporal_resolution"
     },
     "temporal_support": {
       "@type": "@id",

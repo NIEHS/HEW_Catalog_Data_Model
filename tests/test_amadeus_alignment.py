@@ -98,7 +98,7 @@ class TestAmadeusAlignment(unittest.TestCase):
             "id": "HEWRES:monitor", "resource_type": "geospatial_dataset",
             "spatial_support": {"support_type": "monitoring_station"},
             "temporal_support": {
-                "temporal_resolution_category": "hourly", "temporal_resolution": "PT1H"
+                "temporal_resolution": "hourly"
             },
             "temporal_extent": {
                 "coverage_status": "ongoing", "start_time": "2020-01-01T00:00:00Z"
@@ -106,7 +106,7 @@ class TestAmadeusAlignment(unittest.TestCase):
         }
         self.assertEqual(list(self.validator.iter_errors(point)), [])
         self.assertEqual(validate_amadeus_metadata(point), [])
-        point["temporal_support"] = {"temporal_resolution_category": "timeless"}
+        point["temporal_support"] = {"temporal_resolution": "timeless"}
         point["temporal_extent"] = {"coverage_status": "timeless"}
         self.assertEqual(list(self.validator.iter_errors(point)), [])
         self.assertEqual(validate_amadeus_metadata(point), [])
@@ -120,7 +120,7 @@ class TestAmadeusAlignment(unittest.TestCase):
             lambda record: record["grid_definition"].update(resolution_x=0),
             lambda record: record["spatial_support"].update(support_type="point"),
             lambda record: record["temporal_support"].pop("day_boundary_convention"),
-            lambda record: record["temporal_support"].update(temporal_resolution="PT1H"),
+            lambda record: record["temporal_support"].pop("temporal_resolution"),
             lambda record: record["spatial_extent"]["bounding_box"].update(south=40),
             lambda record: record["temporal_extent"].update(end_time="2019-01-01T00:00:00Z"),
             lambda record: record["temporal_extent"].update(start_time="2020-01-01T00:00:00"),
@@ -131,9 +131,12 @@ class TestAmadeusAlignment(unittest.TestCase):
             with self.subTest(record=record):
                 self.assertTrue(validate_amadeus_metadata(record))
 
-    def test_duration_calendar_and_category_are_validated(self):
+    def test_resolution_enum_and_duration_windows_are_validated(self):
         for support in (
-            {"temporal_resolution": "daily"},
+            {"temporal_resolution": "P1D"},
+            {"temporal_resolution": "PT1H"},
+            {"temporal_resolution": "P3D"},
+            {"temporal_resolution": "every_three_days"},
             {"aggregation_window": "yesterday"},
             {"calendar": "invented"},
             {"temporal_resolution_category": "every_three_days"},
@@ -143,11 +146,29 @@ class TestAmadeusAlignment(unittest.TestCase):
             with self.subTest(support=support):
                 self.assertTrue(list(self.validator.iter_errors(record)))
 
+    def test_resolution_enum_is_shared_by_extent_and_support(self):
+        view = SchemaView(str(SCHEMA_DIR / "modules/hew_core.yaml"))
+        self.assertEqual(view.get_slot("temporal_resolution").range, "TemporalResolutionEnum")
+        self.assertNotIn("temporal_resolution_category", SchemaView(str(self.profile)).all_slots())
+        values = {
+            "instantaneous", "subhourly", "hourly", "three_hourly", "daily",
+            "monthly", "seasonal", "annual", "multi_year_epoch", "timeless",
+        }
+        self.assertEqual(set(view.get_enum("TemporalResolutionEnum").permissible_values), values)
+        for value in values:
+            record = deepcopy(self.example)
+            record["temporal_support"]["temporal_resolution"] = value
+            record["temporal_extent"]["temporal_resolution"] = value
+            with self.subTest(value=value):
+                self.assertEqual(list(self.validator.iter_errors(record)), [])
+        record["temporal_extent"]["temporal_resolution"] = "P1D"
+        self.assertTrue(list(self.validator.iter_errors(record)))
+
     def test_delivery_overrides_replace_dataset_defaults(self):
         record = deepcopy(self.example)
         delivery = record["variable_deliveries"][0]
         delivery["temporal_support"] = {
-            "temporal_resolution_category": "hourly", "temporal_resolution": "PT1H"
+            "temporal_resolution": "hourly"
         }
         delivery["spatial_support"] = {"support_type": "point"}
         self.assertEqual(validate_amadeus_metadata(record), [])

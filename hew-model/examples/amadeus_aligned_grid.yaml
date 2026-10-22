@@ -34,8 +34,7 @@ temporal_extent:
   end_time: '2021-01-01T00:00:00Z'
   coverage_status: bounded
 temporal_support:
-  temporal_resolution_category: daily
-  temporal_resolution: P1D
+  temporal_resolution: daily
   aggregation_window: P1D
   temporal_alignment: end
   day_boundary_convention: utc_midnight
