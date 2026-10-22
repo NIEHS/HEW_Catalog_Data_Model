@@ -1,0 +1,78 @@
+schema: ../../hew-model/schema/hew.yaml
+profile: ../../hew-model/schema/profiles/hew_amadeus.yaml
+target_schema: https://w3id.org/niehs/amadeus/catalog
+target_version: 0.1.0
+kind: transformation_specification
+notes: >-
+  HEW-owned crosswalk specification, not an executable adapter. No Amadeus import
+  or modification is required. Paths are relative to their mapped class. Exact
+  mappings annotate semantic equivalence, not serialization or field relocation.
+classes:
+  GeospatialResource: Product
+  GridDefinition: GridDefinition
+  EnvironmentalVariableDelivery: ProductVariable
+  Distribution: Asset
+slots:
+  GeospatialResource:
+    spatial_coverage: {target: spatial_extent_descriptor, operation: copy}
+    spatial_extent.bounding_box:
+      target: spatial_extent_bbox_wkt
+      operation: wgs84_envelope_to_wkt
+      notes: >-
+        Export in EPSG:4326 only when the target Product CRS is EPSG:4326;
+        otherwise reproject the envelope with a geometry engine. Handle
+        antimeridian crossing explicitly. Preserve full footprints separately.
+    coordinate_reference_system_uri:
+      target: crs
+      operation: normalize_authority_code
+    grid_definition: {target: grid_definition, operation: extract_entity_and_reference_id}
+    spatial_support.support_type: {target: spatial_support_type, operation: copy}
+    spatial_resolution: {target: native_spatial_resolution_descriptor, operation: copy}
+    quantitative_spatial_resolution:
+      target: native_spatial_resolution_m
+      operation: convert_linear_nominal_resolution_to_metres
+      notes: No implicit angular-to-metre or anisotropic-axis-to-nominal conversion.
+    temporal_support.temporal_resolution: {target: temporal_resolution_iso, operation: copy}
+    temporal_support.temporal_resolution_category: {target: temporal_resolution, operation: copy}
+    temporal_support.temporal_alignment: {target: temporal_alignment, operation: copy}
+    temporal_support.day_boundary_convention: {target: day_boundary_convention, operation: copy}
+    temporal_support.calendar: {target: calendar, operation: copy}
+    temporal_extent.start_time:
+      target: temporal_coverage_start
+      operation: datetime_to_coverage_date_with_declared_policy
+    temporal_extent.end_time:
+      target: temporal_coverage_end
+      operation: exclusive_datetime_to_coverage_date_with_declared_policy
+      notes: Target date-boundary inclusivity must be configured; never truncate silently.
+    update_cadence_iso: {target: update_cadence_iso, operation: copy}
+    typical_latency_iso: {target: typical_latency_iso, operation: copy}
+  GridDefinition:
+    id: {target: id, operation: copy}
+    name: {target: name, operation: copy}
+    coordinate_reference_system_uri: {target: crs, operation: normalize_authority_code}
+    srid: {target: srid, operation: verify_authority_mapping}
+    grid_mapping_name: {target: grid_mapping_name, operation: copy}
+    proj_string: {target: proj_string, operation: copy}
+    resolution_x: {target: resolution_x, operation: copy}
+    resolution_y: {target: resolution_y, operation: copy}
+    resolution_unit: {target: resolution_unit, operation: copy}
+    n_columns: {target: n_columns, operation: copy}
+    n_rows: {target: n_rows, operation: copy}
+    origin_x: {target: origin_x, operation: confirm_origin_convention}
+    origin_y: {target: origin_y, operation: confirm_origin_convention}
+    vertical_level_type: {target: vertical_level_type, operation: copy}
+    vertical_level_unit: {target: vertical_level_unit, operation: copy}
+    vertical_levels: {target: vertical_levels, operation: copy}
+  EnvironmentalVariableDelivery:
+    id: {target: id, operation: copy}
+    canonical_variable: {target: canonical_variable, operation: reference_quantity_identity}
+    native_name: {target: native_name, operation: copy}
+    aggregation_method: {target: aggregation_method, operation: copy}
+    cf_cell_methods: {target: cf_cell_methods, operation: copy}
+    temporal_support.aggregation_window: {target: aggregation_window_iso, operation: copy}
+    temporal_support.temporal_alignment: {target: temporal_alignment, operation: copy}
+  Distribution:
+    temporal_extent.start_time: {target: valid_time_start, operation: copy_inclusive_start}
+    temporal_extent.end_time: {target: valid_time_end, operation: copy_exclusive_end}
+    reference_time: {target: reference_time, operation: copy}
+    spatial_extent.bounding_box: {target: bbox_wkt, operation: envelope_to_wkt_in_asset_crs}

@@ -24,4 +24,4 @@ fields:
       affiliation: affiliations
   publicationYear: publication_date
   identifier: doi
-  geoLocation: spatial_extent  # GeospatialResource only
+  geoLocation: spatial_extent

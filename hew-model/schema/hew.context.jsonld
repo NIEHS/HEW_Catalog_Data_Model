@@ -2,6 +2,7 @@
   "@context": {
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "HEW": "https://w3id.org/hew/",
+    "amadeus": "https://w3id.org/niehs/amadeus/",
     "biolink": "https://w3id.org/biolink/vocab/",
     "dcat": "http://www.w3.org/ns/dcat#",
     "dcterms": "http://purl.org/dc/terms/",
@@ -83,6 +84,7 @@
       "@id": "aggregation_method"
     },
     "aggregation_window": {
+      "@type": "xsd:duration",
       "@id": "aggregation_window"
     },
     "aliases": {
@@ -135,7 +137,16 @@
       "@id": "calculation_method"
     },
     "calendar": {
+      "@context": {
+        "text": "skos:notation",
+        "description": "skos:prefLabel",
+        "meaning": "@id"
+      },
       "@id": "calendar"
+    },
+    "canonical_variable": {
+      "@type": "@id",
+      "@id": "canonical_variable"
     },
     "cde_integration": {
       "@type": "xsd:boolean",
@@ -144,6 +155,9 @@
     "centroid": {
       "@type": "@id",
       "@id": "centroid"
+    },
+    "cf_cell_methods": {
+      "@id": "cf_cell_methods"
     },
     "citation": {
       "@id": "schema:citation"
@@ -229,6 +243,14 @@
       "@type": "@id",
       "@id": "coordinate_reference_system_uri"
     },
+    "coverage_status": {
+      "@context": {
+        "text": "skos:notation",
+        "description": "skos:prefLabel",
+        "meaning": "@id"
+      },
+      "@id": "coverage_status"
+    },
     "curator": {
       "@type": "@id",
       "@id": "curator"
@@ -251,6 +273,14 @@
     },
     "data_type": {
       "@id": "data_type"
+    },
+    "day_boundary_convention": {
+      "@context": {
+        "text": "skos:notation",
+        "description": "skos:prefLabel",
+        "meaning": "@id"
+      },
+      "@id": "day_boundary_convention"
     },
     "description": {
       "@id": "schema:description"
@@ -433,6 +463,13 @@
     "given_name": {
       "@id": "schema:givenName"
     },
+    "grid_definition": {
+      "@type": "@id",
+      "@id": "grid_definition"
+    },
+    "grid_mapping_name": {
+      "@id": "grid_mapping_name"
+    },
     "health_impact_annotations": {
       "@type": "@id",
       "@id": "health_impact_annotations"
@@ -560,12 +597,23 @@
       },
       "@id": "model_types"
     },
+    "n_columns": {
+      "@type": "xsd:integer",
+      "@id": "n_columns"
+    },
+    "n_rows": {
+      "@type": "xsd:integer",
+      "@id": "n_rows"
+    },
     "name": {
       "@id": "schema:name"
     },
     "named_locations": {
       "@type": "@id",
       "@id": "named_locations"
+    },
+    "native_name": {
+      "@id": "native_name"
     },
     "needs_human_review": {
       "@type": "xsd:boolean",
@@ -609,6 +657,14 @@
         "meaning": "@id"
       },
       "@id": "organization_type"
+    },
+    "origin_x": {
+      "@type": "xsd:float",
+      "@id": "origin_x"
+    },
+    "origin_y": {
+      "@type": "xsd:float",
+      "@id": "origin_y"
     },
     "output_variables": {
       "@id": "output_variables"
@@ -689,6 +745,9 @@
     "programming_language": {
       "@id": "schema:programmingLanguage"
     },
+    "proj_string": {
+      "@id": "proj_string"
+    },
     "publication_date": {
       "@id": "schema:datePublished"
     },
@@ -716,6 +775,10 @@
     "readability_level": {
       "@type": "xsd:float",
       "@id": "readability_level"
+    },
+    "reference_time": {
+      "@type": "xsd:dateTime",
+      "@id": "reference_time"
     },
     "reference_type": {
       "@context": {
@@ -767,6 +830,14 @@
       "@type": "xsd:float",
       "@id": "resolution_value"
     },
+    "resolution_x": {
+      "@type": "xsd:float",
+      "@id": "resolution_x"
+    },
+    "resolution_y": {
+      "@type": "xsd:float",
+      "@id": "resolution_y"
+    },
     "resource_type": {
       "@context": {
         "text": "skos:notation",
@@ -806,6 +877,14 @@
     "ror_id": {
       "@type": "@id",
       "@id": "ror_id"
+    },
+    "row_direction": {
+      "@context": {
+        "text": "skos:notation",
+        "description": "skos:prefLabel",
+        "meaning": "@id"
+      },
+      "@id": "row_direction"
     },
     "same_as": {
       "@type": "@id",
@@ -869,6 +948,13 @@
       "@type": "@id",
       "@id": "spatial_extent"
     },
+    "spatial_index_resolution": {
+      "@type": "xsd:integer",
+      "@id": "spatial_index_resolution"
+    },
+    "spatial_index_system": {
+      "@id": "spatial_index_system"
+    },
     "spatial_join_method": {
       "@context": {
         "text": "skos:notation",
@@ -901,6 +987,10 @@
     "sponsoring_organizations": {
       "@type": "@id",
       "@id": "schema:sponsor"
+    },
+    "srid": {
+      "@type": "xsd:integer",
+      "@id": "srid"
     },
     "start_date": {
       "@type": "xsd:date",
@@ -988,7 +1078,16 @@
       "@id": "temporal_join_method"
     },
     "temporal_resolution": {
+      "@type": "xsd:duration",
       "@id": "temporal_resolution"
+    },
+    "temporal_resolution_category": {
+      "@context": {
+        "text": "skos:notation",
+        "description": "skos:prefLabel",
+        "meaning": "@id"
+      },
+      "@id": "temporal_resolution_category"
     },
     "temporal_support": {
       "@type": "@id",
@@ -1025,11 +1124,19 @@
       },
       "@id": "tool_type"
     },
+    "typical_latency_iso": {
+      "@type": "xsd:duration",
+      "@id": "typical_latency_iso"
+    },
     "uncertainty": {
       "@id": "uncertainty"
     },
     "unit": {
       "@id": "unit"
+    },
+    "update_cadence_iso": {
+      "@type": "xsd:duration",
+      "@id": "update_cadence_iso"
     },
     "url": {
       "@type": "xsd:anyURI",
@@ -1054,6 +1161,10 @@
     "value_unit": {
       "@id": "value_unit"
     },
+    "variable_deliveries": {
+      "@type": "@id",
+      "@id": "variable_deliveries"
+    },
     "variables": {
       "@type": "@id",
       "@id": "variables"
@@ -1061,11 +1172,22 @@
     "version": {
       "@id": "schema:version"
     },
+    "vertical_level_type": {
+      "@id": "vertical_level_type"
+    },
+    "vertical_level_unit": {
+      "@id": "vertical_level_unit"
+    },
+    "vertical_levels": {
+      "@type": "xsd:float",
+      "@id": "vertical_levels"
+    },
     "west": {
       "@type": "xsd:float",
       "@id": "west"
     },
     "wkt": {
+      "@type": "geo:wktLiteral",
       "@id": "geo:asWKT"
     },
     "AdministrativeSpatialResolution": {
@@ -1107,6 +1229,9 @@
     "EnvironmentalVariable": {
       "@id": "EnvironmentalVariable"
     },
+    "EnvironmentalVariableDelivery": {
+      "@id": "EnvironmentalVariableDelivery"
+    },
     "ExternalExposureLinkage": {
       "@id": "ExternalExposureLinkage"
     },
@@ -1124,6 +1249,9 @@
     },
     "GeospatialResource": {
       "@id": "GeospatialResource"
+    },
+    "GridDefinition": {
+      "@id": "GridDefinition"
     },
     "HEWResource": {
       "@id": "schema:CreativeWork"

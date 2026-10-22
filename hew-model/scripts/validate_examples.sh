@@ -15,6 +15,8 @@ linkml-validate -s "$SCHEMA" -C SurveyInstrument "$EXAMPLES/survey_measure_mappi
 linkml-validate -s "$SCHEMA" -C SurveyDataset "$EXAMPLES/survey_dataset.yaml"
 linkml-validate -s "$SCHEMA" -C GeospatialResource "$EXAMPLES/example_dataset_resource.yaml"
 linkml-validate -s "$SCHEMA" -C GeospatialResource "$EXAMPLES/geospatial_dataset.yaml"
+linkml-validate -s "$SCHEMA" -C GeospatialResource "$EXAMPLES/amadeus_aligned_grid.yaml"
+linkml-validate -s "$MODEL_DIR/schema/profiles/hew_amadeus.yaml" -C AmadeusGeospatialResource "$EXAMPLES/amadeus_aligned_grid.yaml"
 linkml-validate -s "$SCHEMA" -C EnvironmentalVariable "$EXAMPLES/environmental_variable.yaml"
 linkml-validate -s "$SCHEMA" -C SpatiotemporalExposure "$EXAMPLES/example_spatiotemporal_exposure.yaml"
 linkml-validate -s "$SCHEMA" -C SpatiotemporalExposure "$EXAMPLES/spatiotemporal_exposure_optional.yaml"

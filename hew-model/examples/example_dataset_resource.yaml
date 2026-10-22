@@ -9,7 +9,7 @@ spatial_coverage: United States
 temporal_coverage: 2010/2020
 temporal_extent:
   start_time: '2010-01-01T00:00:00Z'
-  end_time: '2020-12-31T23:59:59Z'
+  end_time: '2021-01-01T00:00:00Z'
   temporal_resolution: P1D
 spatial_resolution: 1 km
 coordinate_reference_system: epsg:4326

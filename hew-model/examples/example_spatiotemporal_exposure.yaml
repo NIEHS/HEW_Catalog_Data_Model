@@ -21,7 +21,7 @@ spatial_support:
     resolution_axis: nominal
 temporal_extent:
   start_time: '2020-01-01T00:00:00Z'
-  end_time: '2025-12-31T23:59:59Z'
+  end_time: '2026-01-01T00:00:00Z'
   temporal_resolution: P1D
 temporal_support:
   temporal_resolution: P1D

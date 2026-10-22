@@ -103,22 +103,27 @@ There is one canonical validation entry point in `hew-model/schema/`:
 
 ```text
 modules/hew_core.yaml            HEWResource, DatasetResource, Distribution, DataDictionary,
-                                 Variable, GeographicLocation, Agent and its subclasses
+                                 Variable, GeographicLocation, shared extents and geometry,
+                                 calendar/duration types, Agent and its subclasses
 modules/hew_review_coding.yaml   HEWSystematicReviewAnnotation, ConceptAnnotation,
                                  GeographyAnnotation, DataToolMethodAnnotation, MentionedResource
 modules/hew_publication.yaml     LiteratureResource
 modules/hew_survey.yaml          SurveyInstrument, SurveyConstruct, SurveyQuestion,
                                  ResponseOption, SurveyDataset, Population
-modules/hew_ext_geospatial.yaml  GeospatialResource, EnvironmentalVariable, extents, supports,
+modules/hew_ext_geospatial.yaml  GeospatialResource, GridDefinition, EnvironmentalVariable,
+                                 EnvironmentalVariableDelivery, supports,
                                  SpatiotemporalExposure, CovariateCalculation, OMOP/Gaia linkage
+profiles/hew_amadeus.yaml        Optional AmadeusGeospatialResource interoperability profile
 modules/hew_ext_projects.yaml    Program, Project, FundingSource, AgentAssociation
 modules/hew_ext_resources.yaml   CohortResource, SoftwareResource, ModelResource,
                                  ToolResource, ResourceCollection
 ```
 
-Every module imports `hew_core`, and each class and slot is defined in exactly
-one module. New capabilities are added as extension modules, not as slots on
-`HEWResource`.
+Every extension module imports `hew_core`, and each class and slot is defined in
+exactly one module. Core imports only `linkml:types`; it never imports extensions
+or profiles. The optional Amadeus profile imports the geospatial extension, which
+imports core. Amadeus mapping URIs do not create schema dependencies. Tests check
+every schema import graph for cycles and every induced slot for resolved ranges.
 
 Generated artifacts are committed next to the schemas and refreshed with
 `make artifacts`:
@@ -163,7 +168,9 @@ information entity, not necessarily a data-bearing object. It carries only the
 descriptive, rights, and attribution slots shared by all resource types:
 identifiers, title, description, keywords, themes, catalog `status`, license,
 access rights, authors, contributors, contacts, funding sources, related
-resources, and free-text spatial and temporal coverage. Each subclass adds its
+resources, free-text spatial and temporal coverage, and optional structured
+`spatial_extent` and `temporal_extent`. Distributions can carry their own extents
+and forecast `reference_time`. Each subclass adds its
 own slots, and every concrete subclass pins its `resource_type` value.
 
 | Class | Module | `resource_type` |
@@ -285,7 +292,8 @@ annotations use it. The design rationale is in the
   `SpatiotemporalExposure.exposure_geometry`.
 - **`Geometry`**: an explicit footprint as WKT (GeoSPARQL/RDF interchange) or
   GeoJSON (API, web, and GIS interchange).
-- **`BoundingBox`**: `west`, `south`, `east`, `north`, range-constrained.
+- **`BoundingBox`**: required `west`, `south`, `east`, `north`, range-constrained
+  WGS84 geographic coordinates regardless of the native geometry/grid CRS.
 - **`SpatialExtent`**: the overall footprint of a resource: named locations,
   geometry, bounding box, centroid, environmental context, resolution, and CRS.
 
@@ -323,10 +331,33 @@ EnVar-style metadata; HEW does not copy or fork the EnVar micro-schema.
 | Observation location | Measurement site | Weather station |
 | Exposure location | Assignment unit | Census tract |
 
-ISO 8601 durations such as `PT1H`, `P1D`, and `P1M` are recommended for temporal
+ISO 8601 durations such as `PT1H`, `P1D`, and `P1M` are validated for temporal
 resolution and aggregation windows. Use ontology CURIEs for scientific concepts
 and reserve enums for closed method, processing, alignment, and value-type
 vocabularies.
+
+### Amadeus spatial and temporal alignment
+
+`GeospatialResource` adds dataset support defaults, reusable `GridDefinition`,
+`update_cadence_iso`, `typical_latency_iso` and source-specific
+`EnvironmentalVariableDelivery` bindings. Explicit delivery support replaces the
+corresponding dataset default. Grids describe native spacing, dimensions,
+projection, outer-corner origin, row direction and vertical levels. Hex-cell and
+line-feature supports extend the existing controlled values.
+
+`TemporalSupport` preserves duration-valued `temporal_resolution` and adds
+`temporal_resolution_category`, `day_boundary_convention`, a controlled `calendar`
+and `timezone`. Datetime extents use inclusive starts and exclusive ends;
+`coverage_status` distinguishes bounded, ongoing, unknown and timeless coverage.
+Forecast reference time, value aggregation windows and publication cadence are
+separate from coverage and observation spacing.
+
+The optional `profiles/hew_amadeus.yaml` entry point and
+`hew_model.amadeus.validate_amadeus_metadata` provide structural and semantic
+validation respectively. The canonical HEW schema still accepts incomplete
+catalog metadata. See [the HEW-owned Amadeus mapping](../mappings/amadeus/README.md)
+for field mappings, compatibility limits, migration and validation instructions.
+All alignment changes are maintained in HEW; Amadeus is not imported or modified.
 
 ### Exposure estimates and covariates
 

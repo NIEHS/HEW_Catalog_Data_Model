@@ -1,0 +1,62 @@
+id: HEWRES:aligned-daily-temperature
+resource_type: geospatial_dataset
+title: Daily temperature on a reusable projected grid
+coordinate_reference_system_uri: epsg:5070
+spatial_coverage: Example region
+spatial_extent:
+  bounding_box:
+    west: -100.0
+    south: 35.0
+    east: -99.0
+    north: 36.0
+  geometry:
+    geometry_type: polygon
+    coordinate_reference_system_uri: epsg:4326
+    wkt: POLYGON((-100 35, -99 35, -99 36, -100 36, -100 35))
+spatial_support:
+  support_type: model_grid_cell
+grid_definition:
+  id: HEW:grids/example-1km
+  name: Example 1 km grid
+  coordinate_reference_system_uri: epsg:5070
+  srid: 5070
+  grid_mapping_name: albers_conical_equal_area
+  resolution_x: 1000.0
+  resolution_y: 1000.0
+  resolution_unit: m
+  n_columns: 100
+  n_rows: 100
+  origin_x: 0.0
+  origin_y: 100000.0
+  row_direction: decreasing_y
+temporal_extent:
+  start_time: '2020-01-01T00:00:00Z'
+  end_time: '2021-01-01T00:00:00Z'
+  coverage_status: bounded
+temporal_support:
+  temporal_resolution_category: daily
+  temporal_resolution: P1D
+  aggregation_window: P1D
+  temporal_alignment: end
+  day_boundary_convention: utc_midnight
+  calendar: gregorian
+update_cadence_iso: P1D
+typical_latency_iso: PT6H
+environmental_variables:
+  - id: HEWVAR:air-temperature
+    name: air_temperature
+    unit: UCUM:Cel
+variable_deliveries:
+  - id: HEWVAR:example-tmax
+    canonical_variable: HEWVAR:air-temperature
+    native_name: tmax
+    aggregation_method: maximum
+    cf_cell_methods: 'time: maximum'
+distributions:
+  - id: HEWRES:aligned-temperature-20200101
+    format: NetCDF
+    temporal_extent:
+      start_time: '2020-01-01T00:00:00Z'
+      end_time: '2020-01-02T00:00:00Z'
+      coverage_status: bounded
+    reference_time: '2019-12-31T18:00:00Z'

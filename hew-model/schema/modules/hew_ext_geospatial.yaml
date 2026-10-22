@@ -16,6 +16,7 @@ prefixes:
   prov: http://www.w3.org/ns/prov#
   dcterms: http://purl.org/dc/terms/
   epsg: http://www.opengis.net/def/crs/EPSG/0/
+  amadeus: https://w3id.org/niehs/amadeus/
 default_prefix: HEW
 default_range: string
 
@@ -26,12 +27,18 @@ imports:
 classes:
   GeospatialResource:
     is_a: DatasetResource
+    close_mappings:
+      - amadeus:Product
     description: >-
       A geospatial dataset, layer, raster, vector file, map service, or spatial data product.
     slots:
-      - spatial_extent
-      - temporal_extent
       - environmental_variables
+      - variable_deliveries
+      - spatial_support
+      - temporal_support
+      - grid_definition
+      - update_cadence_iso
+      - typical_latency_iso
       - measured_variables
       - spatial_resolution
       - quantitative_spatial_resolution
@@ -45,42 +52,53 @@ classes:
         range: string
         equals_string: geospatial_dataset
 
-  Geometry:
-    class_uri: geo:Geometry
+  GridDefinition:
+    exact_mappings:
+      - amadeus:GridDefinition
     description: >-
-      A machine-readable geometry. GeoJSON is recommended for application and API interchange;
-      WKT is recommended for GeoSPARQL/RDF interchange.
+      Reusable native raster or model grid. Origin is the outer corner at column 0,
+      row 0 in native x/y coordinates. Positive resolution_x and resolution_y are
+      spacing magnitudes; row_direction declares the row-axis direction. Rotated,
+      curvilinear and unstructured grids require an external grid definition.
     slots:
-      - geometry_type
-      - wkt
-      - geojson
+      - id
+      - name
       - coordinate_reference_system_uri
+      - srid
+      - grid_mapping_name
+      - proj_string
+      - resolution_x
+      - resolution_y
+      - resolution_unit
+      - n_columns
+      - n_rows
+      - origin_x
+      - origin_y
+      - row_direction
+      - vertical_level_type
+      - vertical_level_unit
+      - vertical_levels
+    slot_usage:
+      resolution_x:
+        required: true
+      resolution_y:
+        required: true
 
-  SpatialExtent:
+  EnvironmentalVariableDelivery:
+    close_mappings:
+      - amadeus:ProductVariable
     description: >-
-      Structured spatial coverage of a resource. This complements the legacy spatial_coverage
-      string and supports geometry, bounding boxes, centroids, named places, environmental
-      context, and resolution.
+      Source-specific delivery of an EnvironmentalVariable. The containing dataset
+      supplies support defaults; explicit delivery support overrides those defaults
+      as a whole. Legacy environmental_variables may still embed delivery semantics.
     slots:
-      - geometry
-      - bounding_box
-      - centroid
-      - named_locations
-      - environmental_context
-      - spatial_resolution
-      - quantitative_spatial_resolution
-      - administrative_spatial_resolution
-      - coordinate_reference_system_uri
-
-  BoundingBox:
-    description: >-
-      An axis-aligned geographic bounding box expressed as west, south, east, and north coordinates,
-      normally in WGS84 longitude/latitude.
-    slots:
-      - west
-      - south
-      - east
-      - north
+      - id
+      - canonical_variable
+      - native_name
+      - spatial_support
+      - temporal_support
+      - aggregation_method
+      - cf_cell_methods
 
   EnvironmentalVariable:
     is_a: Variable
@@ -112,15 +130,23 @@ classes:
       - administrative_spatial_resolution
       - geometry_type
       - coordinate_reference_system_uri
+      - grid_definition
+      - spatial_index_system
+      - spatial_index_resolution
 
   TemporalSupport:
     description: >-
       The temporal support and aggregation semantics of an environmental variable. ISO 8601
-      duration strings are recommended for resolution and window fields.
+      duration strings are used for resolution and window fields. Dataset defaults
+      are replaced by an explicit delivery support object, never silently merged.
     slots:
       - temporal_resolution
       - aggregation_window
       - temporal_alignment
+      - temporal_resolution_category
+      - day_boundary_convention
+      - calendar
+      - timezone
 
   OMOPConceptBinding:
     description: >-
@@ -213,17 +239,6 @@ classes:
       - parameter_unit
       - parameter_description
 
-  TemporalExtent:
-    description: >-
-      Structured temporal interval for a resource, exposure estimate, variable, observation,
-      model run, or derived covariate.
-    slots:
-      - start_time
-      - end_time
-      - temporal_resolution
-      - calendar
-      - timezone
-
   ValueSpecification:
     description: >-
       Unit, statistic, threshold, uncertainty, and value semantics for an environmental variable
@@ -236,22 +251,6 @@ classes:
       - threshold_unit
       - uncertainty
       - quality_flag
-
-  QuantitativeSpatialResolution:
-    description: Quantitative spatial resolution, such as 1 km, 250 m, or 30 arc-second.
-    slots:
-      - resolution_value
-      - resolution_unit
-      - resolution_axis
-      - resolution_description
-
-  AdministrativeSpatialResolution:
-    description: >-
-      Administrative or statistical geography level used as spatial resolution.
-    slots:
-      - administrative_level
-      - coding_system
-      - example_units
 
   ExternalExposureLinkage:
     description: >-
@@ -272,12 +271,6 @@ classes:
       - linkage_notes
 
 slots:
-  spatial_extent:
-    range: SpatialExtent
-    inlined: true
-    description: Structured spatial extent or footprint of a dataset or resource.
-    close_mappings:
-      - dcterms:spatial
   measured_variables:
     multivalued: true
     range: string
@@ -302,6 +295,8 @@ slots:
   aggregation_method:
     range: AggregationMethodEnum
     description: Statistical or temporal aggregation used to derive each reported value.
+    exact_mappings:
+      - amadeus:aggregation_method
   spatial_support:
     range: SpatialSupport
     inlined: true
@@ -321,23 +316,19 @@ slots:
       workflows.
   support_type:
     range: SpatialSupportTypeEnum
-  administrative_level:
-    range: string
-    description: >-
-      Administrative or statistical geography level when values are reported by units such
-      as state, county, ZIP code, census tract, or block group.
-  temporal_resolution:
-    range: string
-    description: >-
-      Temporal spacing or nominal resolution of values; ISO 8601 duration syntax such as PT1H,
-      P1D, or P1M is recommended where applicable.
+    exact_mappings:
+      - amadeus:spatial_support_type
   aggregation_window:
-    range: string
+    range: Iso8601Duration
+    exact_mappings:
+      - amadeus:aggregation_window_iso
     description: >-
       Time window over which a reported environmental value is aggregated; ISO 8601 duration
       syntax is recommended.
   temporal_alignment:
     range: TemporalAlignmentEnum
+    exact_mappings:
+      - amadeus:temporal_alignment
   omop_concept_id:
     range: integer
   omop_concept_name:
@@ -354,67 +345,11 @@ slots:
     description: >-
       Status of the OMOP concept mapping, including explicit representation of a vocabulary
       gap.
-  spatial_resolution:
-    range: string
-    description: >-
-      Human-readable spatial resolution, retained for compatibility. Examples include 1 km,
-      30 arc-second, county, or census tract.
   coordinate_reference_system:
     range: string
     description: >-
       Legacy free-text coordinate reference system. Prefer coordinate_reference_system_uri
       for normalized new metadata.
-  coordinate_reference_system_uri:
-    range: uriorcurie
-    description: >-
-      Identifier for the coordinate reference system, preferably an OGC CRS URI or EPSG identifier
-      such as epsg:4326.
-  geometry:
-    slot_uri: geo:hasGeometry
-    range: Geometry
-    inlined: true
-  geometry_type:
-    range: GeometryTypeEnum
-  wkt:
-    slot_uri: geo:asWKT
-    range: string
-    description: >-
-      Well-Known Text geometry serialization. For RDF export this may be emitted as a GeoSPARQL
-      geo:wktLiteral.
-  geojson:
-    slot_uri: geo:asGeoJSON
-    range: string
-    description: GeoJSON geometry serialized as a JSON string.
-  bounding_box:
-    range: BoundingBox
-    inlined: true
-  centroid:
-    range: GeographicLocation
-    inlined: true
-  named_locations:
-    multivalued: true
-    range: GeographicLocation
-    inlined_as_list: true
-  west:
-    range: float
-    minimum_value: -180
-    maximum_value: 180
-  east:
-    range: float
-    minimum_value: -180
-    maximum_value: 180
-  south:
-    range: float
-    minimum_value: -90
-    maximum_value: 90
-  north:
-    range: float
-    minimum_value: -90
-    maximum_value: 90
-  temporal_extent:
-    range: TemporalExtent
-    inlined: true
-    description: Structured temporal interval for a resource or exposure estimate.
   processing_level:
     range: DatasetProcessingLevelEnum
     description: Processing or derivation level of a dataset or exposure resource.
@@ -516,35 +451,6 @@ slots:
     range: string
   parameter_description:
     range: string
-  start_time:
-    range: datetime
-  end_time:
-    range: datetime
-  calendar:
-    range: string
-    description: Calendar system if relevant; Gregorian is assumed when omitted.
-  timezone:
-    range: string
-    description: Timezone identifier if local time is relevant.
-  quantitative_spatial_resolution:
-    range: QuantitativeSpatialResolution
-    inlined: true
-  administrative_spatial_resolution:
-    range: AdministrativeSpatialResolution
-    inlined: true
-  resolution_value:
-    range: float
-  resolution_unit:
-    range: string
-  resolution_axis:
-    range: ResolutionAxisEnum
-  resolution_description:
-    range: string
-  coding_system:
-    range: string
-  example_units:
-    multivalued: true
-    range: string
   exposure_estimate:
     range: uriorcurie
   location_history_reference:
@@ -569,9 +475,142 @@ slots:
     range: string
   quality_flag:
     range: string
+  grid_definition:
+    range: GridDefinition
+    inlined: true
+    description: Embedded reusable grid definition carrying a stable identifier.
+    exact_mappings:
+      - amadeus:grid_definition
+  srid:
+    range: integer
+    description: Derived spatial reference identifier; requires a defined authority mapping.
+    exact_mappings:
+      - amadeus:srid
+  grid_mapping_name:
+    range: string
+    exact_mappings:
+      - amadeus:grid_mapping_name
+  proj_string:
+    range: string
+    exact_mappings:
+      - amadeus:proj_string
+  resolution_x:
+    range: float
+    minimum_value: 0
+    exact_mappings:
+      - amadeus:resolution_x
+  resolution_y:
+    range: float
+    minimum_value: 0
+    exact_mappings:
+      - amadeus:resolution_y
+  n_columns:
+    range: integer
+    minimum_value: 1
+    exact_mappings:
+      - amadeus:n_columns
+  n_rows:
+    range: integer
+    minimum_value: 1
+    exact_mappings:
+      - amadeus:n_rows
+  origin_x:
+    range: float
+    close_mappings:
+      - amadeus:origin_x
+  origin_y:
+    range: float
+    close_mappings:
+      - amadeus:origin_y
+  row_direction:
+    range: GridRowDirectionEnum
+  vertical_level_type:
+    range: string
+    exact_mappings:
+      - amadeus:vertical_level_type
+  vertical_level_unit:
+    range: string
+    exact_mappings:
+      - amadeus:vertical_level_unit
+  vertical_levels:
+    range: float
+    multivalued: true
+    exact_mappings:
+      - amadeus:vertical_levels
+  spatial_index_system:
+    range: string
+    description: Index authority, such as H3, for indexed cell support.
+  spatial_index_resolution:
+    range: integer
+    minimum_value: 0
+  temporal_resolution_category:
+    range: TemporalResolutionEnum
+    exact_mappings:
+      - amadeus:temporal_resolution
+  day_boundary_convention:
+    range: DayBoundaryConventionEnum
+    exact_mappings:
+      - amadeus:day_boundary_convention
+  update_cadence_iso:
+    range: Iso8601Duration
+    exact_mappings:
+      - amadeus:update_cadence_iso
+  typical_latency_iso:
+    range: Iso8601Duration
+    exact_mappings:
+      - amadeus:typical_latency_iso
+  variable_deliveries:
+    range: EnvironmentalVariableDelivery
+    multivalued: true
+    inlined_as_list: true
+  canonical_variable:
+    range: EnvironmentalVariable
+    required: true
+    description: Reference to the quantity definition, without source-specific support.
+    close_mappings:
+      - amadeus:canonical_variable
+  native_name:
+    range: string
+    required: true
+    exact_mappings:
+      - amadeus:native_name
+  cf_cell_methods:
+    range: string
+    exact_mappings:
+      - amadeus:cf_cell_methods
 
 enums:
+  GridRowDirectionEnum:
+    permissible_values:
+      increasing_y:
+      decreasing_y:
+  TemporalResolutionEnum:
+    exact_mappings:
+      - amadeus:TemporalResolutionEnum
+    permissible_values:
+      instantaneous:
+      subhourly:
+      hourly:
+      three_hourly:
+      daily:
+      monthly:
+      seasonal:
+      annual:
+      multi_year_epoch:
+      timeless:
+  DayBoundaryConventionEnum:
+    exact_mappings:
+      - amadeus:DayBoundaryConventionEnum
+    permissible_values:
+      local_midnight:
+      utc_midnight:
+      ending_1200_gmt:
+      solar_noon_centered:
+      observation_dependent:
+      not_applicable:
   AggregationMethodEnum:
+    exact_mappings:
+      - amadeus:AggregationMethodEnum
     permissible_values:
       instantaneous:
       mean:
@@ -582,8 +621,16 @@ enums:
       count:
       percentile:
       cumulative:
+      area_weighted_mean:
+      population_weighted_mean:
+      mode:
+      class_proportion:
+      density:
+      nearest:
       other:
   SpatialSupportTypeEnum:
+    exact_mappings:
+      - amadeus:SpatialSupportTypeEnum
     permissible_values:
       point:
       monitoring_station:
@@ -592,8 +639,12 @@ enums:
       administrative_area:
       statistical_area:
       model_grid_cell:
+      hex_cell:
+      line_feature:
       other:
   TemporalAlignmentEnum:
+    exact_mappings:
+      - amadeus:TemporalAlignmentEnum
     permissible_values:
       start:
       center:
@@ -607,20 +658,6 @@ enums:
       candidate_mapping:
       vocabulary_gap:
       not_evaluated:
-  GeometryTypeEnum:
-    permissible_values:
-      point:
-        meaning: sf:Point
-      multipoint:
-        meaning: sf:MultiPoint
-      linestring:
-        meaning: sf:LineString
-      multilinestring:
-        meaning: sf:MultiLineString
-      polygon:
-        meaning: sf:Polygon
-      multipolygon:
-        meaning: sf:MultiPolygon
   CovariateCalculationMethodEnum:
     permissible_values:
       buffer_extraction:
@@ -685,14 +722,6 @@ enums:
       threshold_exceedance:
       percentile:
       anomaly:
-      other:
-  ResolutionAxisEnum:
-    permissible_values:
-      x:
-      y:
-      z:
-      temporal:
-      nominal:
       other:
   DatasetProcessingLevelEnum:
     permissible_values:

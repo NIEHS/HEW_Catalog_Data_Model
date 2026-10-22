@@ -57,11 +57,28 @@ prefixes:
   sf: http://www.opengis.net/ont/sf#
   epsg: http://www.opengis.net/def/crs/EPSG/0/
   geonames: https://www.geonames.org/ontology#
+  amadeus: https://w3id.org/niehs/amadeus/
+  xsd: http://www.w3.org/2001/XMLSchema#
 default_prefix: HEW
 default_range: string
 
 imports:
   - linkml:types
+
+types:
+  WktLiteral:
+    typeof: string
+    base: str
+    uri: geo:wktLiteral
+    exact_mappings:
+      - amadeus:WktLiteral
+  Iso8601Duration:
+    typeof: string
+    base: str
+    uri: xsd:duration
+    pattern: '^P(?!$)(\d+Y)?(\d+M)?(\d+D)?(T(?=\d)(\d+H)?(\d+M)?(\d+(\.\d+)?S)?)?$'
+    exact_mappings:
+      - amadeus:Iso8601Duration
 
 classes:
   ConceptMappingMixin:
@@ -110,6 +127,8 @@ classes:
       - distributions
       - spatial_coverage
       - temporal_coverage
+      - spatial_extent
+      - temporal_extent
 
   DatasetResource:
     is_a: HEWResource
@@ -135,6 +154,9 @@ classes:
       - license
       - media_type
       - format
+      - spatial_extent
+      - temporal_extent
+      - reference_time
 
   DataDictionary:
     class_uri: schema:Dataset
@@ -172,6 +194,83 @@ classes:
       - longitude
       - geographic_identifiers
       - environmental_context
+
+  Geometry:
+    class_uri: geo:Geometry
+    description: >-
+      Geometry with an explicit CRS, or the containing SpatialExtent CRS when omitted.
+      WKT coordinates follow that CRS's declared axis convention. GeoJSON uses WGS84
+      longitude/latitude. Projected coordinates belong here, not in GeographicLocation.
+    slots:
+      - geometry_type
+      - wkt
+      - geojson
+      - coordinate_reference_system_uri
+
+  SpatialExtent:
+    description: >-
+      Structured coverage shared by all resources and distributions. Bounding boxes and
+      centroids use WGS84 longitude/latitude independently of the geometry's native CRS.
+      Structured values are authoritative for queries; spatial_coverage is display text.
+    slots:
+      - geometry
+      - bounding_box
+      - centroid
+      - named_locations
+      - environmental_context
+      - spatial_resolution
+      - quantitative_spatial_resolution
+      - administrative_spatial_resolution
+      - coordinate_reference_system_uri
+
+  BoundingBox:
+    description: >-
+      WGS84 geographic envelope in west, south, east, north order. West greater than east
+      denotes antimeridian crossing. South must not exceed north. The containing extent's
+      CRS applies to geometry, never to these geographic bounds.
+    slots:
+      - west
+      - south
+      - east
+      - north
+    slot_usage:
+      west:
+        required: true
+      south:
+        required: true
+      east:
+        required: true
+      north:
+        required: true
+
+  TemporalExtent:
+    description: >-
+      Coverage or validity interval. Datetime bounds are inclusive start and exclusive end
+      [start, end). coverage_status distinguishes ongoing, unknown and timeless intervals.
+      Missing bounds alone do not imply timelessness. Structured coverage is authoritative.
+      Non-Gregorian calendars require calendar-aware interpretation by consumers.
+    slots:
+      - start_time
+      - end_time
+      - temporal_resolution
+      - calendar
+      - timezone
+      - coverage_status
+
+  QuantitativeSpatialResolution:
+    description: Nominal spatial resolution; angular units are not a constant metre distance.
+    slots:
+      - resolution_value
+      - resolution_unit
+      - resolution_axis
+      - resolution_description
+
+  AdministrativeSpatialResolution:
+    description: Administrative or statistical geography level used as spatial resolution.
+    slots:
+      - administrative_level
+      - coding_system
+      - example_units
 
   Agent:
     abstract: true
@@ -317,7 +416,9 @@ slots:
     slot_uri: dcterms:spatial
     range: string
     description: >-
-      Free-text spatial coverage. Geospatial resources add structured spatial_extent.
+      Display description of spatial coverage; spatial_extent supplies queryable coverage.
+    close_mappings:
+      - amadeus:spatial_extent_descriptor
   temporal_coverage:
     slot_uri: dcterms:temporal
     range: string
@@ -408,11 +509,13 @@ slots:
     range: float
     minimum_value: -90
     maximum_value: 90
+    description: WGS84 geographic latitude in decimal degrees.
   longitude:
     slot_uri: biolink:longitude
     range: float
     minimum_value: -180
     maximum_value: 180
+    description: WGS84 geographic longitude in decimal degrees.
   geographic_identifiers:
     multivalued: true
     range: uriorcurie
@@ -462,8 +565,160 @@ slots:
     multivalued: true
     range: GeographicFeatureEnum
     description: Resource-level or location-level geographic features such as urban or rural.
+  spatial_extent:
+    range: SpatialExtent
+    inlined: true
+    close_mappings:
+      - dcterms:spatial
+  geometry:
+    slot_uri: geo:hasGeometry
+    range: Geometry
+    inlined: true
+  geometry_type:
+    range: GeometryTypeEnum
+  wkt:
+    slot_uri: geo:asWKT
+    range: WktLiteral
+  geojson:
+    slot_uri: geo:asGeoJSON
+    range: string
+    description: GeoJSON geometry serialized as JSON, using WGS84 longitude/latitude.
+  coordinate_reference_system_uri:
+    range: uriorcurie
+    description: >-
+      CRS identifier, preferably an OGC URI or EPSG CURIE. An explicit geometry CRS
+      overrides its containing extent. Amadeus authority strings require normalization.
+    close_mappings:
+      - amadeus:crs
+  spatial_resolution:
+    range: string
+    description: Human-readable native resolution, such as 1 km or census tract.
+    exact_mappings:
+      - amadeus:native_spatial_resolution_descriptor
+  bounding_box:
+    range: BoundingBox
+    inlined: true
+  centroid:
+    range: GeographicLocation
+    inlined: true
+  named_locations:
+    range: GeographicLocation
+    multivalued: true
+    inlined_as_list: true
+  west:
+    range: float
+    minimum_value: -180
+    maximum_value: 180
+  east:
+    range: float
+    minimum_value: -180
+    maximum_value: 180
+  south:
+    range: float
+    minimum_value: -90
+    maximum_value: 90
+  north:
+    range: float
+    minimum_value: -90
+    maximum_value: 90
+  temporal_extent:
+    range: TemporalExtent
+    inlined: true
+  start_time:
+    range: datetime
+    description: Inclusive start of coverage or validity, with an explicit UTC offset.
+    close_mappings:
+      - amadeus:valid_time_start
+  end_time:
+    range: datetime
+    description: Exclusive end of coverage or validity, with an explicit UTC offset.
+    close_mappings:
+      - amadeus:valid_time_end
+  reference_time:
+    range: datetime
+    description: Forecast initialization or model cycle time, distinct from validity.
+    exact_mappings:
+      - amadeus:reference_time
+  temporal_resolution:
+    range: Iso8601Duration
+    description: Nominal temporal spacing, distinct from aggregation window and update cadence.
+    exact_mappings:
+      - amadeus:temporal_resolution_iso
+  calendar:
+    range: CalendarEnum
+    description: Calendar used to interpret times; Gregorian is assumed when omitted.
+    exact_mappings:
+      - amadeus:calendar
+  timezone:
+    range: string
+    description: IANA timezone identifier for local temporal interpretation.
+  coverage_status:
+    range: TemporalCoverageStatusEnum
+  quantitative_spatial_resolution:
+    range: QuantitativeSpatialResolution
+    inlined: true
+  administrative_spatial_resolution:
+    range: AdministrativeSpatialResolution
+    inlined: true
+  resolution_value:
+    range: float
+    minimum_value: 0
+  resolution_unit:
+    range: string
+    exact_mappings:
+      - amadeus:resolution_unit
+  resolution_axis:
+    range: ResolutionAxisEnum
+  resolution_description:
+    range: string
+  administrative_level:
+    range: string
+  coding_system:
+    range: string
+  example_units:
+    range: string
+    multivalued: true
 
 enums:
+  CalendarEnum:
+    exact_mappings:
+      - amadeus:CalendarEnum
+    permissible_values:
+      gregorian:
+      proleptic_gregorian:
+      noleap:
+      daymet_365:
+      all_leap:
+      day_360:
+      julian:
+  TemporalCoverageStatusEnum:
+    permissible_values:
+      bounded:
+      ongoing:
+      unknown:
+      timeless:
+  GeometryTypeEnum:
+    permissible_values:
+      point:
+        meaning: sf:Point
+      multipoint:
+        meaning: sf:MultiPoint
+      linestring:
+        meaning: sf:LineString
+      multilinestring:
+        meaning: sf:MultiLineString
+      polygon:
+        meaning: sf:Polygon
+      multipolygon:
+        meaning: sf:MultiPolygon
+  ResolutionAxisEnum:
+    permissible_values:
+      x:
+      y:
+      z:
+      temporal:
+      nominal:
+      other:
   ResourceTypeEnum:
     description: Catalog resource types. Each value corresponds to one resource class.
     permissible_values:

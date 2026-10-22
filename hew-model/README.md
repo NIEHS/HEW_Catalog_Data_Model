@@ -27,6 +27,12 @@ hew-model/
 `-- HEW Geospatial Metadata Enhancement Strategy.md
 ```
 
+Shared extent and geometry classes live in core; grids and support classes live
+in the geospatial extension. The optional `schema/profiles/hew_amadeus.yaml`
+imports that extension and adds an interoperability entry point. See the
+[HEW-owned Amadeus crosswalk](../mappings/amadeus/README.md) for mappings,
+semantic validation and migration. Amadeus is referenced by URI, never imported.
+
 All examples validate against `hew.yaml`. See
 `scripts/validate_examples.sh` for the class each example is checked as.
 
