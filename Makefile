@@ -11,7 +11,7 @@ jsonschema:
 	gen-json-schema $(SCHEMA) > build/hew.schema.json
 
 jsonld-context:
-	PYTHONPATH=hew-model $(PYTHON) hew/generate_jsonld_context.py --schema $(SCHEMA) --output build/hew.context.jsonld
+	PYTHONPATH=hew-model $(PYTHON) hew-model/hew_model/jsonld.py --schema $(SCHEMA) --output build/hew.context.jsonld
 
 # Refresh the generated files committed next to the schema.
 artifacts: jsonschema jsonld-context
