@@ -5,13 +5,6 @@ import re
 from typing import Any
 
 
-REGULAR_DURATIONS = {
-    "hourly": "PT1H",
-    "three_hourly": "PT3H",
-    "daily": "P1D",
-    "monthly": "P1M",
-    "annual": "P1Y",
-}
 GRID_SUPPORTS = {"raster_grid_cell", "model_grid_cell"}
 
 
@@ -85,13 +78,9 @@ def validate_amadeus_metadata(resource: dict[str, Any]) -> list[str]:
         errors.append("bounding_box.south must not exceed north")
 
     def check_temporal(support: dict[str, Any], path: str) -> None:
-        category = support.get("temporal_resolution_category")
-        duration = support.get("temporal_resolution")
+        category = support.get("temporal_resolution")
         if category is None:
-            errors.append(f"{path}.temporal_resolution_category is required")
-        if category in REGULAR_DURATIONS:
-            if duration != REGULAR_DURATIONS[category]:
-                errors.append(f"{path} requires {REGULAR_DURATIONS[category]} for {category}")
+            errors.append(f"{path}.temporal_resolution is required")
         if category == "daily" and support.get("day_boundary_convention") in (
             None, "not_applicable"
         ):
@@ -99,8 +88,6 @@ def validate_amadeus_metadata(resource: dict[str, Any]) -> list[str]:
         if support.get("day_boundary_convention") == "local_midnight":
             if not support.get("timezone"):
                 errors.append(f"{path} local_midnight requires timezone")
-        if category in {"timeless", "instantaneous", "multi_year_epoch"} and duration:
-            errors.append(f"{path} {category} must not invent a regular duration")
 
     check_temporal(temporal, "temporal_support")
     for position, delivery in enumerate(resource.get("variable_deliveries", [])):
@@ -144,13 +131,13 @@ def validate_amadeus_metadata(resource: dict[str, Any]) -> list[str]:
         if interval.get(field) and temporal.get(field):
             if interval[field] != temporal[field]:
                 errors.append(f"temporal_extent and temporal_support disagree on {field}")
-    if temporal.get("temporal_resolution_category") == "timeless":
+    if temporal.get("temporal_resolution") == "timeless":
         if interval.get("start_time") or interval.get("end_time"):
             errors.append("timeless products cannot declare temporal bounds")
         if interval.get("coverage_status") not in (None, "timeless"):
             errors.append("timeless product conflicts with coverage_status")
     elif interval.get("coverage_status") == "timeless":
-        errors.append("timeless coverage conflicts with temporal resolution category")
+        errors.append("timeless coverage conflicts with temporal resolution")
     for position, distribution in enumerate(resource.get("distributions", [])):
         check_extent(distribution.get("temporal_extent", {}), f"distributions[{position}]")
     return errors

@@ -10,7 +10,7 @@ temporal_coverage: 2010/2020
 temporal_extent:
   start_time: '2010-01-01T00:00:00Z'
   end_time: '2021-01-01T00:00:00Z'
-  temporal_resolution: P1D
+  temporal_resolution: daily
 spatial_resolution: 1 km
 coordinate_reference_system: epsg:4326
 spatial_extent:
@@ -48,7 +48,7 @@ environmental_variables:
       geometry_type: polygon
       coordinate_reference_system_uri: epsg:4326
     temporal_support:
-      temporal_resolution: P1D
+      temporal_resolution: daily
       aggregation_window: P1D
       temporal_alignment: end
     concept_mappings:
@@ -70,7 +70,7 @@ environmental_variables:
       geometry_type: polygon
       coordinate_reference_system_uri: epsg:4326
     temporal_support:
-      temporal_resolution: P1D
+      temporal_resolution: daily
       aggregation_window: P1D
       temporal_alignment: end
     omop_concept_binding:

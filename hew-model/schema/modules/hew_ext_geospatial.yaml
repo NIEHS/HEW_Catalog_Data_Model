@@ -136,14 +136,13 @@ classes:
 
   TemporalSupport:
     description: >-
-      The temporal support and aggregation semantics of an environmental variable. ISO 8601
-      duration strings are used for resolution and window fields. Dataset defaults
+      The temporal support and aggregation semantics of an environmental variable.
+      Resolution uses the Amadeus enum; aggregation windows use ISO 8601 durations. Dataset defaults
       are replaced by an explicit delivery support object, never silently merged.
     slots:
       - temporal_resolution
       - aggregation_window
       - temporal_alignment
-      - temporal_resolution_category
       - day_boundary_convention
       - calendar
       - timezone
@@ -543,10 +542,6 @@ slots:
   spatial_index_resolution:
     range: integer
     minimum_value: 0
-  temporal_resolution_category:
-    range: TemporalResolutionEnum
-    exact_mappings:
-      - amadeus:temporal_resolution
   day_boundary_convention:
     range: DayBoundaryConventionEnum
     exact_mappings:
@@ -584,20 +579,6 @@ enums:
     permissible_values:
       increasing_y:
       decreasing_y:
-  TemporalResolutionEnum:
-    exact_mappings:
-      - amadeus:TemporalResolutionEnum
-    permissible_values:
-      instantaneous:
-      subhourly:
-      hourly:
-      three_hourly:
-      daily:
-      monthly:
-      seasonal:
-      annual:
-      multi_year_epoch:
-      timeless:
   DayBoundaryConventionEnum:
     exact_mappings:
       - amadeus:DayBoundaryConventionEnum

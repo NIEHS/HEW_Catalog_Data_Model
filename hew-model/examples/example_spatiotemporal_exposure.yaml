@@ -22,9 +22,9 @@ spatial_support:
 temporal_extent:
   start_time: '2020-01-01T00:00:00Z'
   end_time: '2026-01-01T00:00:00Z'
-  temporal_resolution: P1D
+  temporal_resolution: daily
 temporal_support:
-  temporal_resolution: P1D
+  temporal_resolution: daily
   aggregation_window: P1D
   temporal_alignment: interval
 value_specification:

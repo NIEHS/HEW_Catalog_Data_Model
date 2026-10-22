@@ -640,10 +640,10 @@ slots:
     exact_mappings:
       - amadeus:reference_time
   temporal_resolution:
-    range: Iso8601Duration
+    range: TemporalResolutionEnum
     description: Nominal temporal spacing, distinct from aggregation window and update cadence.
     exact_mappings:
-      - amadeus:temporal_resolution_iso
+      - amadeus:temporal_resolution
   calendar:
     range: CalendarEnum
     description: Calendar used to interpret times; Gregorian is assumed when omitted.
@@ -680,6 +680,20 @@ slots:
     multivalued: true
 
 enums:
+  TemporalResolutionEnum:
+    exact_mappings:
+      - amadeus:TemporalResolutionEnum
+    permissible_values:
+      instantaneous:
+      subhourly:
+      hourly:
+      three_hourly:
+      daily:
+      monthly:
+      seasonal:
+      annual:
+      multi_year_epoch:
+      timeless:
   CalendarEnum:
     exact_mappings:
       - amadeus:CalendarEnum

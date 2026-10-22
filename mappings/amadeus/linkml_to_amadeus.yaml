@@ -32,8 +32,7 @@ slots:
       target: native_spatial_resolution_m
       operation: convert_linear_nominal_resolution_to_metres
       notes: No implicit angular-to-metre or anisotropic-axis-to-nominal conversion.
-    temporal_support.temporal_resolution: {target: temporal_resolution_iso, operation: copy}
-    temporal_support.temporal_resolution_category: {target: temporal_resolution, operation: copy}
+    temporal_support.temporal_resolution: {target: temporal_resolution, operation: copy}
     temporal_support.temporal_alignment: {target: temporal_alignment, operation: copy}
     temporal_support.day_boundary_convention: {target: day_boundary_convention, operation: copy}
     temporal_support.calendar: {target: calendar, operation: copy}

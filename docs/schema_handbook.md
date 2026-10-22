@@ -331,8 +331,9 @@ EnVar-style metadata; HEW does not copy or fork the EnVar micro-schema.
 | Observation location | Measurement site | Weather station |
 | Exposure location | Assignment unit | Census tract |
 
-ISO 8601 durations such as `PT1H`, `P1D`, and `P1M` are validated for temporal
-resolution and aggregation windows. Use ontology CURIEs for scientific concepts
+`temporal_resolution` uses Amadeus's `TemporalResolutionEnum` exclusively.
+ISO 8601 durations such as `PT1H`, `P1D`, and `P1M` are validated for aggregation
+windows, update cadence and latency. Use ontology CURIEs for scientific concepts
 and reserve enums for closed method, processing, alignment, and value-type
 vocabularies.
 
@@ -345,8 +346,8 @@ corresponding dataset default. Grids describe native spacing, dimensions,
 projection, outer-corner origin, row direction and vertical levels. Hex-cell and
 line-feature supports extend the existing controlled values.
 
-`TemporalSupport` preserves duration-valued `temporal_resolution` and adds
-`temporal_resolution_category`, `day_boundary_convention`, a controlled `calendar`
+`TemporalSupport` uses enum-valued `temporal_resolution` alongside
+`day_boundary_convention`, a controlled `calendar`
 and `timezone`. Datetime extents use inclusive starts and exclusive ends;
 `coverage_status` distinguishes bounded, ongoing, unknown and timeless coverage.
 Forecast reference time, value aggregation windows and publication cadence are
@@ -413,7 +414,7 @@ environmental_variables:
       geometry_type: polygon
       coordinate_reference_system_uri: epsg:4326
     temporal_support:
-      temporal_resolution: P1D
+      temporal_resolution: daily
       aggregation_window: P1D
       temporal_alignment: end
     concept_mappings:
