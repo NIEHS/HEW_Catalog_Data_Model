@@ -32,10 +32,6 @@ jobs:
       - run: python3 -m pip install -e .
       - run: make validate
       - run: make artifacts
-      - name: Prepare JSON-LD distribution
-        run: |
-          mkdir -p dist
-          cp hew-model/schema/hew.context.jsonld dist/hew.context.jsonld
       - name: Commit generated schema
         if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
         env:
@@ -43,13 +39,9 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add hew-model/schema/hew.schema.json hew-model/schema/hew.context.jsonld
+          git add hew-model/schema/hew.schema.json hew-model/schema/hew-extended.schema.json hew-model/schema/hew.context.jsonld
           if ! git diff --cached --quiet; then
-            git commit -m "Regenerate HEW schema artifacts"
+            git commit -m "Regenerate HEW schema artifacts"00000000
+          
             git push origin "HEAD:refs/heads/$BRANCH"
           fi
-      - uses: actions/upload-artifact@v4
-        with:
-          name: hew-jsonld
-          path: dist/hew.context.jsonld
-          if-no-files-found: error
