@@ -176,7 +176,14 @@
                     "type": "string"
                 },
                 "role": {
-                    "$ref": "#/$defs/AgentRoleEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AgentRoleEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "source": {
                     "type": [
@@ -335,7 +342,14 @@
             "description": "A cohort or cohort-derived resource relevant to exposure-health research.",
             "properties": {
                 "access_rights": {
-                    "$ref": "#/$defs/AccessRightsEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AccessRightsEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "authors": {
                     "description": "Ordered list of people or organizations credited as authors of the resource.",
@@ -495,7 +509,14 @@
                     ]
                 },
                 "status": {
-                    "$ref": "#/$defs/CatalogStatusEnum",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CatalogStatusEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "Catalog record lifecycle status."
                 },
                 "subtitle": {
@@ -720,7 +741,14 @@
             "description": "A method or computational process used to derive an exposure covariate from environmental, geospatial, climate, weather, social-context, or other health-relevant data.",
             "properties": {
                 "aggregation_method": {
-                    "$ref": "#/$defs/AggregationMethodEnum",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AggregationMethodEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "Statistical or temporal aggregation used to derive each reported value."
                 },
                 "buffer_radius": {
@@ -742,7 +770,14 @@
                     ]
                 },
                 "extraction_method": {
-                    "$ref": "#/$defs/ExtractionMethodEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ExtractionMethodEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "function_name": {
                     "description": "Name of the function or workflow step used to derive the covariate.",
@@ -773,7 +808,14 @@
                     ]
                 },
                 "method_type": {
-                    "$ref": "#/$defs/CovariateCalculationMethodEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CovariateCalculationMethodEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "name": {
                     "type": [
@@ -820,7 +862,14 @@
                     ]
                 },
                 "spatial_join_method": {
-                    "$ref": "#/$defs/SpatialJoinMethodEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SpatialJoinMethodEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "target_crs": {
                     "description": "CRS used for calculation output, preferably an EPSG or OGC CRS identifier.",
@@ -830,7 +879,14 @@
                     ]
                 },
                 "temporal_join_method": {
-                    "$ref": "#/$defs/TemporalJoinMethodEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalJoinMethodEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "temporal_window": {
                     "description": "ISO 8601 duration or human-readable temporal window.",
@@ -989,7 +1045,14 @@
             "description": "A dataset relevant to health and extreme weather. Specialized dataset kinds (survey, geospatial, cohort) are subclasses.",
             "properties": {
                 "access_rights": {
-                    "$ref": "#/$defs/AccessRightsEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AccessRightsEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "authors": {
                     "description": "Ordered list of people or organizations credited as authors of the resource.",
@@ -1148,7 +1211,14 @@
                     ]
                 },
                 "status": {
-                    "$ref": "#/$defs/CatalogStatusEnum",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CatalogStatusEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "Catalog record lifecycle status."
                 },
                 "subtitle": {
@@ -1222,7 +1292,14 @@
             "description": "A concrete downloadable, API, service, or object distribution of a dataset or resource.",
             "properties": {
                 "access_rights": {
-                    "$ref": "#/$defs/AccessRightsEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AccessRightsEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "description": {
                     "type": [
@@ -1327,7 +1404,14 @@
             "description": "An environmental variable described with EnVar-aligned metadata sufficient to interpret what was measured or derived, how it was summarized, where and when values apply, and how the variable maps to environmental and clinical vocabularies. This is an HEW integration profile, not a copy of the authoritative EnVar micro-schema.",
             "properties": {
                 "aggregation_method": {
-                    "$ref": "#/$defs/AggregationMethodEnum",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AggregationMethodEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "Statistical or temporal aggregation used to derive each reported value."
                 },
                 "concept_mappings": {
@@ -1398,7 +1482,14 @@
                     "description": "Optional OMOP vocabulary mapping and mapping status for downstream Gaia or external-exposure workflows."
                 },
                 "processing_level": {
-                    "$ref": "#/$defs/DatasetProcessingLevelEnum",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/DatasetProcessingLevelEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "Processing or derivation level of a dataset or exposure resource."
                 },
                 "spatial_support": {
@@ -1447,7 +1538,14 @@
             "description": "Source-specific delivery of an EnvironmentalVariable. The containing dataset supplies support defaults; explicit delivery support overrides those defaults as a whole. Legacy environmental_variables may still embed delivery semantics.",
             "properties": {
                 "aggregation_method": {
-                    "$ref": "#/$defs/AggregationMethodEnum",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AggregationMethodEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "Statistical or temporal aggregation used to derive each reported value."
                 },
                 "canonical_variable": {
@@ -1560,10 +1658,24 @@
                     ]
                 },
                 "spatial_join_method": {
-                    "$ref": "#/$defs/SpatialJoinMethodEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SpatialJoinMethodEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "temporal_join_method": {
-                    "$ref": "#/$defs/TemporalJoinMethodEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalJoinMethodEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 }
             },
             "required": [
@@ -1740,7 +1852,14 @@
                     ]
                 },
                 "location_type": {
-                    "$ref": "#/$defs/GeographicLocationTypeEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/GeographicLocationTypeEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "longitude": {
                     "description": "WGS84 geographic longitude in decimal degrees.",
@@ -1876,7 +1995,14 @@
                     ]
                 },
                 "geometry_type": {
-                    "$ref": "#/$defs/GeometryTypeEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/GeometryTypeEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "wkt": {
                     "type": [
@@ -1906,7 +2032,14 @@
             "description": "A geospatial dataset, layer, raster, vector file, map service, or spatial data product.",
             "properties": {
                 "access_rights": {
-                    "$ref": "#/$defs/AccessRightsEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AccessRightsEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "administrative_spatial_resolution": {
                     "anyOf": [
@@ -2076,7 +2209,14 @@
                     ]
                 },
                 "processing_level": {
-                    "$ref": "#/$defs/DatasetProcessingLevelEnum",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/DatasetProcessingLevelEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "Processing or derivation level of a dataset or exposure resource."
                 },
                 "publication_date": {
@@ -2163,7 +2303,14 @@
                     "description": "Spatial unit over which an individual variable value applies; distinct from the complete spatial extent of the parent dataset."
                 },
                 "status": {
-                    "$ref": "#/$defs/CatalogStatusEnum",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CatalogStatusEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "Catalog record lifecycle status."
                 },
                 "subtitle": {
@@ -2326,7 +2473,14 @@
                     "type": "number"
                 },
                 "row_direction": {
-                    "$ref": "#/$defs/GridRowDirectionEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/GridRowDirectionEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "srid": {
                     "description": "Derived spatial reference identifier; requires a defined authority mapping.",
@@ -2379,7 +2533,14 @@
             "description": "A cataloged resource relevant to health and extreme weather. Holds only the descriptive, rights, and attribution fields shared by every resource type; type-specific fields live on subclasses.",
             "properties": {
                 "access_rights": {
-                    "$ref": "#/$defs/AccessRightsEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AccessRightsEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "authors": {
                     "description": "Ordered list of people or organizations credited as authors of the resource.",
@@ -2528,7 +2689,14 @@
                     ]
                 },
                 "status": {
-                    "$ref": "#/$defs/CatalogStatusEnum",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CatalogStatusEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "Catalog record lifecycle status."
                 },
                 "subtitle": {
@@ -2606,7 +2774,14 @@
                     ]
                 },
                 "coding_method": {
-                    "$ref": "#/$defs/CodingMethodEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CodingMethodEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "coding_scheme": {
                     "type": [
@@ -2675,7 +2850,14 @@
                     "type": "string"
                 },
                 "information_source": {
-                    "$ref": "#/$defs/InformationSourceEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/InformationSourceEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "needs_human_review": {
                     "type": [
@@ -2697,7 +2879,14 @@
                     ]
                 },
                 "reference_type": {
-                    "$ref": "#/$defs/ReferenceTypeEnum",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ReferenceTypeEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "Reference type as coded by the reviewer, with the annotation's provenance. The resource's own publication_type is the catalog value."
                 },
                 "related_resources": {
@@ -2766,7 +2955,14 @@
                     ]
                 },
                 "access_rights": {
-                    "$ref": "#/$defs/AccessRightsEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AccessRightsEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "aliases": {
                     "description": "Alternate labels or synonyms for a concept, variable, or coded term. These are useful for facets, search indexing, and user-facing displays without changing the canonical id.",
@@ -2938,7 +3134,14 @@
                     ]
                 },
                 "publication_type": {
-                    "$ref": "#/$defs/ReferenceTypeEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ReferenceTypeEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "related_mappings": {
                     "description": "Semantically related concept identifiers for broader, narrower, or associated concepts used in search, graph navigation, or faceting.",
@@ -3008,7 +3211,14 @@
                     ]
                 },
                 "status": {
-                    "$ref": "#/$defs/CatalogStatusEnum",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CatalogStatusEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "Catalog record lifecycle status."
                 },
                 "study_objective": {
@@ -3081,7 +3291,14 @@
                     ]
                 },
                 "availability": {
-                    "$ref": "#/$defs/AvailabilityEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AvailabilityEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "name": {
                     "type": [
@@ -3090,7 +3307,14 @@
                     ]
                 },
                 "relationship_to_literature": {
-                    "$ref": "#/$defs/ResourceRelationshipEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ResourceRelationshipEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "resource_type": {
                     "$ref": "#/$defs/ResourceTypeEnum",
@@ -3115,7 +3339,14 @@
             "description": "A computational, exposure, geospatial, statistical, or AI/ML model resource.",
             "properties": {
                 "access_rights": {
-                    "$ref": "#/$defs/AccessRightsEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AccessRightsEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "authors": {
                     "description": "Ordered list of people or organizations credited as authors of the resource.",
@@ -3219,7 +3450,14 @@
                     ]
                 },
                 "model_type": {
-                    "$ref": "#/$defs/ModelTypeEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ModelTypeEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "output_variables": {
                     "items": {
@@ -3286,7 +3524,14 @@
                     ]
                 },
                 "status": {
-                    "$ref": "#/$defs/CatalogStatusEnum",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CatalogStatusEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "Catalog record lifecycle status."
                 },
                 "subtitle": {
@@ -3358,7 +3603,14 @@
             "description": "Optional mapping of an environmental variable to an OMOP vocabulary concept, including an explicit status so vocabulary gaps can be represented without inventing identifiers.",
             "properties": {
                 "concept_status": {
-                    "$ref": "#/$defs/ConceptStatusEnum",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ConceptStatusEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "Status of the OMOP concept mapping, including explicit representation of a vocabulary gap."
                 },
                 "omop_concept_id": {
@@ -3438,7 +3690,14 @@
                     ]
                 },
                 "organization_type": {
-                    "$ref": "#/$defs/OrganizationTypeEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/OrganizationTypeEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "parent_organization": {
                     "type": [
@@ -3730,7 +3989,14 @@
                     ]
                 },
                 "status": {
-                    "$ref": "#/$defs/ProjectStatusEnum",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ProjectStatusEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "Catalog record lifecycle status."
                 },
                 "themes": {
@@ -3865,7 +4131,14 @@
                     ]
                 },
                 "status": {
-                    "$ref": "#/$defs/ProjectStatusEnum",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ProjectStatusEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "Catalog record lifecycle status."
                 },
                 "themes": {
@@ -3923,7 +4196,14 @@
             "description": "Nominal spatial resolution; angular units are not a constant metre distance.",
             "properties": {
                 "resolution_axis": {
-                    "$ref": "#/$defs/ResolutionAxisEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ResolutionAxisEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "resolution_description": {
                     "type": [
@@ -3977,7 +4257,14 @@
             "description": "A curated collection of HEW resources, such as the HEW Resource Library, a systematic-review corpus, a Dataverse collection, or a covariate collection.",
             "properties": {
                 "access_rights": {
-                    "$ref": "#/$defs/AccessRightsEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AccessRightsEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "authors": {
                     "description": "Ordered list of people or organizations credited as authors of the resource.",
@@ -4154,7 +4441,14 @@
                     ]
                 },
                 "status": {
-                    "$ref": "#/$defs/CatalogStatusEnum",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CatalogStatusEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "Catalog record lifecycle status."
                 },
                 "subtitle": {
@@ -4360,7 +4654,14 @@
             "description": "Software, code, library, workflow, notebook, or computational tool relevant to HEW.",
             "properties": {
                 "access_rights": {
-                    "$ref": "#/$defs/AccessRightsEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AccessRightsEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "authors": {
                     "description": "Ordered list of people or organizations credited as authors of the resource.",
@@ -4508,7 +4809,14 @@
                     ]
                 },
                 "software_type": {
-                    "$ref": "#/$defs/SoftwareTypeEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SoftwareTypeEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "source_organization": {
                     "description": "Organization where the resource was created or originated.",
@@ -4535,7 +4843,14 @@
                     ]
                 },
                 "status": {
-                    "$ref": "#/$defs/CatalogStatusEnum",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CatalogStatusEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "Catalog record lifecycle status."
                 },
                 "subtitle": {
@@ -4740,7 +5055,14 @@
                     ]
                 },
                 "geometry_type": {
-                    "$ref": "#/$defs/GeometryTypeEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/GeometryTypeEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "grid_definition": {
                     "anyOf": [
@@ -4785,7 +5107,14 @@
                     ]
                 },
                 "support_type": {
-                    "$ref": "#/$defs/SpatialSupportTypeEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SpatialSupportTypeEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 }
             },
             "title": "SpatialSupport",
@@ -4813,10 +5142,24 @@
             "description": "A measured, modeled, derived, assigned, or summarized environmental exposure estimate with explicit exposure semantics, spatial support, temporal support, environmental context, value semantics, provenance, and optional linkage to a population, cohort, study, health resource, or OMOP/Gaia external exposure workflow.",
             "properties": {
                 "access_rights": {
-                    "$ref": "#/$defs/AccessRightsEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AccessRightsEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "aggregation_method": {
-                    "$ref": "#/$defs/AggregationMethodEnum",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AggregationMethodEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "Statistical or temporal aggregation used to derive each reported value."
                 },
                 "associated_health_outcomes": {
@@ -4955,7 +5298,14 @@
                     ]
                 },
                 "processing_level": {
-                    "$ref": "#/$defs/DatasetProcessingLevelEnum",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/DatasetProcessingLevelEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "Processing or derivation level of a dataset or exposure resource."
                 },
                 "quality_flags": {
@@ -5168,7 +5518,14 @@
             "description": "A dataset containing survey responses or derived survey measures collected using one or more survey instruments.",
             "properties": {
                 "access_rights": {
-                    "$ref": "#/$defs/AccessRightsEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AccessRightsEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "authors": {
                     "description": "Ordered list of people or organizations credited as authors of the resource.",
@@ -5354,7 +5711,14 @@
                     ]
                 },
                 "status": {
-                    "$ref": "#/$defs/CatalogStatusEnum",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CatalogStatusEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "Catalog record lifecycle status."
                 },
                 "subtitle": {
@@ -5424,7 +5788,14 @@
             "description": "A questionnaire, interview guide, assessment instrument, scale, or protocol used to collect HEW-relevant survey data.",
             "properties": {
                 "access_rights": {
-                    "$ref": "#/$defs/AccessRightsEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AccessRightsEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "adapted_from": {
                     "description": "Resources, templates, or instruments from which this resource was adapted.",
@@ -5437,10 +5808,24 @@
                     ]
                 },
                 "administered_by": {
-                    "$ref": "#/$defs/AdministeredByEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AdministeredByEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "administration_mode": {
-                    "$ref": "#/$defs/AdministrationModeEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AdministrationModeEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "administration_time": {
                     "description": "Expected time required to complete or administer the resource.",
@@ -5532,10 +5917,24 @@
                     ]
                 },
                 "ease_of_use": {
-                    "$ref": "#/$defs/EaseOfUseEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/EaseOfUseEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "electronic_data_capture": {
-                    "$ref": "#/$defs/ElectronicDataCaptureEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ElectronicDataCaptureEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "event_types": {
                     "description": "Event or disaster concepts for which the resource is appropriate.",
@@ -5762,7 +6161,14 @@
                     ]
                 },
                 "status": {
-                    "$ref": "#/$defs/CatalogStatusEnum",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CatalogStatusEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "Catalog record lifecycle status."
                 },
                 "subtitle": {
@@ -5880,7 +6286,14 @@
                     ]
                 },
                 "response_type": {
-                    "$ref": "#/$defs/ResponseTypeEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ResponseTypeEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "response_variables": {
                     "description": "Dataset variables that record responses to this question.",
@@ -5933,11 +6346,25 @@
             "description": "Coverage or validity interval. Datetime bounds are inclusive start and exclusive end [start, end). coverage_status distinguishes ongoing, unknown and timeless intervals. Missing bounds alone do not imply timelessness. Structured coverage is authoritative. Non-Gregorian calendars require calendar-aware interpretation by consumers.",
             "properties": {
                 "calendar": {
-                    "$ref": "#/$defs/CalendarEnum",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CalendarEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "Calendar used to interpret times; Gregorian is assumed when omitted."
                 },
                 "coverage_status": {
-                    "$ref": "#/$defs/TemporalCoverageStatusEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalCoverageStatusEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "end_time": {
                     "description": "Exclusive end of coverage or validity, with an explicit UTC offset.",
@@ -5956,7 +6383,14 @@
                     ]
                 },
                 "temporal_resolution": {
-                    "$ref": "#/$defs/TemporalResolutionEnum",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalResolutionEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "Nominal temporal spacing, distinct from aggregation window and update cadence."
                 },
                 "timezone": {
@@ -6018,17 +6452,45 @@
                     ]
                 },
                 "calendar": {
-                    "$ref": "#/$defs/CalendarEnum",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CalendarEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "Calendar used to interpret times; Gregorian is assumed when omitted."
                 },
                 "day_boundary_convention": {
-                    "$ref": "#/$defs/DayBoundaryConventionEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/DayBoundaryConventionEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "temporal_alignment": {
-                    "$ref": "#/$defs/TemporalAlignmentEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalAlignmentEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "temporal_resolution": {
-                    "$ref": "#/$defs/TemporalResolutionEnum",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalResolutionEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "Nominal temporal spacing, distinct from aggregation window and update cadence."
                 },
                 "timezone": {
@@ -6047,7 +6509,14 @@
             "description": "A tool used to collect, compute, analyze, visualize, interpret, or translate health and extreme weather information. Tools may include computational tools, survey tools, decision-support tools, calculators, dashboards, notebooks, workflows, or educational tools.",
             "properties": {
                 "access_rights": {
-                    "$ref": "#/$defs/AccessRightsEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AccessRightsEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "authors": {
                     "description": "Ordered list of people or organizations credited as authors of the resource.",
@@ -6231,7 +6700,14 @@
                     ]
                 },
                 "status": {
-                    "$ref": "#/$defs/CatalogStatusEnum",
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CatalogStatusEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
                     "description": "Catalog record lifecycle status."
                 },
                 "subtitle": {
@@ -6273,7 +6749,14 @@
                     ]
                 },
                 "tool_type": {
-                    "$ref": "#/$defs/ToolTypeEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ToolTypeEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "url": {
                     "format": "uri",
@@ -6319,7 +6802,14 @@
                     ]
                 },
                 "statistic": {
-                    "$ref": "#/$defs/AggregationMethodEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AggregationMethodEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "threshold": {
                     "type": [
@@ -6347,7 +6837,14 @@
                     ]
                 },
                 "value_type": {
-                    "$ref": "#/$defs/ValueTypeEnum"
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ValueTypeEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 }
             },
             "title": "ValueSpecification",
@@ -6428,7 +6925,7 @@
     "$id": "https://w3id.org/hew/schema",
     "$schema": "https://json-schema.org/draft/2019-09/schema",
     "additionalProperties": true,
-    "metamodel_version": "1.11.0",
+    "metamodel_version": "1.12.0",
     "title": "hew",
     "type": "object",
     "version": "2.0.0"
