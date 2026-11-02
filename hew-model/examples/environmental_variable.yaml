@@ -13,5 +13,5 @@ spatial_support:
     resolution_unit: km
     resolution_axis: nominal
 temporal_support:
-  temporal_resolution: P1D
+  temporal_resolution: daily
   aggregation_window: P1D

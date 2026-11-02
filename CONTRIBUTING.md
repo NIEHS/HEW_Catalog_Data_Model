@@ -11,8 +11,8 @@ Read the [HEW Schema Handbook](docs/schema_handbook.md) before changing the sche
 - Keep LaserAI output provenance explicit.
 - Prefer local HEW identifiers first, then add ontology mappings as evidence improves.
 - Add examples for every meaningful schema change.
-- Keep the core (`hew.yaml`) small. Add new capabilities as extension modules,
-  and do not add type-specific slots to `HEWResource`.
+- Keep `hew.yaml` as the single canonical schema entry point. Add capabilities
+  as modules, and do not add type-specific slots to `HEWResource`.
 - Define each class and slot in exactly one module, and regenerate the committed
   artifacts with `make artifacts` after schema changes.
 

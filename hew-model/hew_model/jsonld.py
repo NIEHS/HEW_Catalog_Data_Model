@@ -14,8 +14,7 @@ from rdflib import Graph
 from rdflib.compare import to_isomorphic
 
 
-# The extended schema is a superset of the core, so its context covers every module.
-SCHEMA_PATH = Path(__file__).parents[1] / "schema" / "hew-extended.yaml"
+SCHEMA_PATH = Path(__file__).parents[1] / "schema" / "hew.yaml"
 
 
 def generate_context(schema_path: str | Path = SCHEMA_PATH) -> dict[str, Any]:

@@ -9,11 +9,9 @@ the [HEW Schema Handbook](../docs/schema_handbook.md).
 ```text
 hew-model/
 |-- schema/
-|   |-- hew.yaml                  # core schema
-|   |-- hew-extended.yaml         # core + extensions
+|   |-- hew.yaml                  # canonical schema, composed from all modules
 |   |-- hew.schema.json           # generated from hew.yaml
-|   |-- hew-extended.schema.json  # generated from hew-extended.yaml
-|   |-- hew.context.jsonld        # generated from hew-extended.yaml
+|   |-- hew.context.jsonld        # generated from hew.yaml
 |   `-- modules/
 |       |-- hew_core.yaml            # resource base, agents, variables, locations
 |       |-- hew_review_coding.yaml   # systematic-review annotations
@@ -29,9 +27,13 @@ hew-model/
 `-- HEW Geospatial Metadata Enhancement Strategy.md
 ```
 
-Core examples (`publication_resource.yaml`, `example_literature_annotation.yaml`,
-`survey_instrument.yaml`, `survey_dataset.yaml`) validate against `hew.yaml`; the
-rest validate against `hew-extended.yaml`. See
+Shared extent and geometry classes live in core; grids and support classes live
+in the geospatial extension. The optional `schema/profiles/hew_amadeus.yaml`
+imports that extension and adds an interoperability entry point. See the
+[HEW-owned Amadeus crosswalk](../mappings/amadeus/README.md) for mappings,
+semantic validation and migration. Amadeus is referenced by URI, never imported.
+
+All examples validate against `hew.yaml`. See
 `scripts/validate_examples.sh` for the class each example is checked as.
 
 ## External vocabulary integration

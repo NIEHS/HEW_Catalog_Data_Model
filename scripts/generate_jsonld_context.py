@@ -7,7 +7,7 @@ from pathlib import Path
 
 from hew_model.jsonld import generate_context
 
-DEFAULT_SCHEMA = Path(__file__).parents[1] / "hew-model" / "schema" / "hew-extended.yaml"
+DEFAULT_SCHEMA = Path(__file__).parents[1] / "hew-model" / "schema" / "hew.yaml"
 
 
 def main() -> None:

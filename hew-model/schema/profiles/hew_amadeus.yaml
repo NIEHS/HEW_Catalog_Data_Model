@@ -1,0 +1,27 @@
+id: https://w3id.org/hew/schema/profiles/amadeus
+name: hew_amadeus
+title: HEW Amadeus interoperability profile
+description: >-
+  Optional stricter HEW profile. Imports only the HEW geospatial extension;
+  Amadeus identifiers are mappings, never schema imports. Cross-field checks
+  are implemented by hew_model.amadeus.validate_amadeus_metadata.
+version: 2.0.0
+license: CC-BY-4.0
+prefixes:
+  HEW: https://w3id.org/hew/
+  linkml: https://w3id.org/linkml/
+  amadeus: https://w3id.org/niehs/amadeus/
+default_prefix: HEW
+default_range: string
+imports:
+  - ../modules/hew_ext_geospatial
+classes:
+  AmadeusGeospatialResource:
+    is_a: GeospatialResource
+    close_mappings:
+      - amadeus:Product
+    slot_usage:
+      spatial_support:
+        required: true
+      temporal_support:
+        required: true
