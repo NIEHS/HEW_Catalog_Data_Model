@@ -42,6 +42,35 @@
             "title": "AdministrationModeEnum",
             "type": "string"
         },
+        "AdministrativeSpatialResolution": {
+            "additionalProperties": false,
+            "description": "Administrative or statistical geography level used as spatial resolution.",
+            "properties": {
+                "administrative_level": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "coding_system": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "example_units": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "title": "AdministrativeSpatialResolution",
+            "type": "object"
+        },
         "Agent": {
             "additionalProperties": false,
             "description": "A person, organization, group, or software agent associated with a HEW resource, program, project, annotation, funding source, or activity.",
@@ -107,6 +136,126 @@
             "title": "Agent",
             "type": "object"
         },
+        "AgentAssociation": {
+            "additionalProperties": false,
+            "description": "A role-bearing association between an agent and another HEW entity, such as a project, program, resource, annotation, activity, or funding source.",
+            "properties": {
+                "affiliation_context": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "agent": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "associated_with": {
+                    "description": "CURIE for the program, project, resource, annotation, activity, or funding source.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "contribution_description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "end_date": {
+                    "format": "date",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "role": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AgentRoleEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "source": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "start_date": {
+                    "format": "date",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "AgentAssociation",
+            "type": "object"
+        },
+        "AgentRoleEnum": {
+            "description": "",
+            "enum": [
+                "principal_investigator",
+                "co_investigator",
+                "researcher",
+                "curator",
+                "coder",
+                "reviewer",
+                "software_developer",
+                "data_steward",
+                "data_contributor",
+                "project_manager",
+                "program_officer",
+                "scientific_contact",
+                "community_partner",
+                "funder",
+                "sponsor",
+                "author",
+                "corresponding_author",
+                "maintainer",
+                "software_agent",
+                "other",
+                "participating_organization"
+            ],
+            "title": "AgentRoleEnum",
+            "type": "string"
+        },
+        "AggregationMethodEnum": {
+            "description": "",
+            "enum": [
+                "instantaneous",
+                "mean",
+                "minimum",
+                "maximum",
+                "median",
+                "sum",
+                "count",
+                "percentile",
+                "cumulative",
+                "area_weighted_mean",
+                "population_weighted_mean",
+                "mode",
+                "class_proportion",
+                "density",
+                "nearest",
+                "other"
+            ],
+            "title": "AggregationMethodEnum",
+            "type": "string"
+        },
         "AvailabilityEnum": {
             "description": "",
             "enum": [
@@ -117,6 +266,54 @@
                 "unknown"
             ],
             "title": "AvailabilityEnum",
+            "type": "string"
+        },
+        "BoundingBox": {
+            "additionalProperties": false,
+            "description": "WGS84 geographic envelope in west, south, east, north order. West greater than east denotes antimeridian crossing. South must not exceed north. The containing extent's CRS applies to geometry, never to these geographic bounds.",
+            "properties": {
+                "east": {
+                    "maximum": 180,
+                    "minimum": -180,
+                    "type": "number"
+                },
+                "north": {
+                    "maximum": 90,
+                    "minimum": -90,
+                    "type": "number"
+                },
+                "south": {
+                    "maximum": 90,
+                    "minimum": -90,
+                    "type": "number"
+                },
+                "west": {
+                    "maximum": 180,
+                    "minimum": -180,
+                    "type": "number"
+                }
+            },
+            "required": [
+                "west",
+                "south",
+                "east",
+                "north"
+            ],
+            "title": "BoundingBox",
+            "type": "object"
+        },
+        "CalendarEnum": {
+            "description": "",
+            "enum": [
+                "gregorian",
+                "proleptic_gregorian",
+                "noleap",
+                "daymet_365",
+                "all_leap",
+                "day_360",
+                "julian"
+            ],
+            "title": "CalendarEnum",
             "type": "string"
         },
         "CatalogStatusEnum": {
@@ -139,6 +336,241 @@
             ],
             "title": "CodingMethodEnum",
             "type": "string"
+        },
+        "CohortResource": {
+            "additionalProperties": false,
+            "description": "A cohort or cohort-derived resource relevant to exposure-health research.",
+            "properties": {
+                "access_rights": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AccessRightsEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "authors": {
+                    "description": "Ordered list of people or organizations credited as authors of the resource.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/$defs/Person"
+                            },
+                            {
+                                "$ref": "#/$defs/Organization"
+                            },
+                            {
+                                "$ref": "#/$defs/SoftwareAgent"
+                            }
+                        ]
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "contacts": {
+                    "description": "Agents to contact about the resource, referenced by identifier.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "contributors": {
+                    "description": "Agents who contributed to the resource, referenced by identifier.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "data_dictionary": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/DataDictionary"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "distributions": {
+                    "items": {
+                        "$ref": "#/$defs/Distribution"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "funding_sources": {
+                    "description": "Funding awards that supported the resource, referenced by identifier.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "identifiers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "keywords": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "license": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "publication_date": {
+                    "description": "Date the resource was originally published or posted.",
+                    "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "related_resources": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "resource_type": {
+                    "const": "cohort",
+                    "description": "Catalog resource type. Each resource class pins the value it accepts, so the type and the class cannot disagree.",
+                    "type": "string"
+                },
+                "same_as": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "source_organization": {
+                    "description": "Organization where the resource was created or originated.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "spatial_coverage": {
+                    "description": "Display description of spatial coverage; spatial_extent supplies queryable coverage.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "spatial_extent": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SpatialExtent"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "status": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CatalogStatusEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Catalog record lifecycle status."
+                },
+                "subtitle": {
+                    "description": "Secondary title or subtitle supplied by the resource owner.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "temporal_coverage": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "temporal_extent": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalExtent"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "themes": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "title": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "resource_type"
+            ],
+            "title": "CohortResource",
+            "type": "object"
         },
         "ConceptAnnotation": {
             "additionalProperties": false,
@@ -292,6 +724,204 @@
             "title": "ConceptMappingMixin",
             "type": "object"
         },
+        "ConceptStatusEnum": {
+            "description": "",
+            "enum": [
+                "mapped_standard",
+                "mapped_nonstandard",
+                "candidate_mapping",
+                "vocabulary_gap",
+                "not_evaluated"
+            ],
+            "title": "ConceptStatusEnum",
+            "type": "string"
+        },
+        "CovariateCalculation": {
+            "additionalProperties": false,
+            "description": "A method or computational process used to derive an exposure covariate from environmental, geospatial, climate, weather, social-context, or other health-relevant data.",
+            "properties": {
+                "aggregation_method": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AggregationMethodEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Statistical or temporal aggregation used to derive each reported value."
+                },
+                "buffer_radius": {
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "buffer_unit": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "extraction_method": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ExtractionMethodEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "function_name": {
+                    "description": "Name of the function or workflow step used to derive the covariate.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "generated_outputs": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "input_resources": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "method_type": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CovariateCalculationMethodEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "output_variables": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "parameters": {
+                    "items": {
+                        "$ref": "#/$defs/ParameterValue"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "software": {
+                    "description": "Software resource or software agent used to generate the exposure.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "software_version": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "source_crs": {
+                    "description": "CRS of source data, preferably an EPSG or OGC CRS identifier.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "spatial_join_method": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SpatialJoinMethodEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "target_crs": {
+                    "description": "CRS used for calculation output, preferably an EPSG or OGC CRS identifier.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "temporal_join_method": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalJoinMethodEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "temporal_window": {
+                    "description": "ISO 8601 duration or human-readable temporal window.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "CovariateCalculation",
+            "type": "object"
+        },
+        "CovariateCalculationMethodEnum": {
+            "description": "",
+            "enum": [
+                "buffer_extraction",
+                "point_extraction",
+                "zonal_statistics",
+                "raster_summary",
+                "spatial_overlay",
+                "interpolation",
+                "model_prediction",
+                "reanalysis_extraction",
+                "monitor_assignment",
+                "nearest_monitor",
+                "distance_weighted_assignment",
+                "administrative_area_summary",
+                "other"
+            ],
+            "title": "CovariateCalculationMethodEnum",
+            "type": "string"
+        },
         "DataDictionary": {
             "additionalProperties": false,
             "description": "A structured description of variables, fields, measures, or data elements.",
@@ -392,6 +1022,23 @@
             },
             "title": "DataToolMethodAnnotation",
             "type": "object"
+        },
+        "DatasetProcessingLevelEnum": {
+            "description": "",
+            "enum": [
+                "raw",
+                "cleaned",
+                "harmonized",
+                "derived",
+                "modeled",
+                "summarized",
+                "exposure_assigned",
+                "analysis_ready",
+                "publication_ready",
+                "other"
+            ],
+            "title": "DatasetProcessingLevelEnum",
+            "type": "string"
         },
         "DatasetResource": {
             "additionalProperties": false,
@@ -547,10 +1194,20 @@
                     ]
                 },
                 "spatial_coverage": {
-                    "description": "Free-text spatial coverage. Geospatial resources add structured spatial_extent.",
+                    "description": "Display description of spatial coverage; spatial_extent supplies queryable coverage.",
                     "type": [
                         "string",
                         "null"
+                    ]
+                },
+                "spatial_extent": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SpatialExtent"
+                        },
+                        {
+                            "type": "null"
+                        }
                     ]
                 },
                 "status": {
@@ -575,6 +1232,16 @@
                     "type": [
                         "string",
                         "null"
+                    ]
+                },
+                "temporal_extent": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalExtent"
+                        },
+                        {
+                            "type": "null"
+                        }
                     ]
                 },
                 "themes": {
@@ -606,6 +1273,19 @@
             ],
             "title": "DatasetResource",
             "type": "object"
+        },
+        "DayBoundaryConventionEnum": {
+            "description": "",
+            "enum": [
+                "local_midnight",
+                "utc_midnight",
+                "ending_1200_gmt",
+                "solar_noon_centered",
+                "observation_dependent",
+                "not_applicable"
+            ],
+            "title": "DayBoundaryConventionEnum",
+            "type": "string"
         },
         "Distribution": {
             "additionalProperties": false,
@@ -646,6 +1326,34 @@
                     "type": [
                         "string",
                         "null"
+                    ]
+                },
+                "reference_time": {
+                    "description": "Forecast initialization or model cycle time, distinct from validity.",
+                    "format": "date-time",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "spatial_extent": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SpatialExtent"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "temporal_extent": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalExtent"
+                        },
+                        {
+                            "type": "null"
+                        }
                     ]
                 },
                 "title": {
@@ -690,6 +1398,393 @@
             ],
             "title": "ElectronicDataCaptureEnum",
             "type": "string"
+        },
+        "EnvironmentalVariable": {
+            "additionalProperties": false,
+            "description": "An environmental variable described with EnVar-aligned metadata sufficient to interpret what was measured or derived, how it was summarized, where and when values apply, and how the variable maps to environmental and clinical vocabularies. This is an HEW integration profile, not a copy of the authoritative EnVar micro-schema.",
+            "properties": {
+                "aggregation_method": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AggregationMethodEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Statistical or temporal aggregation used to derive each reported value."
+                },
+                "concept_mappings": {
+                    "description": "Ontology or vocabulary terms that the variable or construct maps to, such as ENVO, ECTO, CHEBI, LOINC, or SNOMED CT.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "data_type": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "external_exposure_linkage": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ExternalExposureLinkage"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Optional OMOP/Gaia external exposure linkage metadata."
+                },
+                "id": {
+                    "type": "string"
+                },
+                "measured_property": {
+                    "description": "Ontology identifier for the environmental property, phenomenon, substance, or exposure-related quantity represented by the variable. ENVO, ECTO, CHEBI, or other appropriate ontology terms may be used.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "measurement_method": {
+                    "description": "Identifier for the measurement, observation, assay, retrieval, or derivation method when a suitable controlled term exists.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "omop_concept_binding": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/OMOPConceptBinding"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Optional OMOP vocabulary mapping and mapping status for downstream Gaia or external-exposure workflows."
+                },
+                "processing_level": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/DatasetProcessingLevelEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Processing or derivation level of a dataset or exposure resource."
+                },
+                "spatial_support": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SpatialSupport"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Spatial unit over which an individual variable value applies; distinct from the complete spatial extent of the parent dataset."
+                },
+                "temporal_support": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalSupport"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Temporal resolution, aggregation window, and alignment for individual values."
+                },
+                "title": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "unit": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "EnvironmentalVariable",
+            "type": "object"
+        },
+        "EnvironmentalVariableDelivery": {
+            "additionalProperties": false,
+            "description": "Source-specific delivery of an EnvironmentalVariable. The containing dataset supplies support defaults; explicit delivery support overrides those defaults as a whole. Legacy environmental_variables may still embed delivery semantics.",
+            "properties": {
+                "aggregation_method": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AggregationMethodEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Statistical or temporal aggregation used to derive each reported value."
+                },
+                "canonical_variable": {
+                    "description": "Reference to the quantity definition, without source-specific support.",
+                    "type": "string"
+                },
+                "cf_cell_methods": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "native_name": {
+                    "type": "string"
+                },
+                "spatial_support": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SpatialSupport"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Spatial unit over which an individual variable value applies; distinct from the complete spatial extent of the parent dataset."
+                },
+                "temporal_support": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalSupport"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Temporal resolution, aggregation window, and alignment for individual values."
+                }
+            },
+            "required": [
+                "id",
+                "canonical_variable",
+                "native_name"
+            ],
+            "title": "EnvironmentalVariableDelivery",
+            "type": "object"
+        },
+        "ExternalExposureLinkage": {
+            "additionalProperties": false,
+            "description": "Metadata describing how an exposure estimate, variable, or dataset can be linked to OMOP/Gaia-style external exposure workflows, including spatial and temporal join assumptions and privacy-preserving location references.",
+            "properties": {
+                "exposure_end_date": {
+                    "format": "date",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "exposure_estimate": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "exposure_start_date": {
+                    "format": "date",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "linkage_notes": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "location_history_reference": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "omop_concept_binding": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/OMOPConceptBinding"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Optional OMOP vocabulary mapping and mapping status for downstream Gaia or external-exposure workflows."
+                },
+                "person_or_cohort_reference": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "privacy_preserving_geography": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "spatial_join_method": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SpatialJoinMethodEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "temporal_join_method": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalJoinMethodEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "ExternalExposureLinkage",
+            "type": "object"
+        },
+        "ExtractionMethodEnum": {
+            "description": "",
+            "enum": [
+                "point_sample",
+                "bilinear_interpolation",
+                "nearest_cell",
+                "zonal_mean",
+                "zonal_sum",
+                "zonal_minimum",
+                "zonal_maximum",
+                "zonal_percentile",
+                "majority_class",
+                "area_weighted",
+                "distance_weighted",
+                "other"
+            ],
+            "title": "ExtractionMethodEnum",
+            "type": "string"
+        },
+        "FundingSource": {
+            "additionalProperties": false,
+            "description": "A funding award, mechanism, contract, cooperative agreement, or sponsor.",
+            "properties": {
+                "award_number": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "end_date": {
+                    "format": "date",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "funder": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "funding_mechanism": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "identifiers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "sponsoring_organizations": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "start_date": {
+                    "format": "date",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "title": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "FundingSource",
+            "type": "object"
         },
         "GeographicFeatureEnum": {
             "description": "Resource-level or location-level geographic features.",
@@ -741,6 +1836,7 @@
                     ]
                 },
                 "latitude": {
+                    "description": "WGS84 geographic latitude in decimal degrees.",
                     "maximum": 90,
                     "minimum": -90,
                     "type": [
@@ -766,6 +1862,7 @@
                     ]
                 },
                 "longitude": {
+                    "description": "WGS84 geographic longitude in decimal degrees.",
                     "maximum": 180,
                     "minimum": -180,
                     "type": [
@@ -878,6 +1975,558 @@
             },
             "title": "GeographyAnnotation",
             "type": "object"
+        },
+        "Geometry": {
+            "additionalProperties": false,
+            "description": "Geometry with an explicit CRS, or the containing SpatialExtent CRS when omitted. WKT coordinates follow that CRS's declared axis convention. GeoJSON uses WGS84 longitude/latitude. Projected coordinates belong here, not in GeographicLocation.",
+            "properties": {
+                "coordinate_reference_system_uri": {
+                    "description": "CRS identifier, preferably an OGC URI or EPSG CURIE. An explicit geometry CRS overrides its containing extent. Amadeus authority strings require normalization.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "geojson": {
+                    "description": "GeoJSON geometry serialized as JSON, using WGS84 longitude/latitude.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "geometry_type": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/GeometryTypeEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "wkt": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "Geometry",
+            "type": "object"
+        },
+        "GeometryTypeEnum": {
+            "description": "",
+            "enum": [
+                "point",
+                "multipoint",
+                "linestring",
+                "multilinestring",
+                "polygon",
+                "multipolygon"
+            ],
+            "title": "GeometryTypeEnum",
+            "type": "string"
+        },
+        "GeospatialResource": {
+            "additionalProperties": false,
+            "description": "A geospatial dataset, layer, raster, vector file, map service, or spatial data product.",
+            "properties": {
+                "access_rights": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AccessRightsEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "administrative_spatial_resolution": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AdministrativeSpatialResolution"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "authors": {
+                    "description": "Ordered list of people or organizations credited as authors of the resource.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/$defs/Person"
+                            },
+                            {
+                                "$ref": "#/$defs/Organization"
+                            },
+                            {
+                                "$ref": "#/$defs/SoftwareAgent"
+                            }
+                        ]
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "contacts": {
+                    "description": "Agents to contact about the resource, referenced by identifier.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "contributors": {
+                    "description": "Agents who contributed to the resource, referenced by identifier.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "coordinate_reference_system": {
+                    "description": "Legacy free-text coordinate reference system. Prefer coordinate_reference_system_uri for normalized new metadata.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "coordinate_reference_system_uri": {
+                    "description": "CRS identifier, preferably an OGC URI or EPSG CURIE. An explicit geometry CRS overrides its containing extent. Amadeus authority strings require normalization.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "data_dictionary": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/DataDictionary"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "distributions": {
+                    "items": {
+                        "$ref": "#/$defs/Distribution"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "environmental_variables": {
+                    "description": "Structured environmental variables using the HEW EnVar integration profile. This complements the legacy measured_variables string list.",
+                    "items": {
+                        "$ref": "#/$defs/EnvironmentalVariable"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "external_exposure_linkage": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ExternalExposureLinkage"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Optional OMOP/Gaia external exposure linkage metadata."
+                },
+                "funding_sources": {
+                    "description": "Funding awards that supported the resource, referenced by identifier.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "grid_definition": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/GridDefinition"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Embedded reusable grid definition carrying a stable identifier."
+                },
+                "id": {
+                    "type": "string"
+                },
+                "identifiers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "keywords": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "license": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "measured_variables": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "processing_level": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/DatasetProcessingLevelEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Processing or derivation level of a dataset or exposure resource."
+                },
+                "publication_date": {
+                    "description": "Date the resource was originally published or posted.",
+                    "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "quantitative_spatial_resolution": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/QuantitativeSpatialResolution"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "related_resources": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "resource_type": {
+                    "const": "geospatial_dataset",
+                    "description": "Catalog resource type. Each resource class pins the value it accepts, so the type and the class cannot disagree.",
+                    "type": "string"
+                },
+                "same_as": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "source_organization": {
+                    "description": "Organization where the resource was created or originated.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "spatial_coverage": {
+                    "description": "Display description of spatial coverage; spatial_extent supplies queryable coverage.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "spatial_extent": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SpatialExtent"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "spatial_resolution": {
+                    "description": "Human-readable native resolution, such as 1 km or census tract.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "spatial_support": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SpatialSupport"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Spatial unit over which an individual variable value applies; distinct from the complete spatial extent of the parent dataset."
+                },
+                "status": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CatalogStatusEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Catalog record lifecycle status."
+                },
+                "subtitle": {
+                    "description": "Secondary title or subtitle supplied by the resource owner.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "temporal_coverage": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "temporal_extent": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalExtent"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "temporal_support": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalSupport"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Temporal resolution, aggregation window, and alignment for individual values."
+                },
+                "themes": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "title": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "typical_latency_iso": {
+                    "pattern": "^P(?!$)(\\d+Y)?(\\d+M)?(\\d+D)?(T(?=\\d)(\\d+H)?(\\d+M)?(\\d+(\\.\\d+)?S)?)?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "update_cadence_iso": {
+                    "pattern": "^P(?!$)(\\d+Y)?(\\d+M)?(\\d+D)?(T(?=\\d)(\\d+H)?(\\d+M)?(\\d+(\\.\\d+)?S)?)?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "variable_deliveries": {
+                    "items": {
+                        "$ref": "#/$defs/EnvironmentalVariableDelivery"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "resource_type"
+            ],
+            "title": "GeospatialResource",
+            "type": "object"
+        },
+        "GridDefinition": {
+            "additionalProperties": false,
+            "description": "Reusable native raster or model grid. Origin is the outer corner at column 0, row 0 in native x/y coordinates. Positive resolution_x and resolution_y are spacing magnitudes; row_direction declares the row-axis direction. Rotated, curvilinear and unstructured grids require an external grid definition.",
+            "properties": {
+                "coordinate_reference_system_uri": {
+                    "description": "CRS identifier, preferably an OGC URI or EPSG CURIE. An explicit geometry CRS overrides its containing extent. Amadeus authority strings require normalization.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "grid_mapping_name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "n_columns": {
+                    "minimum": 1,
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "n_rows": {
+                    "minimum": 1,
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "origin_x": {
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "origin_y": {
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "proj_string": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "resolution_unit": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "resolution_x": {
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "resolution_y": {
+                    "minimum": 0,
+                    "type": "number"
+                },
+                "row_direction": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/GridRowDirectionEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "srid": {
+                    "description": "Derived spatial reference identifier; requires a defined authority mapping.",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "vertical_level_type": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "vertical_level_unit": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "vertical_levels": {
+                    "items": {
+                        "type": "number"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "resolution_x",
+                "resolution_y"
+            ],
+            "title": "GridDefinition",
+            "type": "object"
+        },
+        "GridRowDirectionEnum": {
+            "description": "",
+            "enum": [
+                "increasing_y",
+                "decreasing_y"
+            ],
+            "title": "GridRowDirectionEnum",
+            "type": "string"
         },
         "HEWResource": {
             "additionalProperties": false,
@@ -1023,10 +2672,20 @@
                     ]
                 },
                 "spatial_coverage": {
-                    "description": "Free-text spatial coverage. Geospatial resources add structured spatial_extent.",
+                    "description": "Display description of spatial coverage; spatial_extent supplies queryable coverage.",
                     "type": [
                         "string",
                         "null"
+                    ]
+                },
+                "spatial_extent": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SpatialExtent"
+                        },
+                        {
+                            "type": "null"
+                        }
                     ]
                 },
                 "status": {
@@ -1051,6 +2710,16 @@
                     "type": [
                         "string",
                         "null"
+                    ]
+                },
+                "temporal_extent": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalExtent"
+                        },
+                        {
+                            "type": "null"
+                        }
                     ]
                 },
                 "themes": {
@@ -1525,10 +3194,20 @@
                     ]
                 },
                 "spatial_coverage": {
-                    "description": "Free-text spatial coverage. Geospatial resources add structured spatial_extent.",
+                    "description": "Display description of spatial coverage; spatial_extent supplies queryable coverage.",
                     "type": [
                         "string",
                         "null"
+                    ]
+                },
+                "spatial_extent": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SpatialExtent"
+                        },
+                        {
+                            "type": "null"
+                        }
                     ]
                 },
                 "status": {
@@ -1559,6 +3238,16 @@
                     "type": [
                         "string",
                         "null"
+                    ]
+                },
+                "temporal_extent": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalExtent"
+                        },
+                        {
+                            "type": "null"
+                        }
                     ]
                 },
                 "themes": {
@@ -1645,6 +3334,259 @@
             "title": "MentionedResource",
             "type": "object"
         },
+        "ModelResource": {
+            "additionalProperties": false,
+            "description": "A computational, exposure, geospatial, statistical, or AI/ML model resource.",
+            "properties": {
+                "access_rights": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AccessRightsEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "authors": {
+                    "description": "Ordered list of people or organizations credited as authors of the resource.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/$defs/Person"
+                            },
+                            {
+                                "$ref": "#/$defs/Organization"
+                            },
+                            {
+                                "$ref": "#/$defs/SoftwareAgent"
+                            }
+                        ]
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "contacts": {
+                    "description": "Agents to contact about the resource, referenced by identifier.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "contributors": {
+                    "description": "Agents who contributed to the resource, referenced by identifier.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "distributions": {
+                    "items": {
+                        "$ref": "#/$defs/Distribution"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "funding_sources": {
+                    "description": "Funding awards that supported the resource, referenced by identifier.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "identifiers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "input_variables": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "keywords": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "license": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "model_type": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ModelTypeEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "output_variables": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "publication_date": {
+                    "description": "Date the resource was originally published or posted.",
+                    "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "related_resources": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "resource_type": {
+                    "const": "model",
+                    "description": "Catalog resource type. Each resource class pins the value it accepts, so the type and the class cannot disagree.",
+                    "type": "string"
+                },
+                "same_as": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "source_organization": {
+                    "description": "Organization where the resource was created or originated.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "spatial_coverage": {
+                    "description": "Display description of spatial coverage; spatial_extent supplies queryable coverage.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "spatial_extent": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SpatialExtent"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "status": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CatalogStatusEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Catalog record lifecycle status."
+                },
+                "subtitle": {
+                    "description": "Secondary title or subtitle supplied by the resource owner.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "temporal_coverage": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "temporal_extent": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalExtent"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "themes": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "title": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "resource_type"
+            ],
+            "title": "ModelResource",
+            "type": "object"
+        },
         "ModelTypeEnum": {
             "description": "",
             "enum": [
@@ -1655,6 +3597,56 @@
             ],
             "title": "ModelTypeEnum",
             "type": "string"
+        },
+        "OMOPConceptBinding": {
+            "additionalProperties": false,
+            "description": "Optional mapping of an environmental variable to an OMOP vocabulary concept, including an explicit status so vocabulary gaps can be represented without inventing identifiers.",
+            "properties": {
+                "concept_status": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ConceptStatusEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Status of the OMOP concept mapping, including explicit representation of a vocabulary gap."
+                },
+                "omop_concept_id": {
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "omop_concept_name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "omop_domain_id": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "omop_standard_concept": {
+                    "description": "OMOP standard-concept indicator when available.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "omop_vocabulary_id": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "OMOPConceptBinding",
+            "type": "object"
         },
         "Organization": {
             "additionalProperties": false,
@@ -1762,6 +3754,38 @@
             ],
             "title": "OrganizationTypeEnum",
             "type": "string"
+        },
+        "ParameterValue": {
+            "additionalProperties": false,
+            "description": "A named parameter used in a calculation, workflow, model, or software function.",
+            "properties": {
+                "parameter_description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "parameter_name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "parameter_unit": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "parameter_value": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "ParameterValue",
+            "type": "object"
         },
         "Person": {
             "additionalProperties": false,
@@ -1881,6 +3905,329 @@
             "title": "Population",
             "type": "object"
         },
+        "Program": {
+            "additionalProperties": false,
+            "description": "A coordinated HEW initiative, funding program, consortium, center, or strategic activity that may contain projects and produce resources.",
+            "properties": {
+                "agent_associations": {
+                    "description": "Who did what: each association pairs an agent with a role.",
+                    "items": {
+                        "$ref": "#/$defs/AgentAssociation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "contacts": {
+                    "description": "Agents to contact about the resource, referenced by identifier.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "end_date": {
+                    "format": "date",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "identifiers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "produces_resources": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "same_as": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "sponsoring_organizations": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "start_date": {
+                    "format": "date",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "status": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ProjectStatusEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Catalog record lifecycle status."
+                },
+                "themes": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "title": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "Program",
+            "type": "object"
+        },
+        "Project": {
+            "additionalProperties": false,
+            "description": "A bounded HEW research, infrastructure, curation, data generation, software, analysis, translation, or community-engagement effort.",
+            "properties": {
+                "agent_associations": {
+                    "description": "Who did what: each association pairs an agent with a role.",
+                    "items": {
+                        "$ref": "#/$defs/AgentAssociation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "annotations": {
+                    "items": {
+                        "$ref": "#/$defs/HEWSystematicReviewAnnotation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "contributors": {
+                    "description": "Agents who contributed to the resource, referenced by identifier.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "end_date": {
+                    "format": "date",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "funding_sources": {
+                    "description": "Funding awards that supported the resource, referenced by identifier.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "identifiers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "part_of_programs": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "produces_resources": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "same_as": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "start_date": {
+                    "format": "date",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "status": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ProjectStatusEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Catalog record lifecycle status."
+                },
+                "themes": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "title": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "uses_resources": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "Project",
+            "type": "object"
+        },
+        "ProjectStatusEnum": {
+            "description": "",
+            "enum": [
+                "planned",
+                "active",
+                "completed",
+                "suspended",
+                "unknown"
+            ],
+            "title": "ProjectStatusEnum",
+            "type": "string"
+        },
+        "QuantitativeSpatialResolution": {
+            "additionalProperties": false,
+            "description": "Nominal spatial resolution; angular units are not a constant metre distance.",
+            "properties": {
+                "resolution_axis": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ResolutionAxisEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "resolution_description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "resolution_unit": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "resolution_value": {
+                    "minimum": 0,
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                }
+            },
+            "title": "QuantitativeSpatialResolution",
+            "type": "object"
+        },
         "ReferenceTypeEnum": {
             "description": "",
             "enum": [
@@ -1891,6 +4238,277 @@
             ],
             "title": "ReferenceTypeEnum",
             "type": "string"
+        },
+        "ResolutionAxisEnum": {
+            "description": "",
+            "enum": [
+                "x",
+                "y",
+                "z",
+                "temporal",
+                "nominal",
+                "other"
+            ],
+            "title": "ResolutionAxisEnum",
+            "type": "string"
+        },
+        "ResourceCollection": {
+            "additionalProperties": false,
+            "description": "A curated collection of HEW resources, such as the HEW Resource Library, a systematic-review corpus, a Dataverse collection, or a covariate collection.",
+            "properties": {
+                "access_rights": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AccessRightsEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "authors": {
+                    "description": "Ordered list of people or organizations credited as authors of the resource.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/$defs/Person"
+                            },
+                            {
+                                "$ref": "#/$defs/Organization"
+                            },
+                            {
+                                "$ref": "#/$defs/SoftwareAgent"
+                            }
+                        ]
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "collection_members": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "collection_scope": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "contacts": {
+                    "description": "Agents to contact about the resource, referenced by identifier.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "contributors": {
+                    "description": "Agents who contributed to the resource, referenced by identifier.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "curator": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "distributions": {
+                    "items": {
+                        "$ref": "#/$defs/Distribution"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "funding_sources": {
+                    "description": "Funding awards that supported the resource, referenced by identifier.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "identifiers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "keywords": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "license": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "publication_date": {
+                    "description": "Date the resource was originally published or posted.",
+                    "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "related_resources": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "resource_type": {
+                    "const": "resource_collection",
+                    "description": "Catalog resource type. Each resource class pins the value it accepts, so the type and the class cannot disagree.",
+                    "type": "string"
+                },
+                "same_as": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "source_organization": {
+                    "description": "Organization where the resource was created or originated.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "source_project": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "spatial_coverage": {
+                    "description": "Display description of spatial coverage; spatial_extent supplies queryable coverage.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "spatial_extent": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SpatialExtent"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "status": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CatalogStatusEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Catalog record lifecycle status."
+                },
+                "subtitle": {
+                    "description": "Secondary title or subtitle supplied by the resource owner.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "temporal_coverage": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "temporal_extent": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalExtent"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "themes": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "title": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "version": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "resource_type"
+            ],
+            "title": "ResourceCollection",
+            "type": "object"
         },
         "ResourceRelationshipEnum": {
             "description": "",
@@ -2029,6 +4647,784 @@
                 "agent_type"
             ],
             "title": "SoftwareAgent",
+            "type": "object"
+        },
+        "SoftwareResource": {
+            "additionalProperties": false,
+            "description": "Software, code, library, workflow, notebook, or computational tool relevant to HEW.",
+            "properties": {
+                "access_rights": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AccessRightsEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "authors": {
+                    "description": "Ordered list of people or organizations credited as authors of the resource.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/$defs/Person"
+                            },
+                            {
+                                "$ref": "#/$defs/Organization"
+                            },
+                            {
+                                "$ref": "#/$defs/SoftwareAgent"
+                            }
+                        ]
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "contacts": {
+                    "description": "Agents to contact about the resource, referenced by identifier.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "contributors": {
+                    "description": "Agents who contributed to the resource, referenced by identifier.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "distributions": {
+                    "items": {
+                        "$ref": "#/$defs/Distribution"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "funding_sources": {
+                    "description": "Funding awards that supported the resource, referenced by identifier.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "identifiers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "keywords": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "license": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "maintainers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "programming_language": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "publication_date": {
+                    "description": "Date the resource was originally published or posted.",
+                    "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "related_resources": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "repository": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "resource_type": {
+                    "const": "software_code_library",
+                    "description": "Catalog resource type. Each resource class pins the value it accepts, so the type and the class cannot disagree.",
+                    "type": "string"
+                },
+                "same_as": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "software_type": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SoftwareTypeEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "source_organization": {
+                    "description": "Organization where the resource was created or originated.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "spatial_coverage": {
+                    "description": "Display description of spatial coverage; spatial_extent supplies queryable coverage.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "spatial_extent": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SpatialExtent"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "status": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CatalogStatusEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Catalog record lifecycle status."
+                },
+                "subtitle": {
+                    "description": "Secondary title or subtitle supplied by the resource owner.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "temporal_coverage": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "temporal_extent": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalExtent"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "themes": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "title": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "resource_type"
+            ],
+            "title": "SoftwareResource",
+            "type": "object"
+        },
+        "SoftwareTypeEnum": {
+            "description": "",
+            "enum": [
+                "software_package",
+                "code_library",
+                "workflow",
+                "notebook",
+                "web_tool",
+                "command_line_tool",
+                "other"
+            ],
+            "title": "SoftwareTypeEnum",
+            "type": "string"
+        },
+        "SpatialExtent": {
+            "additionalProperties": false,
+            "description": "Structured coverage shared by all resources and distributions. Bounding boxes and centroids use WGS84 longitude/latitude independently of the geometry's native CRS. Structured values are authoritative for queries; spatial_coverage is display text.",
+            "properties": {
+                "administrative_spatial_resolution": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AdministrativeSpatialResolution"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "bounding_box": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/BoundingBox"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "centroid": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/GeographicLocation"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "coordinate_reference_system_uri": {
+                    "description": "CRS identifier, preferably an OGC URI or EPSG CURIE. An explicit geometry CRS overrides its containing extent. Amadeus authority strings require normalization.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "environmental_context": {
+                    "description": "Ontology identifiers describing environmental features, systems, biomes, or materials associated with a location or extent; ENVO terms are preferred where applicable.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "geometry": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Geometry"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "named_locations": {
+                    "items": {
+                        "$ref": "#/$defs/GeographicLocation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "quantitative_spatial_resolution": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/QuantitativeSpatialResolution"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "spatial_resolution": {
+                    "description": "Human-readable native resolution, such as 1 km or census tract.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "SpatialExtent",
+            "type": "object"
+        },
+        "SpatialJoinMethodEnum": {
+            "description": "",
+            "enum": [
+                "within",
+                "contains",
+                "intersects",
+                "nearest",
+                "distance_weighted",
+                "centroid_within",
+                "overlap_area_weighted",
+                "none",
+                "other"
+            ],
+            "title": "SpatialJoinMethodEnum",
+            "type": "string"
+        },
+        "SpatialSupport": {
+            "additionalProperties": false,
+            "description": "The geographic support over which a single environmental variable value is defined. This is distinct from the overall spatial extent of the dataset.",
+            "properties": {
+                "administrative_level": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "administrative_spatial_resolution": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AdministrativeSpatialResolution"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "coordinate_reference_system_uri": {
+                    "description": "CRS identifier, preferably an OGC URI or EPSG CURIE. An explicit geometry CRS overrides its containing extent. Amadeus authority strings require normalization.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "geometry_type": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/GeometryTypeEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "grid_definition": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/GridDefinition"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Embedded reusable grid definition carrying a stable identifier."
+                },
+                "quantitative_spatial_resolution": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/QuantitativeSpatialResolution"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "spatial_index_resolution": {
+                    "minimum": 0,
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "spatial_index_system": {
+                    "description": "Index authority, such as H3, for indexed cell support.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "spatial_resolution": {
+                    "description": "Human-readable native resolution, such as 1 km or census tract.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "support_type": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SpatialSupportTypeEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                }
+            },
+            "title": "SpatialSupport",
+            "type": "object"
+        },
+        "SpatialSupportTypeEnum": {
+            "description": "",
+            "enum": [
+                "point",
+                "monitoring_station",
+                "raster_grid_cell",
+                "polygon",
+                "administrative_area",
+                "statistical_area",
+                "model_grid_cell",
+                "hex_cell",
+                "line_feature",
+                "other"
+            ],
+            "title": "SpatialSupportTypeEnum",
+            "type": "string"
+        },
+        "SpatiotemporalExposure": {
+            "additionalProperties": false,
+            "description": "A measured, modeled, derived, assigned, or summarized environmental exposure estimate with explicit exposure semantics, spatial support, temporal support, environmental context, value semantics, provenance, and optional linkage to a population, cohort, study, health resource, or OMOP/Gaia external exposure workflow.",
+            "properties": {
+                "access_rights": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AccessRightsEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "aggregation_method": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AggregationMethodEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Statistical or temporal aggregation used to derive each reported value."
+                },
+                "associated_health_outcomes": {
+                    "description": "Health outcome concepts or resources associated with this exposure.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "calculation_method": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CovariateCalculation"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Computational or methodological process used to derive the exposure."
+                },
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "environmental_context": {
+                    "description": "Ontology identifiers describing environmental features, systems, biomes, or materials associated with a location or extent; ENVO terms are preferred where applicable.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "evidence_text": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "exposure_concept": {
+                    "description": "Ontology identifier for the exposure concept. ECTO terms are preferred when available; local HEW exposure terms may be used when needed.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "exposure_geometry": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Geometry"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Explicit geometry where exposure applies."
+                },
+                "exposure_location": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/GeographicLocation"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Named or coordinate-defined location where exposure applies."
+                },
+                "exposure_variable": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/EnvironmentalVariable"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Environmental variable representing or operationalizing the exposure."
+                },
+                "external_exposure_linkage": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ExternalExposureLinkage"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Optional OMOP/Gaia external exposure linkage metadata."
+                },
+                "generated_by": {
+                    "description": "Project, software agent, or activity that generated the record.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "license": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "measured_property": {
+                    "description": "Ontology identifier for the environmental property, phenomenon, substance, or exposure-related quantity represented by the variable. ENVO, ECTO, CHEBI, or other appropriate ontology terms may be used.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "omop_concept_binding": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/OMOPConceptBinding"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Optional OMOP vocabulary mapping and mapping status for downstream Gaia or external-exposure workflows."
+                },
+                "population_or_cohort": {
+                    "description": "Population, cohort, study sample, or resource linked to the exposure.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "processing_level": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/DatasetProcessingLevelEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Processing or derivation level of a dataset or exposure resource."
+                },
+                "quality_flags": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "software": {
+                    "description": "Software resource or software agent used to generate the exposure.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "software_version": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "source_dataset": {
+                    "description": "Dataset or resource from which the exposure estimate was derived.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "source_variables": {
+                    "description": "Variables used as inputs to create this exposure estimate.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "spatial_extent": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SpatialExtent"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "spatial_support": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SpatialSupport"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Spatial unit over which an individual variable value applies; distinct from the complete spatial extent of the parent dataset."
+                },
+                "temporal_extent": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalExtent"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "temporal_support": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalSupport"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Temporal resolution, aggregation window, and alignment for individual values."
+                },
+                "title": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "uncertainty": {
+                    "description": "Human-readable uncertainty statement.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "value_specification": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ValueSpecification"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Unit, statistic, threshold, uncertainty, and value semantics."
+                },
+                "value_unit": {
+                    "description": "Human-readable unit string retained for compatibility.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "SpatiotemporalExposure",
             "type": "object"
         },
         "SurveyConstruct": {
@@ -2298,10 +5694,20 @@
                     ]
                 },
                 "spatial_coverage": {
-                    "description": "Free-text spatial coverage. Geospatial resources add structured spatial_extent.",
+                    "description": "Display description of spatial coverage; spatial_extent supplies queryable coverage.",
                     "type": [
                         "string",
                         "null"
+                    ]
+                },
+                "spatial_extent": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SpatialExtent"
+                        },
+                        {
+                            "type": "null"
+                        }
                     ]
                 },
                 "status": {
@@ -2335,6 +5741,16 @@
                     "type": [
                         "string",
                         "null"
+                    ]
+                },
+                "temporal_extent": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalExtent"
+                        },
+                        {
+                            "type": "null"
+                        }
                     ]
                 },
                 "themes": {
@@ -2718,10 +6134,20 @@
                     ]
                 },
                 "spatial_coverage": {
-                    "description": "Free-text spatial coverage. Geospatial resources add structured spatial_extent.",
+                    "description": "Display description of spatial coverage; spatial_extent supplies queryable coverage.",
                     "type": [
                         "string",
                         "null"
+                    ]
+                },
+                "spatial_extent": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SpatialExtent"
+                        },
+                        {
+                            "type": "null"
+                        }
                     ]
                 },
                 "special_topics": {
@@ -2781,6 +6207,16 @@
                     "type": [
                         "string",
                         "null"
+                    ]
+                },
+                "temporal_extent": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalExtent"
+                        },
+                        {
+                            "type": "null"
+                        }
                     ]
                 },
                 "themes": {
@@ -2881,6 +6317,555 @@
             ],
             "title": "SurveyQuestion",
             "type": "object"
+        },
+        "TemporalAlignmentEnum": {
+            "description": "",
+            "enum": [
+                "start",
+                "center",
+                "end",
+                "interval",
+                "unknown"
+            ],
+            "title": "TemporalAlignmentEnum",
+            "type": "string"
+        },
+        "TemporalCoverageStatusEnum": {
+            "description": "",
+            "enum": [
+                "bounded",
+                "ongoing",
+                "unknown",
+                "timeless"
+            ],
+            "title": "TemporalCoverageStatusEnum",
+            "type": "string"
+        },
+        "TemporalExtent": {
+            "additionalProperties": false,
+            "description": "Coverage or validity interval. Datetime bounds are inclusive start and exclusive end [start, end). coverage_status distinguishes ongoing, unknown and timeless intervals. Missing bounds alone do not imply timelessness. Structured coverage is authoritative. Non-Gregorian calendars require calendar-aware interpretation by consumers.",
+            "properties": {
+                "calendar": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CalendarEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Calendar used to interpret times; Gregorian is assumed when omitted."
+                },
+                "coverage_status": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalCoverageStatusEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "end_time": {
+                    "description": "Exclusive end of coverage or validity, with an explicit UTC offset.",
+                    "format": "date-time",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "start_time": {
+                    "description": "Inclusive start of coverage or validity, with an explicit UTC offset.",
+                    "format": "date-time",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "temporal_resolution": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalResolutionEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Nominal temporal spacing, distinct from aggregation window and update cadence."
+                },
+                "timezone": {
+                    "description": "IANA timezone identifier for local temporal interpretation.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "TemporalExtent",
+            "type": "object"
+        },
+        "TemporalJoinMethodEnum": {
+            "description": "",
+            "enum": [
+                "exact_date",
+                "nearest_time",
+                "same_day",
+                "same_month",
+                "same_year",
+                "moving_average",
+                "lagged_window",
+                "cumulative_window",
+                "event_window",
+                "none",
+                "other"
+            ],
+            "title": "TemporalJoinMethodEnum",
+            "type": "string"
+        },
+        "TemporalResolutionEnum": {
+            "description": "",
+            "enum": [
+                "instantaneous",
+                "subhourly",
+                "hourly",
+                "three_hourly",
+                "daily",
+                "monthly",
+                "seasonal",
+                "annual",
+                "multi_year_epoch",
+                "timeless"
+            ],
+            "title": "TemporalResolutionEnum",
+            "type": "string"
+        },
+        "TemporalSupport": {
+            "additionalProperties": false,
+            "description": "The temporal support and aggregation semantics of an environmental variable. Resolution uses the Amadeus enum; aggregation windows use ISO 8601 durations. Dataset defaults are replaced by an explicit delivery support object, never silently merged.",
+            "properties": {
+                "aggregation_window": {
+                    "description": "Time window over which a reported environmental value is aggregated; ISO 8601 duration syntax is recommended.",
+                    "pattern": "^P(?!$)(\\d+Y)?(\\d+M)?(\\d+D)?(T(?=\\d)(\\d+H)?(\\d+M)?(\\d+(\\.\\d+)?S)?)?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "calendar": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CalendarEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Calendar used to interpret times; Gregorian is assumed when omitted."
+                },
+                "day_boundary_convention": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/DayBoundaryConventionEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "temporal_alignment": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalAlignmentEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "temporal_resolution": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalResolutionEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Nominal temporal spacing, distinct from aggregation window and update cadence."
+                },
+                "timezone": {
+                    "description": "IANA timezone identifier for local temporal interpretation.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "TemporalSupport",
+            "type": "object"
+        },
+        "ToolResource": {
+            "additionalProperties": false,
+            "description": "A tool used to collect, compute, analyze, visualize, interpret, or translate health and extreme weather information. Tools may include computational tools, survey tools, decision-support tools, calculators, dashboards, notebooks, workflows, or educational tools.",
+            "properties": {
+                "access_rights": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AccessRightsEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "authors": {
+                    "description": "Ordered list of people or organizations credited as authors of the resource.",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/$defs/Person"
+                            },
+                            {
+                                "$ref": "#/$defs/Organization"
+                            },
+                            {
+                                "$ref": "#/$defs/SoftwareAgent"
+                            }
+                        ]
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "contacts": {
+                    "description": "Agents to contact about the resource, referenced by identifier.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "contributors": {
+                    "description": "Agents who contributed to the resource, referenced by identifier.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "distributions": {
+                    "items": {
+                        "$ref": "#/$defs/Distribution"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "funding_sources": {
+                    "description": "Funding awards that supported the resource, referenced by identifier.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "identifiers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "input_variables": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "keywords": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "license": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "maintainers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "output_variables": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "publication_date": {
+                    "description": "Date the resource was originally published or posted.",
+                    "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "related_resources": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "repository": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "resource_type": {
+                    "const": "tool",
+                    "description": "Catalog resource type. Each resource class pins the value it accepts, so the type and the class cannot disagree.",
+                    "type": "string"
+                },
+                "same_as": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "source_organization": {
+                    "description": "Organization where the resource was created or originated.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "spatial_coverage": {
+                    "description": "Display description of spatial coverage; spatial_extent supplies queryable coverage.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "spatial_extent": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SpatialExtent"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "status": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/CatalogStatusEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "description": "Catalog record lifecycle status."
+                },
+                "subtitle": {
+                    "description": "Secondary title or subtitle supplied by the resource owner.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "temporal_coverage": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "temporal_extent": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/TemporalExtent"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "themes": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "title": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "tool_type": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ToolTypeEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "url": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "resource_type"
+            ],
+            "title": "ToolResource",
+            "type": "object"
+        },
+        "ToolTypeEnum": {
+            "description": "",
+            "enum": [
+                "computational_tool",
+                "survey_tool",
+                "decision_support_tool",
+                "visualization_tool",
+                "data_collection_tool",
+                "educational_tool",
+                "calculator",
+                "dashboard",
+                "workflow",
+                "notebook",
+                "other"
+            ],
+            "title": "ToolTypeEnum",
+            "type": "string"
+        },
+        "ValueSpecification": {
+            "additionalProperties": false,
+            "description": "Unit, statistic, threshold, uncertainty, and value semantics for an environmental variable or exposure estimate.",
+            "properties": {
+                "quality_flag": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "statistic": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/AggregationMethodEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "threshold": {
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "threshold_unit": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "uncertainty": {
+                    "description": "Human-readable uncertainty statement.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "unit": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "value_type": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ValueTypeEnum"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                }
+            },
+            "title": "ValueSpecification",
+            "type": "object"
+        },
+        "ValueTypeEnum": {
+            "description": "",
+            "enum": [
+                "measured_value",
+                "modeled_value",
+                "derived_value",
+                "index_value",
+                "categorical_value",
+                "binary_indicator",
+                "threshold_exceedance",
+                "percentile",
+                "anomaly",
+                "other"
+            ],
+            "title": "ValueTypeEnum",
+            "type": "string"
         },
         "Variable": {
             "additionalProperties": false,
