@@ -24,7 +24,6 @@ hew-model/
 |-- terms/                        # HEW Resource Library Coding Guide vocabularies
 |-- hew_model/jsonld.py           # JSON-LD context generation and serialization helpers
 |-- scripts/validate_examples.sh  # validates schemas and examples
-`-- HEW Geospatial Metadata Enhancement Strategy.md
 ```
 
 Shared extent and geometry classes live in core; grids and support classes live

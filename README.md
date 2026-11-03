@@ -34,8 +34,6 @@ make artifacts   # regenerate hew.schema.json and hew.context.jsonld
 
 - [HEW Schema Handbook](docs/schema_handbook.md): the model reference.
 - [Model package README](hew-model/README.md): files in `hew-model/`.
-- [Geospatial Metadata Enhancement Strategy](hew-model/HEW%20Geospatial%20Metadata%20Enhancement%20Strategy.md):
-  design rationale for the geospatial and exposure extension.
 - [HEW Resource Library Coding Guide](docs/HEW%20Resource%20Library%20Coding%20Guide.pdf):
   the systematic-review coding scheme.
 - [Contributing](CONTRIBUTING.md) and [Security](SECURITY.md).

@@ -191,6 +191,46 @@ own slots, and every concrete subclass pins its `resource_type` value.
 
 See `hew-model/examples/publication_resource.yaml` for a publication record.
 
+### Dataset dictionaries and sidecar files
+
+`DatasetResource.data_dictionary` is the catalog representation of the
+dataset's variables and fields. It should make the data interpretable and
+discoverable without requiring a user to first download a separate document.
+For environmental data, use the richer `EnvironmentalVariable` and
+`EnvironmentalVariableDelivery` structures where applicable; generic
+`DataDictionary.variables` also covers ordinary tabular columns, identifiers,
+dimensions, coordinates, and other data elements.
+
+A full codebook can be distributed as a sidecar file when it is too detailed,
+large, or format-specific to be convenient in catalog metadata. Treat it as a
+normal dataset `Distribution` alongside the data files, with its own stable ID,
+title, URL or Dataverse file, `media_type`, and `format`. The dictionary object
+and sidecar must share stable variable IDs so a catalog entry can be matched to
+its detailed definition. Keep the sidecar with the same released dataset
+version; changes to data or definitions should produce a corresponding updated
+release and sidecar.
+
+Use a machine-readable, versioned JSON representation when a portable,
+format-neutral dictionary is needed. It should represent the HEW
+`DataDictionary` and its `Variable`s, retain stable HEW identifiers, and be
+validated against the schema. For tabular files, Frictionless Data Resource or
+Table Schema can supply format-specific column structure and constraints; map
+those details into HEW rather than treating a second, independently maintained
+dictionary as authoritative. For NetCDF, retain CF attributes and native
+metadata as authoritative for file-level variable and grid conventions, and
+use the HEW dictionary for catalog meaning and cross-dataset identity. A
+sidecar may supplement these sources, but should not silently conflict with
+them.
+
+Choose one authority for detailed definitions: either maintain the sidecar as
+the reviewed codebook and project its catalog-relevant fields into HEW, or
+generate the sidecar from the HEW dictionary. Avoid manually maintaining two
+competing copies. Record the sidecar's schema/format version in its content or
+format description, and validate variable IDs and delivery references when
+preparing a dataset release. Large dictionaries may remain primarily in the
+sidecar, but the HEW catalog should still expose the identifiers and
+high-value meanings needed for discovery.
+
 ## 5. Agents, programs, and projects
 
 `Agent` and its subclasses `Person`, `Organization`, and `SoftwareAgent` are in
@@ -281,8 +321,35 @@ uses `ResponseTypeEnum`, and `language` is a BCP 47 tag. See
 
 Everything in this section validates against `hew.yaml`.
 `GeographicLocation` is defined in the core module because geography
-annotations use it. The design rationale is in the
-[geospatial strategy](../hew-model/HEW%20Geospatial%20Metadata%20Enhancement%20Strategy.md).
+annotations use it.
+
+### Interoperability rationale
+
+Geospatial metadata has several distinct jobs; no one vocabulary or geometry
+field should stand in for all of them:
+
+```text
+named place        -> GeographicLocation and gazetteer identifiers
+spatial shape      -> Geometry / GeoSPARQL
+environmental kind -> ENVO context
+exposure concept   -> ECTO or another exposure vocabulary
+```
+
+This separation supports both catalog discovery and precise spatial
+interpretation. BioLink supplies broad biomedical geographic semantics;
+GeoSPARQL and WKT provide geometry and spatial relationships; GeoJSON supports
+web and GIS exchange; ENVO describes environmental settings rather than
+coordinates; ECTO describes exposures rather than places. Existing HEW review
+geography codes remain useful for consistent coding and are not replaced by
+these richer resource-level descriptions.
+
+HEW's model can project to DCAT/Schema.org for general catalog discovery,
+STAC for geospatial collections, items, extents and assets, and DataCite for
+published dataset locations. These are projections, not competing source
+models. The HEW classes preserve the distinctions needed to map to each:
+resource extent, value-level spatial support, native grids, named study
+geography, observation locations, and exposure-assignment areas are different
+relationships and must not be collapsed into one generic location.
 
 ### Places and extents
 
@@ -495,9 +562,20 @@ Dataverse metadata blocks expose a curated, searchable subset: resource type,
 exposure and health-impact concepts, geography, time, environmental variables,
 access, license, provenance, and external links. Nested geometries, derivation
 graphs, role associations, and rich ontology context stay in the canonical
-model, and the original JSON-LD record is deposited as a preservation
-attachment. The block design and field-level guidance are in
-`assets/metadata_blocks_guidance.md` in accel-dataverse-hew.
+model. The original JSON-LD record is deposited as a preservation attachment;
+it is distinct from a dataset codebook and should not be used as a substitute
+for one.
+
+For datasets, project the useful variable definitions and deliveries into the
+HEW data-resource metadata. Deposit a detailed machine-readable codebook as a
+Dataverse file when appropriate, represented in the catalog as a `Distribution`
+with its stable identifier, media type, and format. Keep the full codebook
+available to users while exposing the key variable names, meanings, units,
+identifiers, and support needed for catalog search and interpretation. Link
+dictionary variables, deliveries, and distributions by stable IDs and keep
+them synchronized within a dataset release. The Dataverse block design and
+field-level guidance are in `assets/metadata_blocks_guidance.md` in
+accel-dataverse-hew.
 
 ### Knowledge-graph export
 
@@ -578,8 +656,6 @@ OMOP/Gaia projections, develop alongside these phases.
 
 ## 13. Related documents
 
-- [Geospatial Metadata Enhancement Strategy](../hew-model/HEW%20Geospatial%20Metadata%20Enhancement%20Strategy.md):
-  standards roles and design rationale behind section 8.
 - [HEW Resource Library Coding Guide](HEW%20Resource%20Library%20Coding%20Guide.pdf):
   the coding scheme modeled in section 6.
 - [Model package README](../hew-model/README.md): files in `hew-model/`.

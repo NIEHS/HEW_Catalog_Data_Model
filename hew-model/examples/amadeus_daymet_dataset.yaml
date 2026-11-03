@@ -1,0 +1,86 @@
+id: HEWRES:daymet-v4-r1-daily
+resource_type: geospatial_dataset
+title: Daymet Version 4 R1 daily surface weather
+description: >-
+  Gridded daily surface weather for North America, Hawaii, and Puerto Rico.
+  This HEW catalog example describes the dataset product; processing and
+  download run provenance remains in the source system and is not copied onto
+  the catalog record.
+url: https://daymet.ornl.gov/
+identifiers:
+  - https://doi.org/10.3334/ORNLDAAC/2129
+access_rights: public
+license: CC0-1.0
+spatial_coverage: North America, Hawaii, and Puerto Rico
+spatial_resolution: 1 km
+grid_definition:
+  id: HEW:grids/daymet-1km-lcc
+  name: Daymet 1 km Lambert Conformal Conic grid
+  grid_mapping_name: lambert_conformal_conic
+  proj_string: >-
+    +proj=lcc +lat_0=42.5 +lon_0=-100 +lat_1=25 +lat_2=60 +x_0=0 +y_0=0
+    +ellps=WGS84 +units=m +no_defs
+  resolution_x: 1000.0
+  resolution_y: 1000.0
+  resolution_unit: m
+  n_columns: 7814
+  n_rows: 8075
+  origin_x: -4560750.0
+  origin_y: 4984500.0
+  row_direction: decreasing_y
+spatial_support:
+  support_type: model_grid_cell
+  spatial_resolution: 1 km
+temporal_extent:
+  start_time: '1980-01-01T00:00:00Z'
+  coverage_status: ongoing
+temporal_coverage: 1980-present
+temporal_support:
+  temporal_resolution: daily
+  aggregation_window: P1D
+  temporal_alignment: interval
+  day_boundary_convention: local_midnight
+  calendar: daymet_365
+update_cadence_iso: P1Y
+typical_latency_iso: P180D
+environmental_variables:
+  - id: HEWVAR:air-temperature-daily-maximum
+    name: tmax
+    title: Daily maximum 2 m air temperature
+    description: Daily maximum 2 m air temperature on the native Daymet grid.
+    data_type: float
+    unit: UCUM:Cel
+    aggregation_method: maximum
+variable_deliveries:
+  - id: HEWVARDELIVERY:daymet-v4-r1-tmax
+    canonical_variable: HEWVAR:air-temperature-daily-maximum
+    native_name: tmax
+    aggregation_method: maximum
+    cf_cell_methods: 'time: maximum'
+data_dictionary:
+  id: HEWDD:daymet-v4-r1
+  title: Daymet V4 R1 data dictionary
+  description: >-
+    Catalog-level definition of the delivered tmax variable. The detailed,
+    version-matched codebook is distributed as a JSON sidecar.
+  variables:
+    - id: HEWVAR:air-temperature-daily-maximum
+      name: tmax
+      title: Daily maximum 2 m air temperature
+      description: Daily maximum 2 m air temperature on the native Daymet grid.
+      data_type: float
+      unit: UCUM:Cel
+distributions:
+  - id: HEWRES:daymet-v4-r1-netcdf
+    title: Daymet V4 R1 NetCDF data service
+    url: https://thredds.daac.ornl.gov/thredds/ncss/ornldaac/2129/
+    media_type: application/x-netcdf
+    format: netcdf4_cf
+  - id: HEWRES:daymet-v4-r1-codebook
+    title: Daymet V4 R1 machine-readable codebook
+    description: >-
+      Illustrative sidecar distribution; replace the example URL with the
+      versioned Dataverse file URL when depositing the dataset.
+    url: https://example.org/daymet/daymet-v4-r1-codebook.json
+    media_type: application/json
+    format: HEW DataDictionary JSON

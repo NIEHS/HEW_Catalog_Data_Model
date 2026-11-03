@@ -53,7 +53,10 @@ variable_deliveries:
     cf_cell_methods: 'time: maximum'
 distributions:
   - id: HEWRES:aligned-temperature-20200101
+    title: Daily temperature grid for 2020-01-01
+    media_type: application/x-netcdf
     format: NetCDF
+    url: https://example.org/hew/aligned-temperature-20200101.nc
     temporal_extent:
       start_time: '2020-01-01T00:00:00Z'
       end_time: '2020-01-02T00:00:00Z'
