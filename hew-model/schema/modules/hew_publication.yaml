@@ -44,19 +44,26 @@ classes:
 
 slots:
   doi:
+    description: "Digital Object Identifier of the literature resource."
     range: string
   pmid:
+    description: "PubMed identifier of the literature resource."
     range: string
   pmcid:
+    description: "PubMed Central identifier of the literature resource."
     range: string
   abstract:
+    description: "Summary of the literature resource's objectives, methods, and findings."
     slot_uri: schema:abstract
     range: string
   citation:
+    description: "Formatted bibliographic citation for the literature resource."
     slot_uri: schema:citation
     range: string
   publication_type:
+    description: "Catalog classification of the literature resource; reviewer-specific classifications belong in reference_type on an annotation."
     range: ReferenceTypeEnum
   journal:
+    description: "Name of the journal or publication venue containing the literature resource."
     slot_uri: schema:isPartOf
     range: string

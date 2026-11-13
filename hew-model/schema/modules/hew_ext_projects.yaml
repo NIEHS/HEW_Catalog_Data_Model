@@ -11,7 +11,6 @@ prefixes:
   linkml: https://w3id.org/linkml/
   schema: http://schema.org/
   prov: http://www.w3.org/ns/prov#
-  biolink: https://w3id.org/biolink/vocab/
 default_prefix: HEW
 default_range: string
 
@@ -39,9 +38,12 @@ classes:
       - end_date
       - status
       - sponsoring_organizations
+      - sponsoring_organizations_details
       - contacts
+      - contacts_details
       - agent_associations
       - produces_resources
+      - produces_resources_details
       - themes
     slot_usage:
       status:
@@ -65,11 +67,16 @@ classes:
       - end_date
       - status
       - part_of_programs
+      - part_of_programs_details
       - agent_associations
       - contributors
+      - contributors_details
       - funding_sources
+      - funding_sources_details
       - uses_resources
+      - uses_resources_details
       - produces_resources
+      - produces_resources_details
       - annotations
       - themes
     slot_usage:
@@ -77,24 +84,24 @@ classes:
         range: ProjectStatusEnum
 
   AgentAssociation:
-    class_uri: prov:Association
+    class_uri: HEW:AgentAssociation
     close_mappings:
       - schema:Role
-      - schema:OrganizationRole
-      - biolink:Association
     description: >-
       A role-bearing association between an agent and another HEW entity, such as a project,
       program, resource, annotation, activity, or funding source.
     slots:
       - id
       - agent
+      - agent_details
       - associated_with
+      - associated_with_details
       - role
       - start_date
       - end_date
-      - affiliation_context
       - contribution_description
       - source
+      - source_details
 
   FundingSource:
     class_uri: schema:Grant
@@ -105,7 +112,9 @@ classes:
       - description
       - award_number
       - funder
+      - funder_details
       - sponsoring_organizations
+      - sponsoring_organizations_details
       - funding_mechanism
       - start_date
       - end_date
@@ -114,37 +123,44 @@ classes:
 
 slots:
   start_date:
+    description: "Date on which the program, project, or agent role begins."
     slot_uri: schema:startDate
     range: date
   end_date:
+    description: "Date on which the program, project, or agent role ends."
     slot_uri: schema:endDate
     range: date
   sponsoring_organizations:
+    description: "Organizations sponsoring the program, project, or funding source, referenced by identifier."
     slot_uri: schema:sponsor
     multivalued: true
     range: Organization
   agent_associations:
-    slot_uri: prov:qualifiedAssociation
+    slot_uri: HEW:agent_associations
     multivalued: true
     range: AgentAssociation
     inlined_as_list: true
     description: 'Who did what: each association pairs an agent with a role.'
   part_of_programs:
+    description: "Identifiers of programs to which the project belongs."
     multivalued: true
     range: uriorcurie
     close_mappings:
       - schema:isPartOf
   uses_resources:
+    description: "Identifiers of resources used by the program or project."
     close_mappings:
       - prov:used
     multivalued: true
     range: uriorcurie
   produces_resources:
+    description: "Identifiers of resources produced by the program or project."
     close_mappings:
       - prov:generated
     multivalued: true
     range: uriorcurie
   agent:
+    description: "Identifier of the person, organization, or software agent holding the role in this association."
     slot_uri: prov:agent
     range: Agent
   associated_with:
@@ -152,21 +168,67 @@ slots:
       CURIE for the program, project, resource, annotation, activity, or funding source.
     range: uriorcurie
   role:
+    description: "Function performed by the agent with respect to the association's target entity."
     slot_uri: prov:hadRole
     range: AgentRoleEnum
-  affiliation_context:
-    range: uriorcurie
   contribution_description:
+    description: "Free-text explanation of the agent's contribution in this association."
     range: string
   source:
+    description: "Identifier of the source supporting or documenting the agent association."
     range: uriorcurie
-  award_number:
-    range: string
   funder:
+    description: "Organization providing the funding, referenced by identifier."
     slot_uri: schema:funder
     range: Organization
   funding_mechanism:
+    description: "Name or description of the grant, contract, or other mechanism through which support is provided."
     range: string
+
+  sponsoring_organizations_details:
+    description: Name or description and optional identifier for sponsoring organizations. Use reference_id
+      for a URI/CURIE; names and descriptions remain literal text.
+    range: EntityReference
+    multivalued: true
+    inlined_as_list: true
+  part_of_programs_details:
+    description: Name or description and optional identifier for part of programs. Use reference_id
+      for a URI/CURIE; names and descriptions remain literal text.
+    range: EntityReference
+    multivalued: true
+    inlined_as_list: true
+  uses_resources_details:
+    description: Name or description and optional identifier for uses resources. Use reference_id for
+      a URI/CURIE; names and descriptions remain literal text.
+    range: EntityReference
+    multivalued: true
+    inlined_as_list: true
+  produces_resources_details:
+    description: Name or description and optional identifier for produces resources. Use reference_id
+      for a URI/CURIE; names and descriptions remain literal text.
+    range: EntityReference
+    multivalued: true
+    inlined_as_list: true
+  agent_details:
+    description: Name or description and optional identifier for agent. Use reference_id for a URI/CURIE;
+      names and descriptions remain literal text.
+    range: EntityReference
+    inlined: true
+  associated_with_details:
+    description: Name or description and optional identifier for associated with. Use reference_id
+      for a URI/CURIE; names and descriptions remain literal text.
+    range: EntityReference
+    inlined: true
+  source_details:
+    description: Name or description and optional identifier for source. Use reference_id for a URI/CURIE;
+      names and descriptions remain literal text.
+    range: EntityReference
+    inlined: true
+  funder_details:
+    description: Name or description and optional identifier for funder. Use reference_id for a URI/CURIE;
+      names and descriptions remain literal text.
+    range: EntityReference
+    inlined: true
 
 enums:
   ProjectStatusEnum:

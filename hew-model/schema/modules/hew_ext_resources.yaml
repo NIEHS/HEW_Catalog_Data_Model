@@ -37,6 +37,7 @@ classes:
       - programming_language
       - software_type
       - maintainers
+      - maintainers_details
     slot_usage:
       resource_type:
         range: string
@@ -66,6 +67,7 @@ classes:
       - tool_type
       - repository
       - maintainers
+      - maintainers_details
       - input_variables
       - output_variables
     slot_usage:
@@ -80,9 +82,12 @@ classes:
       corpus, a Dataverse collection, or a covariate collection.
     slots:
       - collection_members
+      - collection_members_details
       - collection_scope
       - curator
+      - curator_details
       - source_project
+      - source_project_details
       - version
     slot_usage:
       resource_type:
@@ -91,30 +96,63 @@ classes:
 
 slots:
   repository:
+    description: "URL of the source code repository for the software or tool."
     slot_uri: schema:codeRepository
     range: uri
   programming_language:
+    description: "Programming language used to implement the software."
     slot_uri: schema:programmingLanguage
     range: string
   software_type:
+    description: "Category of software resource, such as package, library, workflow, or notebook."
     range: SoftwareTypeEnum
   maintainers:
+    description: "Agents responsible for maintaining the software or tool, referenced by identifier."
     slot_uri: schema:maintainer
     multivalued: true
     range: Agent
   model_type:
+    description: "Category of computational or analytical model represented by the resource."
     range: ModelTypeEnum
   tool_type:
+    description: "Category describing the tool's function or form."
     range: ToolTypeEnum
   collection_members:
+    description: "Identifiers of resources included in the collection."
     multivalued: true
     range: uriorcurie
   collection_scope:
+    description: "Description of the collection's subject coverage and inclusion boundaries."
     range: string
   curator:
+    description: "Agent responsible for curating the collection, referenced by identifier."
     range: Agent
   source_project:
+    description: "Identifier of the project from which the collection originated."
     range: uriorcurie
+
+  maintainers_details:
+    description: Name or description and optional identifier for maintainers. Use reference_id for
+      a URI/CURIE; names and descriptions remain literal text.
+    range: EntityReference
+    multivalued: true
+    inlined_as_list: true
+  curator_details:
+    description: Name or description and optional identifier for curator. Use reference_id for a URI/CURIE;
+      names and descriptions remain literal text.
+    range: EntityReference
+    inlined: true
+  source_project_details:
+    description: Name or description and optional identifier for source project. Use reference_id for
+      a URI/CURIE; names and descriptions remain literal text.
+    range: EntityReference
+    inlined: true
+  collection_members_details:
+    description: Name or description and optional identifier for collection members. Use reference_id
+      for a URI/CURIE; names and descriptions remain literal text.
+    range: EntityReference
+    multivalued: true
+    inlined_as_list: true
 
 enums:
   SoftwareTypeEnum:

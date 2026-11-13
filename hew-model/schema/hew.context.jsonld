@@ -30,6 +30,10 @@
       "@type": "@id",
       "@id": "adapted_from"
     },
+    "adapted_from_details": {
+      "@type": "@id",
+      "@id": "adapted_from_details"
+    },
     "administered_by": {
       "@context": {
         "text": "skos:notation",
@@ -56,13 +60,13 @@
       "@type": "@id",
       "@id": "administrative_spatial_resolution"
     },
-    "affiliation_context": {
-      "@type": "@id",
-      "@id": "affiliation_context"
-    },
     "affiliations": {
       "@type": "@id",
       "@id": "schema:affiliation"
+    },
+    "affiliations_details": {
+      "@type": "@id",
+      "@id": "affiliations_details"
     },
     "agent": {
       "@type": "@id",
@@ -70,7 +74,11 @@
     },
     "agent_associations": {
       "@type": "@id",
-      "@id": "prov:qualifiedAssociation"
+      "@id": "agent_associations"
+    },
+    "agent_details": {
+      "@type": "@id",
+      "@id": "agent_details"
     },
     "agent_type": {
       "@id": "agent_type"
@@ -106,9 +114,17 @@
       "@type": "@id",
       "@id": "associated_with"
     },
+    "associated_with_details": {
+      "@type": "@id",
+      "@id": "associated_with_details"
+    },
     "authors": {
       "@type": "@id",
       "@id": "schema:author"
+    },
+    "authors_details": {
+      "@type": "@id",
+      "@id": "authors_details"
     },
     "availability": {
       "@context": {
@@ -173,6 +189,10 @@
       "@type": "@id",
       "@id": "coded_by"
     },
+    "coded_by_details": {
+      "@type": "@id",
+      "@id": "coded_by_details"
+    },
     "coded_concept": {
       "@type": "@id",
       "@id": "coded_concept"
@@ -202,6 +222,10 @@
       "@type": "@id",
       "@id": "collection_members"
     },
+    "collection_members_details": {
+      "@type": "@id",
+      "@id": "collection_members_details"
+    },
     "collection_scope": {
       "@id": "collection_scope"
     },
@@ -229,12 +253,20 @@
       "@type": "@id",
       "@id": "schema:contactPoint"
     },
+    "contacts_details": {
+      "@type": "@id",
+      "@id": "contacts_details"
+    },
     "contribution_description": {
       "@id": "contribution_description"
     },
     "contributors": {
       "@type": "@id",
       "@id": "schema:contributor"
+    },
+    "contributors_details": {
+      "@type": "@id",
+      "@id": "contributors_details"
     },
     "coordinate_reference_system": {
       "@id": "coordinate_reference_system"
@@ -254,6 +286,10 @@
     "curator": {
       "@type": "@id",
       "@id": "curator"
+    },
+    "curator_details": {
+      "@type": "@id",
+      "@id": "curator_details"
     },
     "data_dictionary": {
       "@type": "@id",
@@ -406,6 +442,13 @@
       "@type": "@id",
       "@id": "schema:funder"
     },
+    "funder_details": {
+      "@type": "@id",
+      "@id": "funder_details"
+    },
+    "funder_name": {
+      "@id": "funder_name"
+    },
     "funding_mechanism": {
       "@id": "funding_mechanism"
     },
@@ -413,13 +456,25 @@
       "@type": "@id",
       "@id": "schema:funding"
     },
+    "funding_sources_details": {
+      "@type": "@id",
+      "@id": "funding_sources_details"
+    },
     "generated_by": {
       "@type": "@id",
       "@id": "prov:wasGeneratedBy"
     },
+    "generated_by_details": {
+      "@type": "@id",
+      "@id": "generated_by_details"
+    },
     "generated_outputs": {
       "@type": "@id",
       "@id": "generated_outputs"
+    },
+    "generated_outputs_details": {
+      "@type": "@id",
+      "@id": "generated_outputs_details"
     },
     "geographic_features": {
       "@context": {
@@ -494,6 +549,10 @@
       "@type": "@id",
       "@id": "input_resources"
     },
+    "input_resources_details": {
+      "@type": "@id",
+      "@id": "input_resources_details"
+    },
     "input_variables": {
       "@id": "input_variables"
     },
@@ -555,6 +614,10 @@
       "@type": "@id",
       "@id": "schema:maintainer"
     },
+    "maintainers_details": {
+      "@type": "@id",
+      "@id": "maintainers_details"
+    },
     "measured_property": {
       "@type": "@id",
       "@id": "measured_property"
@@ -565,6 +628,10 @@
     "measurement_method": {
       "@type": "@id",
       "@id": "measurement_method"
+    },
+    "measurement_method_details": {
+      "@type": "@id",
+      "@id": "measurement_method_details"
     },
     "media_type": {
       "@id": "dcat:mediaType"
@@ -693,13 +760,25 @@
       "@type": "@id",
       "@id": "schema:parentOrganization"
     },
+    "parent_organization_details": {
+      "@type": "@id",
+      "@id": "parent_organization_details"
+    },
     "part_of_programs": {
       "@type": "@id",
       "@id": "part_of_programs"
     },
+    "part_of_programs_details": {
+      "@type": "@id",
+      "@id": "part_of_programs_details"
+    },
     "part_of_project": {
       "@type": "@id",
       "@id": "part_of_project"
+    },
+    "part_of_project_details": {
+      "@type": "@id",
+      "@id": "part_of_project_details"
     },
     "person_or_cohort_reference": {
       "@type": "@id",
@@ -718,6 +797,10 @@
     "population_or_cohort": {
       "@type": "@id",
       "@id": "population_or_cohort"
+    },
+    "population_or_cohort_details": {
+      "@type": "@id",
+      "@id": "population_or_cohort_details"
     },
     "population_tags": {
       "@type": "@id",
@@ -741,6 +824,10 @@
     "produces_resources": {
       "@type": "@id",
       "@id": "produces_resources"
+    },
+    "produces_resources_details": {
+      "@type": "@id",
+      "@id": "produces_resources_details"
     },
     "programming_language": {
       "@id": "schema:programmingLanguage"
@@ -776,6 +863,10 @@
       "@type": "xsd:float",
       "@id": "readability_level"
     },
+    "reference_id": {
+      "@type": "@id",
+      "@id": "reference_id"
+    },
     "reference_time": {
       "@type": "xsd:dateTime",
       "@id": "reference_time"
@@ -796,6 +887,10 @@
       "@type": "@id",
       "@id": "related_resources"
     },
+    "related_resources_details": {
+      "@type": "@id",
+      "@id": "related_resources_details"
+    },
     "relationship_to_literature": {
       "@context": {
         "text": "skos:notation",
@@ -811,6 +906,10 @@
     "research_program": {
       "@type": "@id",
       "@id": "research_program"
+    },
+    "research_program_details": {
+      "@type": "@id",
+      "@id": "research_program_details"
     },
     "resolution_axis": {
       "@context": {
@@ -866,6 +965,10 @@
       "@type": "@id",
       "@id": "reviewed_by"
     },
+    "reviewed_by_details": {
+      "@type": "@id",
+      "@id": "reviewed_by_details"
+    },
     "role": {
       "@context": {
         "text": "skos:notation",
@@ -894,6 +997,10 @@
       "@type": "@id",
       "@id": "software"
     },
+    "software_details": {
+      "@type": "@id",
+      "@id": "software_details"
+    },
     "software_type": {
       "@context": {
         "text": "skos:notation",
@@ -917,13 +1024,29 @@
       "@type": "@id",
       "@id": "source_dataset"
     },
+    "source_dataset_details": {
+      "@type": "@id",
+      "@id": "source_dataset_details"
+    },
+    "source_details": {
+      "@type": "@id",
+      "@id": "source_details"
+    },
     "source_organization": {
       "@type": "@id",
       "@id": "source_organization"
     },
+    "source_organization_details": {
+      "@type": "@id",
+      "@id": "source_organization_details"
+    },
     "source_project": {
       "@type": "@id",
       "@id": "source_project"
+    },
+    "source_project_details": {
+      "@type": "@id",
+      "@id": "source_project_details"
     },
     "source_resource": {
       "@type": "@id",
@@ -932,6 +1055,10 @@
     "source_variables": {
       "@type": "@id",
       "@id": "source_variables"
+    },
+    "source_variables_details": {
+      "@type": "@id",
+      "@id": "source_variables_details"
     },
     "source_vocabularies": {
       "@type": "@id",
@@ -987,6 +1114,10 @@
     "sponsoring_organizations": {
       "@type": "@id",
       "@id": "schema:sponsor"
+    },
+    "sponsoring_organizations_details": {
+      "@type": "@id",
+      "@id": "sponsoring_organizations_details"
     },
     "srid": {
       "@type": "xsd:integer",
@@ -1142,6 +1273,10 @@
       "@type": "@id",
       "@id": "uses_resources"
     },
+    "uses_resources_details": {
+      "@type": "@id",
+      "@id": "uses_resources_details"
+    },
     "value_specification": {
       "@type": "@id",
       "@id": "value_specification"
@@ -1193,7 +1328,7 @@
       "@id": "prov:Agent"
     },
     "AgentAssociation": {
-      "@id": "prov:Association"
+      "@id": "AgentAssociation"
     },
     "BoundingBox": {
       "@id": "BoundingBox"
@@ -1222,6 +1357,9 @@
     "Distribution": {
       "@id": "dcat:Distribution"
     },
+    "EntityReference": {
+      "@id": "EntityReference"
+    },
     "EnvironmentalVariable": {
       "@id": "EnvironmentalVariable"
     },
@@ -1230,6 +1368,9 @@
     },
     "ExternalExposureLinkage": {
       "@id": "ExternalExposureLinkage"
+    },
+    "FundingReference": {
+      "@id": "FundingReference"
     },
     "FundingSource": {
       "@id": "schema:Grant"

@@ -21,7 +21,7 @@ default_prefix: HEW
 default_range: string
 
 imports:
-  - linkml:types
+  - linkml:types.
   - ./hew_core
 
 classes:
@@ -110,6 +110,7 @@ classes:
     slots:
       - measured_property
       - measurement_method
+      - measurement_method_details
       - aggregation_method
       - spatial_support
       - temporal_support
@@ -176,7 +177,9 @@ classes:
       - measured_property
       - environmental_context
       - source_dataset
+      - source_dataset_details
       - source_variables
+      - source_variables_details
       - exposure_location
       - exposure_geometry
       - spatial_extent
@@ -188,9 +191,12 @@ classes:
       - aggregation_method
       - calculation_method
       - generated_by
+      - generated_by_details
       - software
+      - software_details
       - software_version
       - population_or_cohort
+      - population_or_cohort_details
       - associated_health_outcomes
       - omop_concept_binding
       - external_exposure_linkage
@@ -213,10 +219,12 @@ classes:
       - description
       - method_type
       - software
+      - software_details
       - software_version
       - function_name
       - parameters
       - input_resources
+      - input_resources_details
       - output_variables
       - spatial_join_method
       - temporal_join_method
@@ -228,6 +236,7 @@ classes:
       - target_crs
       - temporal_window
       - generated_outputs
+      - generated_outputs_details
 
   ParameterValue:
     description: >-
@@ -271,6 +280,7 @@ classes:
 
 slots:
   measured_variables:
+    description: "Legacy free-text names of measured variables; use environmental_variables for structured variable metadata."
     multivalued: true
     range: string
   environmental_variables:
@@ -314,6 +324,7 @@ slots:
       Optional OMOP vocabulary mapping and mapping status for downstream Gaia or external-exposure
       workflows.
   support_type:
+    description: "Type of spatial unit over which an individual environmental value applies."
     range: SpatialSupportTypeEnum
     exact_mappings:
       - amadeus:spatial_support_type
@@ -325,16 +336,21 @@ slots:
       Time window over which a reported environmental value is aggregated; ISO 8601 duration
       syntax is recommended.
   temporal_alignment:
+    description: "Position of the timestamp relative to the interval represented by a value."
     range: TemporalAlignmentEnum
     exact_mappings:
       - amadeus:temporal_alignment
   omop_concept_id:
+    description: "Numeric identifier of the mapped OMOP vocabulary concept."
     range: integer
   omop_concept_name:
+    description: "Preferred name of the mapped OMOP vocabulary concept."
     range: string
   omop_vocabulary_id:
+    description: "Identifier of the vocabulary containing the mapped OMOP concept."
     range: string
   omop_domain_id:
+    description: "OMOP domain to which the mapped concept belongs."
     range: string
   omop_standard_concept:
     range: string
@@ -402,32 +418,41 @@ slots:
     range: uriorcurie
     description: Health outcome concepts or resources associated with this exposure.
   quality_flags:
+    description: "Quality indicators or caveats attached to the exposure estimate."
     multivalued: true
     range: string
   uncertainty:
     range: string
     description: Human-readable uncertainty statement.
   method_type:
+    description: "Category of method used to calculate or assign the covariate."
     range: CovariateCalculationMethodEnum
   function_name:
     range: string
     description: Name of the function or workflow step used to derive the covariate.
   parameters:
+    description: "Named parameter values supplied to the calculation or workflow."
     multivalued: true
     range: ParameterValue
     inlined_as_list: true
   input_resources:
+    description: "Identifiers of datasets or other resources consumed by the calculation."
     multivalued: true
     range: uriorcurie
   spatial_join_method:
+    description: "Spatial matching rule used to link input data to target locations or areas."
     range: SpatialJoinMethodEnum
   temporal_join_method:
+    description: "Temporal matching rule used to align input data with target dates or intervals."
     range: TemporalJoinMethodEnum
   buffer_radius:
+    description: "Radius of the spatial buffer used in the calculation, expressed in buffer_unit."
     range: float
   buffer_unit:
+    description: "Unit of measurement for buffer_radius."
     range: string
   extraction_method:
+    description: "Method used to extract or summarize source values for the target geography."
     range: ExtractionMethodEnum
   source_crs:
     range: uriorcurie
@@ -440,39 +465,56 @@ slots:
     range: string
     description: ISO 8601 duration or human-readable temporal window.
   generated_outputs:
+    description: "Identifiers of resources produced by the calculation."
     multivalued: true
     range: uriorcurie
   parameter_name:
+    description: "Name of the calculation or workflow parameter."
     range: string
   parameter_value:
+    description: "Parameter setting serialized as text."
     range: string
   parameter_unit:
+    description: "Unit of measurement for the parameter value, when applicable."
     range: string
   parameter_description:
+    description: "Explanation of the parameter's purpose and interpretation."
     range: string
   exposure_estimate:
+    description: "Identifier of the exposure estimate to be linked to the external workflow."
     range: uriorcurie
   location_history_reference:
+    description: "Identifier of an external location history used for exposure linkage; the history itself is not stored here."
     range: uriorcurie
   person_or_cohort_reference:
+    description: "Identifier of the external person or cohort used for linkage, subject to the source system's privacy controls."
     range: uriorcurie
   exposure_start_date:
+    description: "Start date of the period used for exposure linkage."
     range: date
   exposure_end_date:
+    description: "End date of the period used for exposure linkage."
     range: date
   privacy_preserving_geography:
+    description: "Description of the geographic representation or protection used to limit disclosure during linkage."
     range: string
   linkage_notes:
+    description: "Additional assumptions, caveats, or instructions for the external exposure linkage."
     range: string
   value_type:
+    description: "Category describing whether the value is measured, modeled, derived, an index, or another supported representation."
     range: ValueTypeEnum
   statistic:
+    description: "Summary statistic represented by the value, such as mean, maximum, or count."
     range: AggregationMethodEnum
   threshold:
+    description: "Numeric cutoff used to interpret or derive the value, expressed in threshold_unit."
     range: float
   threshold_unit:
+    description: "Unit of measurement for the threshold."
     range: string
   quality_flag:
+    description: "Quality indicator or caveat for the value specification."
     range: string
   grid_definition:
     range: GridDefinition
@@ -486,52 +528,64 @@ slots:
     exact_mappings:
       - amadeus:srid
   grid_mapping_name:
+    description: "Climate and Forecast conventions grid mapping name describing the grid's coordinate projection."
     range: string
     exact_mappings:
       - amadeus:grid_mapping_name
   proj_string:
+    description: "PROJ representation of the grid's coordinate reference system or projection."
     range: string
     exact_mappings:
       - amadeus:proj_string
   resolution_x:
+    description: "Positive spacing magnitude between grid columns in native coordinates, expressed in resolution_unit."
     range: float
     minimum_value: 0
     exact_mappings:
       - amadeus:resolution_x
   resolution_y:
+    description: "Positive spacing magnitude between grid rows in native coordinates, expressed in resolution_unit."
     range: float
     minimum_value: 0
     exact_mappings:
       - amadeus:resolution_y
   n_columns:
+    description: "Number of columns in the grid."
     range: integer
     minimum_value: 1
     exact_mappings:
       - amadeus:n_columns
   n_rows:
+    description: "Number of rows in the grid."
     range: integer
     minimum_value: 1
     exact_mappings:
       - amadeus:n_rows
   origin_x:
+    description: "Native x coordinate of the outer corner at column zero and row zero."
     range: float
     close_mappings:
       - amadeus:origin_x
   origin_y:
+    description: "Native y coordinate of the outer corner at column zero and row zero."
     range: float
     close_mappings:
       - amadeus:origin_y
   row_direction:
+    description: "Whether row indices advance toward increasing or decreasing native y coordinates."
     range: GridRowDirectionEnum
   vertical_level_type:
+    description: "Kind of vertical coordinate used by the grid, such as height, depth, or pressure."
     range: string
     exact_mappings:
       - amadeus:vertical_level_type
   vertical_level_unit:
+    description: "Unit used to express the vertical coordinate levels."
     range: string
     exact_mappings:
       - amadeus:vertical_level_unit
   vertical_levels:
+    description: "Numeric vertical coordinate levels represented by the grid, expressed in vertical_level_unit."
     range: float
     multivalued: true
     exact_mappings:
@@ -540,21 +594,26 @@ slots:
     range: string
     description: Index authority, such as H3, for indexed cell support.
   spatial_index_resolution:
+    description: "Resolution level within the named spatial indexing system; its meaning depends on spatial_index_system."
     range: integer
     minimum_value: 0
   day_boundary_convention:
+    description: "Rule defining the start, end, or center of a daily reporting interval."
     range: DayBoundaryConventionEnum
     exact_mappings:
       - amadeus:day_boundary_convention
   update_cadence_iso:
+    description: "Expected interval between dataset updates, expressed as an ISO 8601 duration."
     range: Iso8601Duration
     exact_mappings:
       - amadeus:update_cadence_iso
   typical_latency_iso:
+    description: "Typical delay between observation or validity time and data availability, expressed as an ISO 8601 duration."
     range: Iso8601Duration
     exact_mappings:
       - amadeus:typical_latency_iso
   variable_deliveries:
+    description: "Source-specific variable representations, including native names and any support overrides."
     range: EnvironmentalVariableDelivery
     multivalued: true
     inlined_as_list: true
@@ -565,14 +624,55 @@ slots:
     close_mappings:
       - amadeus:canonical_variable
   native_name:
+    description: "Variable name used in the source dataset or product."
     range: string
     required: true
     exact_mappings:
       - amadeus:native_name
   cf_cell_methods:
+    description: "Climate and Forecast conventions cell_methods text describing how values represent or summarize cells."
     range: string
     exact_mappings:
       - amadeus:cf_cell_methods
+
+  measurement_method_details:
+    description: Name or description and optional identifier for measurement method. Use reference_id
+      for a URI/CURIE; names and descriptions remain literal text.
+    range: EntityReference
+    inlined: true
+  source_dataset_details:
+    description: Name or description and optional identifier for source dataset. Use reference_id for
+      a URI/CURIE; names and descriptions remain literal text.
+    range: EntityReference
+    inlined: true
+  source_variables_details:
+    description: Name or description and optional identifier for source variables. Use reference_id
+      for a URI/CURIE; names and descriptions remain literal text.
+    range: EntityReference
+    multivalued: true
+    inlined_as_list: true
+  software_details:
+    description: Name or description and optional identifier for software. Use reference_id for a URI/CURIE;
+      names and descriptions remain literal text.
+    range: EntityReference
+    inlined: true
+  population_or_cohort_details:
+    description: Name or description and optional identifier for population or cohort. Use reference_id
+      for a URI/CURIE; names and descriptions remain literal text.
+    range: EntityReference
+    inlined: true
+  input_resources_details:
+    description: Name or description and optional identifier for input resources. Use reference_id
+      for a URI/CURIE; names and descriptions remain literal text.
+    range: EntityReference
+    multivalued: true
+    inlined_as_list: true
+  generated_outputs_details:
+    description: Name or description and optional identifier for generated outputs. Use reference_id
+      for a URI/CURIE; names and descriptions remain literal text.
+    range: EntityReference
+    multivalued: true
+    inlined_as_list: true
 
 enums:
   GridRowDirectionEnum:

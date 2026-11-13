@@ -1,0 +1,15 @@
+id: HEWRES:named-references
+resource_type: literature
+title: Publication with named references
+contacts_details:
+  - name: Jane Example
+contributors_details:
+  - reference_id: PERSON:example_curator
+    name: Alex Example
+funding_sources_details:
+  - name: Community heat research award
+    award_number: EXAMPLE-2026
+    funder_name: Example Community Foundation
+related_resources_details:
+  - name: Local heat survey
+    description: Unpublished questionnaire maintained by the study team.

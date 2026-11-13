@@ -260,8 +260,20 @@ AgentAssociation
 The same person may be a principal investigator on one project, a curator of a
 systematic-review annotation, and a maintainer of a software resource.
 `AgentAssociation` lets each relationship carry a role, date range, source,
-affiliation context, and contribution description, instead of a fixed slot per
-role. See `hew-model/examples/example_program_project_people.yaml`.
+and contribution description, instead of a fixed slot per role. See `hew-model/examples/example_program_project_people.yaml`.
+
+`AgentAssociation` uses the local URI `HEW:AgentAssociation`, with
+`schema:Role` as a close mapping. The linking property is
+`HEW:agent_associations`. These terms cover agent roles across all HEW targets;
+they do not assert that every target is a PROV activity or that the relationship
+is a Biolink evidence-supported assertion. `schema:OrganizationRole` is also too
+specific for the general class.
+
+When projecting an agent's participation in an activity, use `prov:Association`
+and `prov:qualifiedAssociation` after establishing that the target is an activity.
+For responsibility for a resource entity, assess `prov:Attribution` and
+`prov:qualifiedAttribution` instead. A catalog role alone does not establish
+either PROV relationship.
 
 ## 6. Systematic-review coding
 
@@ -662,3 +674,48 @@ OMOP/Gaia projections, develop alongside these phases.
 - [Contributing](../CONTRIBUTING.md): schema change rules and development commands.
 - [accel-dataverse-hew](https://github.com/NIEHS/accel-dataverse-hew): the
   Dataverse crosswalk, metadata blocks, and block guidance.
+
+## Named references without external identifiers
+
+Entity identity and display text are separate. Existing identifier-valued slots
+retain their meaning. The corresponding optional `<slot>_details` entry accepts
+`reference_id` (URI/CURIE), `name` (plain text), `description` (plain text), or a
+combination. Each entry keeps its own identifier and text together; separate lists
+must never be paired by position. An identifier need not be repeated in the legacy
+slot when it is present in a detail entry. If both representations are supplied,
+they describe the same relationship; avoid repeating an author in both authors and
+authors_details when producing citation metadata.
+
+`EntityReference` detail entries do not require an external identifier or a local
+entity record. `reference_id` identifies the referenced entity, while the detail
+object is a wrapper and may serialize as an RDF blank node. Names, citations, and
+descriptions remain RDF literals. The existing entity `id` requirement is unchanged.
+An optional email supports contact references. Use actual named Agent or
+Organization records when richer entity metadata is known.
+
+Companions cover authors, contacts, contributors, organizations and affiliations,
+funding, related and derived resources, software and generating activities,
+programs and projects, methods, and coding/provenance agents. For instance:
+
+```yaml
+contacts_details:
+  - name: Jane Example
+contributors_details:
+  - reference_id: PERSON:example_curator
+    name: Alex Example
+funding_sources_details:
+  - name: Community heat research award
+    award_number: EXAMPLE-2026
+    funder_name: Example Community Foundation
+```
+
+`FundingReference` extends the generic reference with `award_number` and
+`funder_name`; neither is a substitute for the award's identifier. For an
+AgentAssociation, `agent_details`, `associated_with_details`, and `source_details`
+support named agents, named targets, and source citations without identifiers.
+See `hew-model/examples/publication_named_references.yaml` and
+`hew-model/examples/example_program_project_people.yaml`.
+
+Keep explicit identity and vocabulary fields (`same_as`, ontology mappings,
+ORCID, ROR, CRS identifiers, and operational linkage identifiers) identifier-valued.
+These detail entries do not introduce text alternatives for those assertions.

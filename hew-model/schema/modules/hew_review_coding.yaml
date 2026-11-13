@@ -29,9 +29,13 @@ classes:
       - coding_scheme_version
       - annotation_date
       - coded_by
+      - coded_by_details
       - reviewed_by
+      - reviewed_by_details
       - generated_by
+      - generated_by_details
       - part_of_project
+      - part_of_project_details
       - coding_method
       - information_source
       - reference_type
@@ -42,6 +46,7 @@ classes:
       - data_tool_method_annotations
       - special_topic_annotations
       - related_resources
+      - related_resources_details
       - notes
       - confidence
       - needs_human_review
@@ -99,18 +104,23 @@ classes:
 
 slots:
   annotations:
+    description: "Systematic-review coding records associated with the literature resource."
     multivalued: true
     range: HEWSystematicReviewAnnotation
     inlined_as_list: true
   subject:
+    description: "Identifier of the literature resource to which the coding annotation applies."
     slot_uri: schema:about
     range: uriorcurie
     required: true
   coding_scheme:
+    description: "Name or identifier of the coding guide or scheme used to create the annotation."
     range: string
   coding_scheme_version:
+    description: "Version of the coding guide or scheme used for the annotation."
     range: string
   annotation_date:
+    description: "Date on which the coding annotation was created."
     range: date
   coded_by:
     description: >-
@@ -126,8 +136,10 @@ slots:
     description: Project in which the annotation was produced or reviewed.
     range: uriorcurie
   coding_method:
+    description: "Process used to create the annotation, such as human curation or LaserAI-assisted coding."
     range: CodingMethodEnum
   information_source:
+    description: "Portion of the literature resource consulted when assigning the codes."
     range: InformationSourceEnum
   reference_type:
     range: ReferenceTypeEnum
@@ -135,6 +147,7 @@ slots:
       Reference type as coded by the reviewer, with the annotation's provenance. The resource's
       own publication_type is the catalog value.
   study_objective:
+    description: "Description of the study's stated aim or research question."
     range: string
   exposure_annotations:
     multivalued: true
@@ -147,10 +160,12 @@ slots:
     inlined_as_list: true
     description: Coded health impact concepts.
   geography_annotations:
+    description: "Structured geographic coding records associated with the literature resource."
     multivalued: true
     range: GeographyAnnotation
     inlined_as_list: true
   data_tool_method_annotations:
+    description: "Coding records describing data resources, tools, or model types used or described in the literature resource."
     multivalued: true
     range: DataToolMethodAnnotation
     inlined_as_list: true
@@ -160,18 +175,25 @@ slots:
     inlined_as_list: true
     description: Coded special topic concepts.
   confidence:
+    description: "Numeric confidence reported for the coding annotation; the scale must be documented by the producing workflow."
     range: float
   needs_human_review:
+    description: "Whether the annotation is flagged for review by a human curator."
     range: boolean
   coded_concept:
+    description: "Identifier of the vocabulary concept selected in this coding annotation."
     range: uriorcurie
   parent_concept:
+    description: "Identifier of the broader concept under which the coded concept is placed."
     range: uriorcurie
   specified_text:
+    description: "Additional text supplied to explain or specify the coded selection."
     range: string
   coding_depth:
+    description: "Reported depth of the coded concept in the coding vocabulary hierarchy."
     range: integer
   is_not_reported:
+    description: "Whether the coding category was not reported in the reviewed material; this is a review state rather than a domain concept."
     range: boolean
   locations:
     multivalued: true
@@ -181,25 +203,51 @@ slots:
       Structured named or coordinate-defined locations extracted or curated for the annotation.
       This complements broad geographic coding enums.
   spatial_text:
+    description: "Geographic description extracted from or supplied for the literature resource."
     range: string
   is_global_or_unspecified:
+    description: "Whether the geographic coding is global or lacks a specified location."
     range: boolean
   data_resource_types:
+    description: "Categories of data resources used, created, or described by the literature resource."
     multivalued: true
     range: DataResourceTypeEnum
   model_types:
+    description: "Categories of computational or analytical models used, created, or described by the literature resource."
     multivalued: true
     range: ModelTypeEnum
   mentioned_resources:
+    description: "Descriptions of identifiable resources mentioned in the literature resource."
     multivalued: true
     range: MentionedResource
     inlined_as_list: true
   relationship_to_literature:
+    description: "How the mentioned resource relates to the literature resource, such as being used, created, or evaluated."
     range: ResourceRelationshipEnum
   availability:
+    description: "Reported access availability of the mentioned resource."
     range: AvailabilityEnum
   access_statement:
+    description: "Free-text explanation of how the mentioned resource can be accessed or why access is limited."
     range: string
+
+  coded_by_details:
+    description: Name or description and optional identifier for coded by. Use reference_id for a URI/CURIE;
+      names and descriptions remain literal text.
+    range: EntityReference
+    multivalued: true
+    inlined_as_list: true
+  reviewed_by_details:
+    description: Name or description and optional identifier for reviewed by. Use reference_id for
+      a URI/CURIE; names and descriptions remain literal text.
+    range: EntityReference
+    multivalued: true
+    inlined_as_list: true
+  part_of_project_details:
+    description: Name or description and optional identifier for part of project. Use reference_id
+      for a URI/CURIE; names and descriptions remain literal text.
+    range: EntityReference
+    inlined: true
 
 enums:
   ReferenceTypeEnum:

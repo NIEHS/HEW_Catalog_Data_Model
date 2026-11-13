@@ -26,3 +26,4 @@ linkml-validate -s "$SCHEMA" -C ExternalExposureLinkage "$EXAMPLES/omop_gaia_ext
 linkml-validate -s "$SCHEMA" -C Project "$EXAMPLES/example_program_project_people.yaml"
 linkml-validate -s "$SCHEMA" -C ToolResource "$EXAMPLES/tool_resource.yaml"
 linkml-validate -s "$SCHEMA" -C ResourceCollection "$EXAMPLES/resource_collection.yaml"
+linkml-validate -s "$SCHEMA" -C LiteratureResource "$EXAMPLES/publication_named_references.yaml"

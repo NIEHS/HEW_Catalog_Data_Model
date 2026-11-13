@@ -17,6 +17,7 @@ imports:
   - ../modules/hew_ext_geospatial
 classes:
   AmadeusGeospatialResource:
+    description: "A geospatial resource with required spatial and temporal support for the HEW Amadeus interoperability profile."
     is_a: GeospatialResource
     close_mappings:
       - amadeus:Product

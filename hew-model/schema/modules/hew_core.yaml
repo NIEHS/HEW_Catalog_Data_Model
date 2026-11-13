@@ -119,11 +119,17 @@ classes:
       - license
       - access_rights
       - authors
+      - authors_details
       - contributors
+      - contributors_details
       - contacts
+      - contacts_details
       - funding_sources
+      - funding_sources_details
       - related_resources
+      - related_resources_details
       - source_organization
+      - source_organization_details
       - distributions
       - spatial_coverage
       - temporal_coverage
@@ -301,6 +307,7 @@ classes:
       - family_name
       - orcid
       - affiliations
+      - affiliations_details
 
   Organization:
     is_a: Agent
@@ -315,6 +322,7 @@ classes:
       - ror_id
       - organization_type
       - parent_organization
+      - parent_organization_details
 
   SoftwareAgent:
     is_a: Agent
@@ -324,21 +332,42 @@ classes:
     slots:
       - software_version
 
+  EntityReference:
+    description: A reference to an entity using an optional URI/CURIE, a plain name,
+      a description, or a combination. An external identifier is not required; reference_id
+      is not the identifier of this wrapper.
+    slots:
+    - reference_id
+    - name
+    - description
+    - email
+  FundingReference:
+    is_a: EntityReference
+    description: A funding reference with an optional identifier, award title or description,
+      award number, and funder name.
+    slots:
+    - award_number
+    - funder_name
+
 slots:
   id:
+    description: "Stable URI or CURIE identifying this entity."
     identifier: true
     range: uriorcurie
     required: true
   title:
+    description: "Display title of the resource, project, program, or exposure estimate."
     slot_uri: dcterms:title
     range: string
   subtitle:
     range: string
     description: Secondary title or subtitle supplied by the resource owner.
   name:
+    description: "Human-readable name of the entity or variable."
     slot_uri: schema:name
     range: string
   description:
+    description: "Free-text account of the entity, its purpose, or its contents."
     slot_uri: schema:description
     range: string
   resource_type:
@@ -348,6 +377,7 @@ slots:
       Catalog resource type. Each resource class pins the value it accepts, so the type and
       the class cannot disagree.
   url:
+    description: "Web address of the entity or its landing page."
     slot_uri: schema:url
     range: uri
   publication_date:
@@ -356,27 +386,33 @@ slots:
     pattern: ^\d{4}(-\d{2}(-\d{2})?)?$
     description: Date the resource was originally published or posted.
   identifiers:
+    description: "Additional identifiers assigned to the entity by catalogs, repositories, or other authorities."
     slot_uri: schema:identifier
     multivalued: true
     range: string
   same_as:
+    description: "Identifiers of entities considered identical to this entity in other systems."
     slot_uri: schema:sameAs
     multivalued: true
     range: uriorcurie
   keywords:
+    description: "Free-text terms used to discover and describe the resource."
     slot_uri: schema:keywords
     multivalued: true
     range: string
   themes:
+    description: "Identifiers of subject categories or concepts addressed by the resource, program, or project."
     multivalued: true
     range: uriorcurie
   status:
     description: Catalog record lifecycle status.
     range: CatalogStatusEnum
   license:
+    description: "License statement or identifier governing reuse of the resource."
     slot_uri: dcterms:license
     range: string
   access_rights:
+    description: "Access category indicating how the resource can be obtained."
     slot_uri: dcterms:accessRights
     range: AccessRightsEnum
   authors:
@@ -402,12 +438,14 @@ slots:
     range: uriorcurie
     description: Funding awards that supported the resource, referenced by identifier.
   related_resources:
+    description: "Identifiers of other resources related to this resource or annotation."
     multivalued: true
     range: uriorcurie
   source_organization:
     range: Organization
     description: Organization where the resource was created or originated.
   distributions:
+    description: "Available files, services, or other accessible representations of the resource."
     slot_uri: dcat:distribution
     multivalued: true
     range: Distribution
@@ -420,46 +458,60 @@ slots:
     close_mappings:
       - amadeus:spatial_extent_descriptor
   temporal_coverage:
+    description: "Human-readable description of the time period covered by the resource; use temporal_extent for structured coverage."
     slot_uri: dcterms:temporal
     range: string
   version:
+    description: "Version designation of the resource or data dictionary."
     range: string
     slot_uri: schema:version
   notes:
+    description: "Additional explanatory or curatorial notes about the entity."
     range: string
   evidence_text:
+    description: "Text supporting the annotation, coding decision, or exposure description."
     range: string
   generated_by:
     slot_uri: prov:wasGeneratedBy
     description: Project, software agent, or activity that generated the record.
     range: uriorcurie
   software_version:
+    description: "Version of the software used or described."
     slot_uri: schema:softwareVersion
     range: string
   input_variables:
+    description: "Names or descriptions of variables consumed by the model, tool, or calculation."
     multivalued: true
     range: string
   output_variables:
+    description: "Names or descriptions of variables produced by the model, tool, or calculation."
     multivalued: true
     range: string
   data_dictionary:
+    description: "Structured documentation of the dataset's variables, types, units, and concept mappings."
     range: DataDictionary
     inlined: true
   media_type:
+    description: "Media type of a distribution, such as text/csv or application/json."
     slot_uri: dcat:mediaType
     range: string
   format:
+    description: "File format or encoding of a distribution."
     slot_uri: dcterms:format
     range: string
   source_resource:
+    description: "Identifier of the resource described by the data dictionary."
     range: uriorcurie
   variables:
+    description: "Variable definitions included in the data dictionary."
     multivalued: true
     range: Variable
     inlined_as_list: true
   data_type:
+    description: "Storage or logical data type of a variable, such as integer, float, or string."
     range: string
   unit:
+    description: "Unit of measurement for a variable or exposure value."
     range: string
   concept_mappings:
     multivalued: true
@@ -503,6 +555,7 @@ slots:
       Stable identifier for a geographic location when available, for example a GeoNames,
       Wikidata, GAZ, or other authoritative gazetteer identifier.
   location_type:
+    description: "Category describing the kind or use of a geographic location."
     range: GeographicLocationTypeEnum
   latitude:
     slot_uri: biolink:latitude
@@ -536,25 +589,33 @@ slots:
     range: string
     required: true
   email:
+    description: "Contact email address for the agent."
     slot_uri: schema:email
     range: string
   given_name:
+    description: "Given or first name of a person."
     slot_uri: schema:givenName
     range: string
   family_name:
+    description: "Family or last name of a person."
     slot_uri: schema:familyName
     range: string
   orcid:
+    description: "ORCID identifier of a person, expressed as a URI or CURIE."
     range: uriorcurie
   ror_id:
+    description: "Research Organization Registry identifier of an organization, expressed as a URI or CURIE."
     range: uriorcurie
   affiliations:
+    description: "Organizations with which the agent is affiliated, referenced by identifier."
     slot_uri: schema:affiliation
     multivalued: true
     range: Organization
   organization_type:
+    description: "Category describing the organization, such as university, funder, or government agency."
     range: OrganizationTypeEnum
   parent_organization:
+    description: "Identifier of the organization of which this organization is a part."
     slot_uri: schema:parentOrganization
     range: Organization
   geographic_locations:
@@ -566,17 +627,21 @@ slots:
     range: GeographicFeatureEnum
     description: Resource-level or location-level geographic features such as urban or rural.
   spatial_extent:
+    description: "Structured geographic coverage of a resource, distribution, or exposure estimate."
     range: SpatialExtent
     inlined: true
     close_mappings:
       - dcterms:spatial
   geometry:
+    description: "Geometric representation of the spatial extent."
     slot_uri: geo:hasGeometry
     range: Geometry
     inlined: true
   geometry_type:
+    description: "Geometric form of the location or support, such as point, polygon, or multipolygon."
     range: GeometryTypeEnum
   wkt:
+    description: "Geometry serialized as Well-Known Text, with a CRS identifier when supplied."
     slot_uri: geo:asWKT
     range: WktLiteral
   geojson:
@@ -596,32 +661,40 @@ slots:
     exact_mappings:
       - amadeus:native_spatial_resolution_descriptor
   bounding_box:
+    description: "Geographic envelope expressed as west, east, south, and north bounds in longitude and latitude."
     range: BoundingBox
     inlined: true
   centroid:
+    description: "Representative center point of the spatial extent."
     range: GeographicLocation
     inlined: true
   named_locations:
+    description: "Named places or geographic locations included in the spatial extent."
     range: GeographicLocation
     multivalued: true
     inlined_as_list: true
   west:
+    description: "Western longitude bound in decimal degrees, within -180 to 180."
     range: float
     minimum_value: -180
     maximum_value: 180
   east:
+    description: "Eastern longitude bound in decimal degrees, within -180 to 180."
     range: float
     minimum_value: -180
     maximum_value: 180
   south:
+    description: "Southern latitude bound in decimal degrees, within -90 to 90."
     range: float
     minimum_value: -90
     maximum_value: 90
   north:
+    description: "Northern latitude bound in decimal degrees, within -90 to 90."
     range: float
     minimum_value: -90
     maximum_value: 90
   temporal_extent:
+    description: "Structured time coverage or validity interval for a resource, distribution, or exposure estimate."
     range: TemporalExtent
     inlined: true
   start_time:
@@ -653,31 +726,102 @@ slots:
     range: string
     description: IANA timezone identifier for local temporal interpretation.
   coverage_status:
+    description: "Whether temporal coverage is bounded, ongoing, unknown, or timeless."
     range: TemporalCoverageStatusEnum
   quantitative_spatial_resolution:
+    description: "Numeric spatial resolution with a unit and optional axis designation."
     range: QuantitativeSpatialResolution
     inlined: true
   administrative_spatial_resolution:
+    description: "Administrative or statistical geography level used to express spatial resolution."
     range: AdministrativeSpatialResolution
     inlined: true
   resolution_value:
+    description: "Magnitude of spatial resolution, interpreted with resolution_unit and resolution_axis."
     range: float
     minimum_value: 0
   resolution_unit:
+    description: "Unit of the numeric spatial resolution or grid spacing; use a recognized unit code where possible."
     range: string
     exact_mappings:
       - amadeus:resolution_unit
   resolution_axis:
+    description: "Axis or nominal dimension to which the numeric resolution applies."
     range: ResolutionAxisEnum
   resolution_description:
+    description: "Additional explanation of the numeric resolution and how to interpret it."
     range: string
   administrative_level:
+    description: "Administrative or statistical geography level, such as county or census tract."
     range: string
   coding_system:
+    description: "Authority or coding scheme defining the administrative or statistical geography units."
     range: string
   example_units:
+    description: "Example geographic units illustrating the administrative or statistical resolution."
     range: string
     multivalued: true
+
+  authors_details:
+    description: Name or description and optional identifier for authors. Use reference_id for a URI/CURIE;
+      names and descriptions remain literal text.
+    range: EntityReference
+    multivalued: true
+    inlined_as_list: true
+  contributors_details:
+    description: Name or description and optional identifier for contributors. Use reference_id for
+      a URI/CURIE; names and descriptions remain literal text.
+    range: EntityReference
+    multivalued: true
+    inlined_as_list: true
+  contacts_details:
+    description: Name or description and optional identifier for contacts. Use reference_id for a URI/CURIE;
+      names and descriptions remain literal text.
+    range: EntityReference
+    multivalued: true
+    inlined_as_list: true
+  source_organization_details:
+    description: Name or description and optional identifier for source organization. Use reference_id
+      for a URI/CURIE; names and descriptions remain literal text.
+    range: EntityReference
+    inlined: true
+  affiliations_details:
+    description: Name or description and optional identifier for affiliations. Use reference_id for
+      a URI/CURIE; names and descriptions remain literal text.
+    range: EntityReference
+    multivalued: true
+    inlined_as_list: true
+  parent_organization_details:
+    description: Name or description and optional identifier for parent organization. Use reference_id
+      for a URI/CURIE; names and descriptions remain literal text.
+    range: EntityReference
+    inlined: true
+  funding_sources_details:
+    description: Name or description and optional identifier for funding sources. Use reference_id
+      for a URI/CURIE; names and descriptions remain literal text.
+    range: FundingReference
+    multivalued: true
+    inlined_as_list: true
+  related_resources_details:
+    description: Name or description and optional identifier for related resources. Use reference_id
+      for a URI/CURIE; names and descriptions remain literal text.
+    range: EntityReference
+    multivalued: true
+    inlined_as_list: true
+  generated_by_details:
+    description: Name or description and optional identifier for generated by. Use reference_id for
+      a URI/CURIE; names and descriptions remain literal text.
+    range: EntityReference
+    inlined: true
+  reference_id:
+    description: Optional URI or CURIE identifying the referenced entity; never a plain name or citation.
+    range: uriorcurie
+  award_number:
+    description: Award, grant, or contract number assigned by the funding authority.
+    range: string
+  funder_name:
+    description: Plain name of the organization providing the funding; an identifier is not required.
+    range: string
 
 enums:
   TemporalResolutionEnum:

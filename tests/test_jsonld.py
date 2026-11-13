@@ -1,6 +1,6 @@
 import unittest
 
-from rdflib import URIRef
+from rdflib import RDF, URIRef
 
 from hew_model.jsonld import jsonld_graph, round_trip_jsonld, to_jsonld
 
@@ -43,6 +43,33 @@ class TestJsonLdRoundTrip(unittest.TestCase):
             URIRef("https://w3id.org/hew/resource/laserai_3541"),
             set(graph.subjects()),
         )
+        self.assertTrue(round_trip_jsonld(document))
+
+    def test_agent_role_rdf_does_not_assert_activity_participation(self):
+        instance = {
+            "id": "HEWPROJECT:example",
+            "title": "Example project",
+            "agent_associations": [{
+                "id": "HEWASSOC:resource-curator",
+                "agent": "PERSON:example_curator",
+                "associated_with": "HEWRES:catalog",
+                "role": "curator",
+            }],
+        }
+        document = to_jsonld(instance, class_name="Project")
+        graph = jsonld_graph(document)
+        hew = "https://w3id.org/hew/"
+        association = next(graph.objects(
+            URIRef("https://w3id.org/hew/project/example"),
+            URIRef(hew + "agent_associations"),
+        ))
+        self.assertIn((association, RDF.type, URIRef(hew + "AgentAssociation")), graph)
+        self.assertNotIn(
+            (association, RDF.type, URIRef("http://www.w3.org/ns/prov#Association")), graph
+        )
+        self.assertFalse(list(graph.triples(
+            (None, URIRef("http://www.w3.org/ns/prov#qualifiedAssociation"), None)
+        )))
         self.assertTrue(round_trip_jsonld(document))
 
     def test_geospatial_nested_objects_receive_types(self):

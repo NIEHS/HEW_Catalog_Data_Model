@@ -43,7 +43,9 @@ classes:
       - language
       - cde_integration
       - adapted_from
+      - adapted_from_details
       - research_program
+      - research_program_details
       - event_types
       - exposure_agents
       - health_impacts
@@ -104,6 +106,7 @@ classes:
 
 slots:
   survey_constructs:
+    description: "Constructs, domains, or scales measured by the survey instrument."
     multivalued: true
     range: SurveyConstruct
     inlined_as_list: true
@@ -113,21 +116,26 @@ slots:
     inlined_as_list: true
     description: Questions in instrument order.
   target_population:
+    description: "Population for which the survey instrument is intended, referenced by identifier."
     range: Population
   population_tags:
     multivalued: true
     range: uriorcurie
     description: Controlled population tags selected for the resource.
   administered_by:
+    description: "Type of person expected to administer or complete the instrument."
     range: AdministeredByEnum
   administration_mode:
+    description: "Mode through which the instrument is administered, such as web, telephone, or paper."
     range: AdministrationModeEnum
   administration_time:
     range: string
     description: Expected time required to complete or administer the resource.
   ease_of_use:
+    description: "Qualitative assessment of the instrument's ease of use."
     range: EaseOfUseEnum
   electronic_data_capture:
+    description: "Electronic data capture platform used or supported by the instrument."
     range: ElectronicDataCaptureEnum
   readability_level:
     range: float
@@ -172,29 +180,50 @@ slots:
     minimum_value: 1
     description: 1-based order of the question within the instrument.
   text:
+    description: "Wording of the survey question, item, or prompt."
     range: string
   response_type:
+    description: "Kind of answer expected for the survey question."
     range: ResponseTypeEnum
   response_options:
+    description: "Coded answer choices offered for the survey question."
     multivalued: true
     range: ResponseOption
     inlined_as_list: true
   construct:
+    description: "Construct measured by the question, referenced by identifier."
     range: SurveyConstruct
   response_variables:
     multivalued: true
     range: Variable
     description: Dataset variables that record responses to this question.
   code:
+    description: "Machine-readable value representing an answer choice."
     range: string
     required: true
   label:
+    description: "Human-readable text displayed for an answer choice."
     range: string
   survey_instruments:
+    description: "Survey instruments used to collect the dataset's responses, referenced by identifier."
     multivalued: true
     range: SurveyInstrument
   population:
+    description: "Population or study sample represented in the survey dataset, referenced by identifier."
     range: Population
+
+  adapted_from_details:
+    description: Name or description and optional identifier for adapted from. Use reference_id for
+      a URI/CURIE; names and descriptions remain literal text.
+    range: EntityReference
+    multivalued: true
+    inlined_as_list: true
+  research_program_details:
+    description: Name or description and optional identifier for research program. Use reference_id
+      for a URI/CURIE; names and descriptions remain literal text.
+    range: EntityReference
+    multivalued: true
+    inlined_as_list: true
 
 enums:
   AdministeredByEnum:

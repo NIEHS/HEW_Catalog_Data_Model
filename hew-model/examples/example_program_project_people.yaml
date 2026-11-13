@@ -18,6 +18,12 @@ agent_associations:
     associated_with: HEWPROJECT:laserai_systematic_review
     role: principal_investigator
     start_date: "2026-05-01"
+    # A separate role for this agent can target a resource rather than an activity.
+  - id: HEWASSOC:000006
+    agent: PERSON:example_pi
+    associated_with: HEWRES:laserai_hew_literature_catalog
+    role: curator
+    contribution_description: Curates the catalog resource.
   - id: HEWASSOC:000002
     agent: PERSON:example_curator
     associated_with: HEWPROJECT:laserai_systematic_review
@@ -36,3 +42,10 @@ agent_associations:
     agent: ORG:laser_ai
     associated_with: HEWPROJECT:laserai_systematic_review
     role: participating_organization
+  - id: HEWASSOC:named-curator
+    agent_details:
+      name: Jane Example
+    associated_with: HEWRES:named-references
+    role: curator
+    source_details:
+      description: Project team roster supplied by the principal investigator.
