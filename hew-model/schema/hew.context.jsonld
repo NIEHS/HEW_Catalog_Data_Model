@@ -141,17 +141,6 @@
       "@type": "@id",
       "@id": "bounding_box"
     },
-    "buffer_radius": {
-      "@type": "xsd:float",
-      "@id": "buffer_radius"
-    },
-    "buffer_unit": {
-      "@id": "buffer_unit"
-    },
-    "calculation_method": {
-      "@type": "@id",
-      "@id": "calculation_method"
-    },
     "calendar": {
       "@context": {
         "text": "skos:notation",
@@ -421,22 +410,11 @@
       "@type": "@id",
       "@id": "external_exposure_linkage"
     },
-    "extraction_method": {
-      "@context": {
-        "text": "skos:notation",
-        "description": "skos:prefLabel",
-        "meaning": "@id"
-      },
-      "@id": "extraction_method"
-    },
     "family_name": {
       "@id": "schema:familyName"
     },
     "format": {
       "@id": "dcterms:format"
-    },
-    "function_name": {
-      "@id": "function_name"
     },
     "funder": {
       "@type": "@id",
@@ -467,14 +445,6 @@
     "generated_by_details": {
       "@type": "@id",
       "@id": "generated_by_details"
-    },
-    "generated_outputs": {
-      "@type": "@id",
-      "@id": "generated_outputs"
-    },
-    "generated_outputs_details": {
-      "@type": "@id",
-      "@id": "generated_outputs_details"
     },
     "geographic_features": {
       "@context": {
@@ -544,14 +514,6 @@
         "meaning": "@id"
       },
       "@id": "information_source"
-    },
-    "input_resources": {
-      "@type": "@id",
-      "@id": "input_resources"
-    },
-    "input_resources_details": {
-      "@type": "@id",
-      "@id": "input_resources_details"
     },
     "input_variables": {
       "@id": "input_variables"
@@ -639,14 +601,6 @@
     "mentioned_resources": {
       "@type": "@id",
       "@id": "mentioned_resources"
-    },
-    "method_type": {
-      "@context": {
-        "text": "skos:notation",
-        "description": "skos:prefLabel",
-        "meaning": "@id"
-      },
-      "@id": "method_type"
     },
     "model_type": {
       "@context": {
@@ -736,22 +690,6 @@
     "output_variables": {
       "@id": "output_variables"
     },
-    "parameter_description": {
-      "@id": "parameter_description"
-    },
-    "parameter_name": {
-      "@id": "parameter_name"
-    },
-    "parameter_unit": {
-      "@id": "parameter_unit"
-    },
-    "parameter_value": {
-      "@id": "parameter_value"
-    },
-    "parameters": {
-      "@type": "@id",
-      "@id": "parameters"
-    },
     "parent_concept": {
       "@type": "@id",
       "@id": "parent_concept"
@@ -821,6 +759,10 @@
       },
       "@id": "processing_level"
     },
+    "processing_methods": {
+      "@type": "@id",
+      "@id": "processing_methods"
+    },
     "produces_resources": {
       "@type": "@id",
       "@id": "produces_resources"
@@ -834,6 +776,14 @@
     },
     "proj_string": {
       "@id": "proj_string"
+    },
+    "provenance_reference": {
+      "@type": "@id",
+      "@id": "provenance_reference"
+    },
+    "provenance_reference_details": {
+      "@type": "@id",
+      "@id": "provenance_reference_details"
     },
     "publication_date": {
       "@id": "schema:datePublished"
@@ -1016,10 +966,6 @@
       "@type": "@id",
       "@id": "source"
     },
-    "source_crs": {
-      "@type": "@id",
-      "@id": "source_crs"
-    },
     "source_dataset": {
       "@type": "@id",
       "@id": "source_dataset"
@@ -1177,10 +1123,6 @@
       "@type": "@id",
       "@id": "survey_questions"
     },
-    "target_crs": {
-      "@type": "@id",
-      "@id": "target_crs"
-    },
     "target_population": {
       "@type": "@id",
       "@id": "target_population"
@@ -1219,9 +1161,6 @@
     "temporal_support": {
       "@type": "@id",
       "@id": "temporal_support"
-    },
-    "temporal_window": {
-      "@id": "temporal_window"
     },
     "text": {
       "@id": "text"
@@ -1342,9 +1281,6 @@
     "ConceptMappingMixin": {
       "@id": "ConceptMappingMixin"
     },
-    "CovariateCalculation": {
-      "@id": "CovariateCalculation"
-    },
     "DataDictionary": {
       "@id": "schema:Dataset"
     },
@@ -1411,14 +1347,14 @@
     "Organization": {
       "@id": "schema:Organization"
     },
-    "ParameterValue": {
-      "@id": "ParameterValue"
-    },
     "Person": {
       "@id": "schema:Person"
     },
     "Population": {
       "@id": "Population"
+    },
+    "ProcessingMethod": {
+      "@id": "ProcessingMethod"
     },
     "Program": {
       "@id": "schema:Project"

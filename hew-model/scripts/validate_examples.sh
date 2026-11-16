@@ -21,7 +21,7 @@ linkml-validate -s "$SCHEMA" -C GeospatialResource "$EXAMPLES/amadeus_daymet_dat
 linkml-validate -s "$SCHEMA" -C EnvironmentalVariable "$EXAMPLES/environmental_variable.yaml"
 linkml-validate -s "$SCHEMA" -C SpatiotemporalExposure "$EXAMPLES/example_spatiotemporal_exposure.yaml"
 linkml-validate -s "$SCHEMA" -C SpatiotemporalExposure "$EXAMPLES/spatiotemporal_exposure_optional.yaml"
-linkml-validate -s "$SCHEMA" -C CovariateCalculation "$EXAMPLES/amadeus_covariate_calculation.yaml"
+linkml-validate -s "$SCHEMA" -C ProcessingMethod "$EXAMPLES/processing_method.yaml"
 linkml-validate -s "$SCHEMA" -C ExternalExposureLinkage "$EXAMPLES/omop_gaia_external_exposure_linkage.yaml"
 linkml-validate -s "$SCHEMA" -C Project "$EXAMPLES/example_program_project_people.yaml"
 linkml-validate -s "$SCHEMA" -C ToolResource "$EXAMPLES/tool_resource.yaml"

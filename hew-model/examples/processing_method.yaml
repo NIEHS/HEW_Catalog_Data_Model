@@ -1,0 +1,10 @@
+name: Amadeus daily maximum temperature derivation
+description: Daily maximum temperature values summarized over the study geography
+  from ERA5-Land.
+software_details:
+  name: Amadeus
+  reference_id: HEWRES:amadeus
+software_version: TBD
+provenance_reference_details:
+  description: Detailed derivation settings and execution history are maintained by
+    the Amadeus workflow.

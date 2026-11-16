@@ -5,7 +5,7 @@ measured_property: envo:example_air_temperature
 source_dataset: HEWRES:era5-land-daily-temperature
 processing_level: exposure_assigned
 environmental_context:
-  - envo:urban_environment
+- envo:urban_environment
 exposure_location:
   location_id: geonames:5303754
   name: Maricopa County
@@ -31,18 +31,6 @@ value_specification:
   unit: degC
   value_type: derived_value
   statistic: maximum
-calculation_method:
-  id: HEWMETHOD:amadeus-daily-max-temp
-  name: Amadeus daily maximum temperature extraction
-  method_type: reanalysis_extraction
-  software: HEWRES:amadeus
-  software_version: TBD
-  function_name: calculate_covariates
-  input_resources:
-    - HEWRES:era5-land-daily-temperature
-  extraction_method: zonal_mean
-  aggregation_method: maximum
-  target_crs: epsg:4326
 omop_concept_binding:
   concept_status: candidate_mapping
   omop_concept_name: Extreme heat exposure
@@ -58,3 +46,14 @@ external_exposure_linkage:
   spatial_join_method: within
   temporal_join_method: same_day
   privacy_preserving_geography: Census tract or approved location-history aggregate
+processing_methods:
+- name: Amadeus daily maximum temperature derivation
+  description: Daily maximum temperature values summarized over the study geography
+    from ERA5-Land.
+  software_details:
+    name: Amadeus
+    reference_id: HEWRES:amadeus
+  software_version: TBD
+  provenance_reference_details:
+    description: Detailed derivation settings and execution history are maintained
+      by the Amadeus workflow.

@@ -14,3 +14,14 @@ temporal_extent:
   start_time: '2020-01-01T00:00:00Z'
   end_time: '2026-01-01T00:00:00Z'
 processing_level: derived
+processing_methods:
+- name: Amadeus daily maximum temperature derivation
+  description: Daily maximum temperature values summarized over the study geography
+    from ERA5-Land.
+  software_details:
+    name: Amadeus
+    reference_id: HEWRES:amadeus
+  software_version: TBD
+  provenance_reference_details:
+    description: Detailed derivation settings and execution history are maintained
+      by the Amadeus workflow.

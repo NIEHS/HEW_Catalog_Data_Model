@@ -98,44 +98,42 @@ classes:
     abstract: true
     class_uri: schema:CreativeWork
     close_mappings:
-      - biolink:InformationContentEntity
-    description: >-
-      A cataloged resource relevant to health and extreme weather. Holds only the descriptive,
-      rights, and attribution fields shared by every resource type; type-specific fields live
-      on subclasses.
+    - biolink:InformationContentEntity
+    description: A cataloged resource relevant to health and extreme weather. Holds only the descriptive,
+      rights, and attribution fields shared by every resource type; type-specific fields live on subclasses.
     slots:
-      - id
-      - resource_type
-      - title
-      - subtitle
-      - description
-      - url
-      - publication_date
-      - identifiers
-      - same_as
-      - keywords
-      - themes
-      - status
-      - license
-      - access_rights
-      - authors
-      - authors_details
-      - contributors
-      - contributors_details
-      - contacts
-      - contacts_details
-      - funding_sources
-      - funding_sources_details
-      - related_resources
-      - related_resources_details
-      - source_organization
-      - source_organization_details
-      - distributions
-      - spatial_coverage
-      - temporal_coverage
-      - spatial_extent
-      - temporal_extent
-
+    - id
+    - resource_type
+    - title
+    - subtitle
+    - description
+    - url
+    - publication_date
+    - identifiers
+    - same_as
+    - keywords
+    - themes
+    - status
+    - license
+    - access_rights
+    - authors
+    - authors_details
+    - contributors
+    - contributors_details
+    - contacts
+    - contacts_details
+    - funding_sources
+    - funding_sources_details
+    - related_resources
+    - related_resources_details
+    - source_organization
+    - source_organization_details
+    - distributions
+    - spatial_coverage
+    - temporal_coverage
+    - spatial_extent
+    - temporal_extent
+    - processing_methods
   DatasetResource:
     is_a: HEWResource
     class_uri: schema:Dataset
@@ -349,6 +347,17 @@ classes:
     - award_number
     - funder_name
 
+  ProcessingMethod:
+    description: A catalog-level account of how a resource or exposure estimate was produced. Detailed
+      execution settings and run history remain in the linked provenance system.
+    slots:
+    - name
+    - description
+    - software
+    - software_details
+    - software_version
+    - provenance_reference
+    - provenance_reference_details
 slots:
   id:
     description: "Stable URI or CURIE identifying this entity."
@@ -823,6 +832,27 @@ slots:
     description: Plain name of the organization providing the funding; an identifier is not required.
     range: string
 
+  software:
+    range: uriorcurie
+    description: URI or CURIE identifying the software used to produce the resource or exposure estimate.
+  software_details:
+    description: Name or description and optional identifier for software. Use reference_id for a URI/CURIE;
+      names and descriptions remain literal text.
+    range: EntityReference
+    inlined: true
+  processing_methods:
+    description: Descriptions of the methods used to produce the resource or exposure estimate; these
+      are not executable requests.
+    range: ProcessingMethod
+    multivalued: true
+    inlined_as_list: true
+  provenance_reference:
+    description: URI or CURIE linking to a detailed processing, derivation, or run provenance record.
+    range: uriorcurie
+  provenance_reference_details:
+    description: Plain name or description and optional identifier of the detailed provenance record.
+    range: EntityReference
+    inlined: true
 enums:
   TemporalResolutionEnum:
     exact_mappings:

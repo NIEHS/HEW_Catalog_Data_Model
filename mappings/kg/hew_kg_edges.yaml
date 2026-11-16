@@ -18,7 +18,7 @@ edges:
   - subject: ToolResource
     predicate: computes
     object: output_variables
-  - subject: CovariateCalculation
+  - subject: ProcessingMethod
     predicate: implemented_by
     object: software
   - subject: Project

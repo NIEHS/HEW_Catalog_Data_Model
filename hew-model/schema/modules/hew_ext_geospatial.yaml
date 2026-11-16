@@ -21,7 +21,7 @@ default_prefix: HEW
 default_range: string
 
 imports:
-  - linkml:types.
+  - linkml:types
   - ./hew_core
 
 classes:
@@ -189,7 +189,7 @@ classes:
       - value_specification
       - value_unit
       - aggregation_method
-      - calculation_method
+      - processing_methods
       - generated_by
       - generated_by_details
       - software
@@ -206,46 +206,6 @@ classes:
       - processing_level
       - access_rights
       - license
-
-  CovariateCalculation:
-    close_mappings:
-      - prov:Activity
-    description: >-
-      A method or computational process used to derive an exposure covariate from environmental,
-      geospatial, climate, weather, social-context, or other health-relevant data.
-    slots:
-      - id
-      - name
-      - description
-      - method_type
-      - software
-      - software_details
-      - software_version
-      - function_name
-      - parameters
-      - input_resources
-      - input_resources_details
-      - output_variables
-      - spatial_join_method
-      - temporal_join_method
-      - buffer_radius
-      - buffer_unit
-      - extraction_method
-      - aggregation_method
-      - source_crs
-      - target_crs
-      - temporal_window
-      - generated_outputs
-      - generated_outputs_details
-
-  ParameterValue:
-    description: >-
-      A named parameter used in a calculation, workflow, model, or software function.
-    slots:
-      - parameter_name
-      - parameter_value
-      - parameter_unit
-      - parameter_description
 
   ValueSpecification:
     description: >-
@@ -403,13 +363,6 @@ slots:
   value_unit:
     range: string
     description: Human-readable unit string retained for compatibility.
-  calculation_method:
-    range: CovariateCalculation
-    inlined: true
-    description: Computational or methodological process used to derive the exposure.
-  software:
-    range: uriorcurie
-    description: Software resource or software agent used to generate the exposure.
   population_or_cohort:
     range: uriorcurie
     description: Population, cohort, study sample, or resource linked to the exposure.
@@ -424,62 +377,12 @@ slots:
   uncertainty:
     range: string
     description: Human-readable uncertainty statement.
-  method_type:
-    description: "Category of method used to calculate or assign the covariate."
-    range: CovariateCalculationMethodEnum
-  function_name:
-    range: string
-    description: Name of the function or workflow step used to derive the covariate.
-  parameters:
-    description: "Named parameter values supplied to the calculation or workflow."
-    multivalued: true
-    range: ParameterValue
-    inlined_as_list: true
-  input_resources:
-    description: "Identifiers of datasets or other resources consumed by the calculation."
-    multivalued: true
-    range: uriorcurie
   spatial_join_method:
     description: "Spatial matching rule used to link input data to target locations or areas."
     range: SpatialJoinMethodEnum
   temporal_join_method:
     description: "Temporal matching rule used to align input data with target dates or intervals."
     range: TemporalJoinMethodEnum
-  buffer_radius:
-    description: "Radius of the spatial buffer used in the calculation, expressed in buffer_unit."
-    range: float
-  buffer_unit:
-    description: "Unit of measurement for buffer_radius."
-    range: string
-  extraction_method:
-    description: "Method used to extract or summarize source values for the target geography."
-    range: ExtractionMethodEnum
-  source_crs:
-    range: uriorcurie
-    description: CRS of source data, preferably an EPSG or OGC CRS identifier.
-  target_crs:
-    range: uriorcurie
-    description: >-
-      CRS used for calculation output, preferably an EPSG or OGC CRS identifier.
-  temporal_window:
-    range: string
-    description: ISO 8601 duration or human-readable temporal window.
-  generated_outputs:
-    description: "Identifiers of resources produced by the calculation."
-    multivalued: true
-    range: uriorcurie
-  parameter_name:
-    description: "Name of the calculation or workflow parameter."
-    range: string
-  parameter_value:
-    description: "Parameter setting serialized as text."
-    range: string
-  parameter_unit:
-    description: "Unit of measurement for the parameter value, when applicable."
-    range: string
-  parameter_description:
-    description: "Explanation of the parameter's purpose and interpretation."
-    range: string
   exposure_estimate:
     description: "Identifier of the exposure estimate to be linked to the external workflow."
     range: uriorcurie
@@ -651,29 +554,11 @@ slots:
     range: EntityReference
     multivalued: true
     inlined_as_list: true
-  software_details:
-    description: Name or description and optional identifier for software. Use reference_id for a URI/CURIE;
-      names and descriptions remain literal text.
-    range: EntityReference
-    inlined: true
   population_or_cohort_details:
     description: Name or description and optional identifier for population or cohort. Use reference_id
       for a URI/CURIE; names and descriptions remain literal text.
     range: EntityReference
     inlined: true
-  input_resources_details:
-    description: Name or description and optional identifier for input resources. Use reference_id
-      for a URI/CURIE; names and descriptions remain literal text.
-    range: EntityReference
-    multivalued: true
-    inlined_as_list: true
-  generated_outputs_details:
-    description: Name or description and optional identifier for generated outputs. Use reference_id
-      for a URI/CURIE; names and descriptions remain literal text.
-    range: EntityReference
-    multivalued: true
-    inlined_as_list: true
-
 enums:
   GridRowDirectionEnum:
     permissible_values:
@@ -739,21 +624,6 @@ enums:
       candidate_mapping:
       vocabulary_gap:
       not_evaluated:
-  CovariateCalculationMethodEnum:
-    permissible_values:
-      buffer_extraction:
-      point_extraction:
-      zonal_statistics:
-      raster_summary:
-      spatial_overlay:
-      interpolation:
-      model_prediction:
-      reanalysis_extraction:
-      monitor_assignment:
-      nearest_monitor:
-      distance_weighted_assignment:
-      administrative_area_summary:
-      other:
   SpatialJoinMethodEnum:
     permissible_values:
       within:
@@ -777,20 +647,6 @@ enums:
       cumulative_window:
       event_window:
       none:
-      other:
-  ExtractionMethodEnum:
-    permissible_values:
-      point_sample:
-      bilinear_interpolation:
-      nearest_cell:
-      zonal_mean:
-      zonal_sum:
-      zonal_minimum:
-      zonal_maximum:
-      zonal_percentile:
-      majority_class:
-      area_weighted:
-      distance_weighted:
       other:
   ValueTypeEnum:
     permissible_values:

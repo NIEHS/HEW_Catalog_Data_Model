@@ -36,6 +36,13 @@ temporal, method, and provenance metadata to make them discoverable, reusable,
 and interoperable. It is not a warehouse for every exposure observation or
 derived value; detailed exposure-estimate modeling is an optional extension.
 
+Extraction requests and execution controls are outside the catalog model. Do not
+model `ExtractionRequest` or request-specific variable selections, geometries,
+time windows, execution options, status, or tracking identifiers in HEW or its
+Dataverse metadata blocks. Those belong in the extraction service. Descriptions
+of methods actually used, dataset coverage, and resulting provenance remain
+catalog metadata; they do not instruct the service to execute a request.
+
 Systematic-review coding, initially from the HEW Resource Library Coding Guide
 and LaserAI-assisted workflows, is one input stream and a coding profile over the
 general resource model, not the whole ontology.
@@ -112,7 +119,7 @@ modules/hew_survey.yaml          SurveyInstrument, SurveyConstruct, SurveyQuesti
                                  ResponseOption, SurveyDataset, Population
 modules/hew_ext_geospatial.yaml  GeospatialResource, GridDefinition, EnvironmentalVariable,
                                  EnvironmentalVariableDelivery, supports,
-                                 SpatiotemporalExposure, CovariateCalculation, OMOP/Gaia linkage
+                                 SpatiotemporalExposure, OMOP/Gaia linkage
 profiles/hew_amadeus.yaml        Optional AmadeusGeospatialResource interoperability profile
 modules/hew_ext_projects.yaml    Program, Project, FundingSource, AgentAssociation
 modules/hew_ext_resources.yaml   CohortResource, SoftwareResource, ModelResource,
@@ -445,15 +452,23 @@ All alignment changes are maintained in HEW; Amadeus is not imported or modified
   summarized exposure estimate with exposure concept, source dataset, location
   or geometry, temporal extent, support, value semantics, and optional health or
   OMOP/Gaia context.
-- **`CovariateCalculation`**: how a source dataset and variables became that
-  estimate: software and version, function or workflow step, inputs and
-  outputs, extraction, spatial-join, and temporal-join methods, buffer and CRS
-  parameters, and aggregation and temporal-window semantics.
+- **`ProcessingMethod`**: a general description of how a resource or estimate
+  was produced, with method name and description, software name or identifier,
+  software version, and a provenance reference or citation. It is shared in core
+  and available through `processing_methods` on all resources and exposure estimates.
 
-This covers Amadeus-derived covariates (reanalysis extraction, raster summaries,
-monitor assignment, buffers, overlays, model predictions) without restricting
-other derivation systems. See `hew-model/examples/example_spatiotemporal_exposure.yaml`
-and `amadeus_covariate_calculation.yaml`.
+Detailed calculation parameters, function names, buffer settings, extraction
+controls, runtime configuration, intermediate results, and run status remain in
+Amadeus or the originating workflow. HEW links to those records rather than
+reproducing their execution model. Source datasets remain resource references;
+Dataverse describes them through the existing CAFE source-data block.
+
+This replaces `CovariateCalculation` and `calculation_method`. Migrate summaries
+into `processing_methods`, retain software/version, and move detailed settings to
+external provenance linked by `provenance_reference` or its `_details` companion.
+Do not relabel settings as method descriptions without a meaningful summary.
+See `hew-model/examples/processing_method.yaml`, `geospatial_dataset.yaml`, and
+`example_spatiotemporal_exposure.yaml`.
 
 ### OMOP/Gaia external exposure linkage
 
