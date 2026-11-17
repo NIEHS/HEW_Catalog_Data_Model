@@ -174,9 +174,11 @@ Exposure information appears at three depths:
 information entity, not necessarily a data-bearing object. It carries only the
 descriptive, rights, and attribution slots shared by all resource types:
 identifiers, title, description, keywords, themes, catalog `status`, license,
-access rights, authors, contributors, contacts, funding sources, related
-resources, free-text spatial and temporal coverage, and optional structured
-`spatial_extent` and `temporal_extent`. Distributions can carry their own extents
+access rights, authors, contributors, contacts, funding sources, and related
+resources. `DatasetResource` and its subclasses carry free-text spatial and
+temporal coverage plus optional structured `spatial_extent` and `temporal_extent`;
+these describe dataset coverage and do not imply that publications or other
+non-dataset resources have extents. Distributions can carry their own extents
 and forecast `reference_time`. Each subclass adds its
 own slots, and every concrete subclass pins its `resource_type` value.
 
@@ -334,7 +336,8 @@ answers, so an instrument and the data collected with it can be joined.
 `AdministeredByEnum`, `ease_of_use` uses `EaseOfUseEnum`, and
 `electronic_data_capture` uses `ElectronicDataCaptureEnum`. `response_type`
 uses `ResponseTypeEnum`, and `language` is a BCP 47 tag. See
-`hew-model/examples/survey_instrument.yaml` and `survey_dataset.yaml`.
+`event_types` is multivalued free text because no event vocabulary is specified.
+See `hew-model/examples/survey_instrument.yaml` and `survey_dataset.yaml`.
 
 ## 8. Geospatial and exposure extension
 

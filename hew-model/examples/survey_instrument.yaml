@@ -31,6 +31,8 @@ geographic_locations:
   - united_states
 geographic_features:
   - urban
+event_types:
+  - Heat waves
 exposure_agents:
   - ECTO:0000147
 health_impacts:

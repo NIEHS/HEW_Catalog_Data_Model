@@ -129,10 +129,6 @@ classes:
     - source_organization
     - source_organization_details
     - distributions
-    - spatial_coverage
-    - temporal_coverage
-    - spatial_extent
-    - temporal_extent
     - processing_methods
   DatasetResource:
     is_a: HEWResource
@@ -141,9 +137,14 @@ classes:
       - dcat:Dataset
     description: >-
       A dataset relevant to health and extreme weather. Specialized dataset kinds (survey,
-      geospatial, cohort) are subclasses.
+      geospatial, cohort) are subclasses. Spatial and temporal coverage describe the dataset,
+      not every catalog resource.
     slots:
       - data_dictionary
+      - spatial_coverage
+      - temporal_coverage
+      - spatial_extent
+      - temporal_extent
 
   Distribution:
     class_uri: dcat:Distribution

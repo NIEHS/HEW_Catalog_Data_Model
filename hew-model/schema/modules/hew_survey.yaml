@@ -161,8 +161,10 @@ slots:
     description: Research programs or funding initiatives associated with the resource.
   event_types:
     multivalued: true
-    range: uriorcurie
-    description: Event or disaster concepts for which the resource is appropriate.
+    range: string
+    description: >-
+      Free-text event or disaster labels for which the resource is appropriate.
+      No controlled vocabulary or identifier source is currently specified.
   exposure_agents:
     multivalued: true
     range: uriorcurie

@@ -86,6 +86,25 @@ class TestAmadeusAlignment(unittest.TestCase):
         }
         self.assertEqual(list(validator.iter_errors(record)), [])
 
+    def test_coverage_slots_are_dataset_specific(self):
+        schema = SchemaView(str(SCHEMA_DIR / "hew.yaml"))
+        coverage_slots = {
+            "spatial_coverage",
+            "temporal_coverage",
+            "spatial_extent",
+            "temporal_extent",
+        }
+        self.assertTrue(coverage_slots.isdisjoint(schema.class_slots("HEWResource")))
+        self.assertTrue(coverage_slots.isdisjoint(schema.class_slots("LiteratureResource")))
+        self.assertTrue(coverage_slots.issubset(schema.class_slots("DatasetResource")))
+        self.assertTrue(coverage_slots.issubset(schema.class_slots("GeospatialResource")))
+
+    def test_survey_event_types_are_free_text(self):
+        schema = SchemaView(str(SCHEMA_DIR / "hew.yaml"))
+        self.assertEqual(
+            schema.induced_slot("event_types", "SurveyInstrument").range, "string"
+        )
+
     def test_projected_grid_and_asset_intervals(self):
         self.assertEqual(list(self.validator.iter_errors(self.example)), [])
         self.assertEqual(validate_amadeus_metadata(self.example), [])

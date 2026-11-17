@@ -1007,7 +1007,7 @@
         },
         "DatasetResource": {
             "additionalProperties": false,
-            "description": "A dataset relevant to health and extreme weather. Specialized dataset kinds (survey, geospatial, cohort) are subclasses.",
+            "description": "A dataset relevant to health and extreme weather. Specialized dataset kinds (survey, geospatial, cohort) are subclasses. Spatial and temporal coverage describe the dataset, not every catalog resource.",
             "properties": {
                 "access_rights": {
                     "anyOf": [
@@ -3057,24 +3057,6 @@
                     ],
                     "description": "Name or description and optional identifier for source organization. Use reference_id for a URI/CURIE; names and descriptions remain literal text."
                 },
-                "spatial_coverage": {
-                    "description": "Display description of spatial coverage; spatial_extent supplies queryable coverage.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "spatial_extent": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/SpatialExtent"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "Structured geographic coverage of a resource, distribution, or exposure estimate."
-                },
                 "status": {
                     "anyOf": [
                         {
@@ -3092,24 +3074,6 @@
                         "string",
                         "null"
                     ]
-                },
-                "temporal_coverage": {
-                    "description": "Human-readable description of the time period covered by the resource; use temporal_extent for structured coverage.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "temporal_extent": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/TemporalExtent"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "Structured time coverage or validity interval for a resource, distribution, or exposure estimate."
                 },
                 "themes": {
                     "description": "Identifiers of subject categories or concepts addressed by the resource, program, or project.",
@@ -3739,24 +3703,6 @@
                         "null"
                     ]
                 },
-                "spatial_coverage": {
-                    "description": "Display description of spatial coverage; spatial_extent supplies queryable coverage.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "spatial_extent": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/SpatialExtent"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "Structured geographic coverage of a resource, distribution, or exposure estimate."
-                },
                 "status": {
                     "anyOf": [
                         {
@@ -3781,24 +3727,6 @@
                         "string",
                         "null"
                     ]
-                },
-                "temporal_coverage": {
-                    "description": "Human-readable description of the time period covered by the resource; use temporal_extent for structured coverage.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "temporal_extent": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/TemporalExtent"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "Structured time coverage or validity interval for a resource, distribution, or exposure estimate."
                 },
                 "themes": {
                     "description": "Identifiers of subject categories or concepts addressed by the resource, program, or project.",
@@ -4147,24 +4075,6 @@
                     ],
                     "description": "Name or description and optional identifier for source organization. Use reference_id for a URI/CURIE; names and descriptions remain literal text."
                 },
-                "spatial_coverage": {
-                    "description": "Display description of spatial coverage; spatial_extent supplies queryable coverage.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "spatial_extent": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/SpatialExtent"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "Structured geographic coverage of a resource, distribution, or exposure estimate."
-                },
                 "status": {
                     "anyOf": [
                         {
@@ -4182,24 +4092,6 @@
                         "string",
                         "null"
                     ]
-                },
-                "temporal_coverage": {
-                    "description": "Human-readable description of the time period covered by the resource; use temporal_extent for structured coverage.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "temporal_extent": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/TemporalExtent"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "Structured time coverage or validity interval for a resource, distribution, or exposure estimate."
                 },
                 "themes": {
                     "description": "Identifiers of subject categories or concepts addressed by the resource, program, or project.",
@@ -5376,24 +5268,6 @@
                     ],
                     "description": "Name or description and optional identifier for source project. Use reference_id for a URI/CURIE; names and descriptions remain literal text."
                 },
-                "spatial_coverage": {
-                    "description": "Display description of spatial coverage; spatial_extent supplies queryable coverage.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "spatial_extent": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/SpatialExtent"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "Structured geographic coverage of a resource, distribution, or exposure estimate."
-                },
                 "status": {
                     "anyOf": [
                         {
@@ -5411,24 +5285,6 @@
                         "string",
                         "null"
                     ]
-                },
-                "temporal_coverage": {
-                    "description": "Human-readable description of the time period covered by the resource; use temporal_extent for structured coverage.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "temporal_extent": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/TemporalExtent"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "Structured time coverage or validity interval for a resource, distribution, or exposure estimate."
                 },
                 "themes": {
                     "description": "Identifiers of subject categories or concepts addressed by the resource, program, or project.",
@@ -5889,24 +5745,6 @@
                     ],
                     "description": "Name or description and optional identifier for source organization. Use reference_id for a URI/CURIE; names and descriptions remain literal text."
                 },
-                "spatial_coverage": {
-                    "description": "Display description of spatial coverage; spatial_extent supplies queryable coverage.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "spatial_extent": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/SpatialExtent"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "Structured geographic coverage of a resource, distribution, or exposure estimate."
-                },
                 "status": {
                     "anyOf": [
                         {
@@ -5924,24 +5762,6 @@
                         "string",
                         "null"
                     ]
-                },
-                "temporal_coverage": {
-                    "description": "Human-readable description of the time period covered by the resource; use temporal_extent for structured coverage.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "temporal_extent": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/TemporalExtent"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "Structured time coverage or validity interval for a resource, distribution, or exposure estimate."
                 },
                 "themes": {
                     "description": "Identifiers of subject categories or concepts addressed by the resource, program, or project.",
@@ -7221,7 +7041,7 @@
                     "description": "Electronic data capture platform used or supported by the instrument."
                 },
                 "event_types": {
-                    "description": "Event or disaster concepts for which the resource is appropriate.",
+                    "description": "Free-text event or disaster labels for which the resource is appropriate. No controlled vocabulary or identifier source is currently specified.",
                     "items": {
                         "type": "string"
                     },
@@ -7474,24 +7294,6 @@
                         "null"
                     ]
                 },
-                "spatial_coverage": {
-                    "description": "Display description of spatial coverage; spatial_extent supplies queryable coverage.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "spatial_extent": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/SpatialExtent"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "Structured geographic coverage of a resource, distribution, or exposure estimate."
-                },
                 "special_topics": {
                     "description": "Special-topic concepts addressed by the resource.",
                     "items": {
@@ -7546,24 +7348,6 @@
                         "string",
                         "null"
                     ]
-                },
-                "temporal_coverage": {
-                    "description": "Human-readable description of the time period covered by the resource; use temporal_extent for structured coverage.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "temporal_extent": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/TemporalExtent"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "Structured time coverage or validity interval for a resource, distribution, or exposure estimate."
                 },
                 "themes": {
                     "description": "Identifiers of subject categories or concepts addressed by the resource, program, or project.",
@@ -8134,24 +7918,6 @@
                     ],
                     "description": "Name or description and optional identifier for source organization. Use reference_id for a URI/CURIE; names and descriptions remain literal text."
                 },
-                "spatial_coverage": {
-                    "description": "Display description of spatial coverage; spatial_extent supplies queryable coverage.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "spatial_extent": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/SpatialExtent"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "Structured geographic coverage of a resource, distribution, or exposure estimate."
-                },
                 "status": {
                     "anyOf": [
                         {
@@ -8169,24 +7935,6 @@
                         "string",
                         "null"
                     ]
-                },
-                "temporal_coverage": {
-                    "description": "Human-readable description of the time period covered by the resource; use temporal_extent for structured coverage.",
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "temporal_extent": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/TemporalExtent"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "description": "Structured time coverage or validity interval for a resource, distribution, or exposure estimate."
                 },
                 "themes": {
                     "description": "Identifiers of subject categories or concepts addressed by the resource, program, or project.",

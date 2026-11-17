@@ -357,7 +357,6 @@
       "@id": "environmental_variables"
     },
     "event_types": {
-      "@type": "@id",
       "@id": "event_types"
     },
     "evidence_text": {
