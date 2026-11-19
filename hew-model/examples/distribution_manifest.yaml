@@ -1,0 +1,15 @@
+id: HEWMANIFEST:daymet-v4-r1-tmax
+catalog_resource: HEWRES:daymet-v4-r1-daily
+distribution: HEWRES:daymet-v4-r1-netcdf
+manifest_version: "1.0.0"
+generated_at: '2026-11-19T17:30:00Z'
+variables:
+  - id: HEWDELIVERY:daymet-v4-r1-tmax
+    canonical_variable: HEWVAR:air-temperature-daily-maximum
+    native_name: tmax
+    native_units: Cel
+    value_data_type: float
+    aggregation_method: maximum
+    aggregation_window: P1D
+    cf_standard_name: air_temperature
+    cf_cell_methods: 'time: maximum'

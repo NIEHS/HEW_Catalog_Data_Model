@@ -90,19 +90,6 @@ def validate_amadeus_metadata(resource: dict[str, Any]) -> list[str]:
                 errors.append(f"{path} local_midnight requires timezone")
 
     check_temporal(temporal, "temporal_support")
-    for position, delivery in enumerate(resource.get("variable_deliveries", [])):
-        effective = {
-            "spatial_support": delivery.get("spatial_support", spatial),
-            "temporal_support": delivery.get("temporal_support", temporal),
-        }
-        if "spatial_support" not in delivery:
-            if grid:
-                effective["grid_definition"] = grid
-            if resource.get("coordinate_reference_system_uri"):
-                effective["coordinate_reference_system_uri"] = resource["coordinate_reference_system_uri"]
-        for error in validate_amadeus_metadata(effective):
-            errors.append(f"variable_deliveries[{position}]: {error}")
-
     def check_extent(interval: dict[str, Any], path: str) -> None:
         status = interval.get("coverage_status")
         if status == "timeless" and (interval.get("start_time") or interval.get("end_time")):

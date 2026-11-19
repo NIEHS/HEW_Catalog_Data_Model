@@ -7,6 +7,8 @@ EXAMPLES="$MODEL_DIR/examples"
 
 cd "$MODEL_DIR/.."
 linkml-validate "$SCHEMA"
+linkml-validate -s "$MODEL_DIR/schema/distribution_manifest.yaml" \
+  -C DistributionManifest "$EXAMPLES/distribution_manifest.yaml"
 
 linkml-validate -s "$SCHEMA" -C LiteratureResource "$EXAMPLES/publication_resource.yaml"
 linkml-validate -s "$SCHEMA" -C LiteratureResource "$EXAMPLES/example_literature_annotation.yaml"

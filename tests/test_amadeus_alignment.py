@@ -183,17 +183,6 @@ class TestAmadeusAlignment(unittest.TestCase):
         record["temporal_extent"]["temporal_resolution"] = "P1D"
         self.assertTrue(list(self.validator.iter_errors(record)))
 
-    def test_delivery_overrides_replace_dataset_defaults(self):
-        record = deepcopy(self.example)
-        delivery = record["variable_deliveries"][0]
-        delivery["temporal_support"] = {
-            "temporal_resolution": "hourly"
-        }
-        delivery["spatial_support"] = {"support_type": "point"}
-        self.assertEqual(validate_amadeus_metadata(record), [])
-        delivery["spatial_support"] = {"support_type": "model_grid_cell"}
-        self.assertTrue(validate_amadeus_metadata(record))
-
     def test_crs_normalization_requires_known_authority(self):
         self.assertEqual(normalize_crs("epsg:5070"), "EPSG:5070")
         self.assertEqual(

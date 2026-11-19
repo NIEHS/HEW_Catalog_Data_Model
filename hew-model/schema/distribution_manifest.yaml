@@ -1,0 +1,136 @@
+id: https://w3id.org/hew/schema/distribution-manifest
+name: hew_distribution_manifest
+title: HEW Distribution Manifest
+description: >-
+  A machine-readable manifest for one concrete dataset distribution or asset.
+  Distribution manifests keep source-specific variable delivery and file
+  representation details outside the HEW catalog. The catalog records
+  canonical EnvironmentalVariable identities; this manifest records how those
+  identities are delivered by a particular file, service response, or object.
+version: 1.0.0
+license: CC-BY-4.0
+
+prefixes:
+  HEW: https://w3id.org/hew/
+  linkml: https://w3id.org/linkml/
+  amadeus: https://w3id.org/niehs/amadeus/
+
+default_prefix: HEW
+default_range: string
+
+imports:
+  - linkml:types
+  - modules/hew_ext_geospatial
+
+classes:
+  DistributionManifest:
+    tree_root: true
+    description: >-
+      Delivery metadata for one concrete distribution or asset. It may be
+      stored beside the data, in a repository, or in a registry, but is not
+      part of the general HEW catalog record.
+    slots:
+      - id
+      - catalog_resource
+      - distribution
+      - manifest_version
+      - generated_at
+      - variables
+
+  DistributionVariable:
+    description: >-
+      One source-specific representation of a catalog EnvironmentalVariable in
+      this distribution. The canonical variable is referenced by stable ID;
+      all other fields describe this delivery only.
+    slots:
+      - id
+      - canonical_variable
+      - native_name
+      - native_units
+      - value_data_type
+      - scale_factor
+      - offset
+      - missing_value_sentinel
+      - aggregation_method
+      - aggregation_window
+      - cf_standard_name
+      - cf_cell_methods
+      - layer_name_template
+      - spatial_support
+      - temporal_support
+      - notes
+
+slots:
+  id:
+    identifier: true
+    range: uriorcurie
+    description: Stable identifier for this manifest or distribution variable.
+  catalog_resource:
+    range: uriorcurie
+    required: true
+    description: Stable HEW catalog resource identifier described by the distribution.
+  distribution:
+    range: uriorcurie
+    required: true
+    description: Stable identifier or URL for the concrete distribution or asset.
+  manifest_version:
+    range: string
+    required: true
+    description: Version of this manifest representation.
+  generated_at:
+    range: datetime
+    description: Time at which this manifest was generated.
+  variables:
+    range: DistributionVariable
+    multivalued: true
+    inlined_as_list: true
+    description: Variables physically or logically available in this distribution.
+  canonical_variable:
+    range: uriorcurie
+    required: true
+    description: Stable ID of the canonical HEW EnvironmentalVariable.
+  native_name:
+    range: string
+    required: true
+    description: Variable name used by the source file, service, or API.
+  native_units:
+    range: string
+    description: Units as represented by this distribution.
+  value_data_type:
+    range: string
+    description: Data type represented by this distribution.
+  scale_factor:
+    range: decimal
+    description: Multiplicative conversion applied to the stored value.
+  offset:
+    range: decimal
+    description: Additive conversion applied after the scale factor.
+  missing_value_sentinel:
+    range: string
+    description: Source-specific missing-value marker.
+  aggregation_method:
+    range: AggregationMethodEnum
+    description: Aggregation applied in this delivery.
+  aggregation_window:
+    range: Iso8601Duration
+    description: Aggregation interval or window used by this delivery.
+  cf_standard_name:
+    range: string
+    description: CF standard name recorded by the source.
+  cf_cell_methods:
+    range: string
+    description: CF cell methods recorded by the source.
+  layer_name_template:
+    range: string
+    description: Template used to derive source layer names.
+  spatial_support:
+    range: SpatialSupport
+    inlined: true
+    description: Delivery-specific spatial support or override.
+  temporal_support:
+    range: TemporalSupport
+    inlined: true
+    description: Delivery-specific temporal support or override.
+  notes:
+    range: string
+    description: Delivery-specific implementation or interpretation notes.

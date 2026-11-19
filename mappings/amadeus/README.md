@@ -2,7 +2,11 @@
 
 All definitions, validation and mappings live in HEW. Amadeus remains unchanged.
 `linkml_to_amadeus.yaml` is a transformation specification for adapter authors;
-it does not execute transformations or promise lossless round trips.
+it does not execute transformations or promise lossless round trips. HEW
+catalog records contain canonical environmental variables only. Source-specific
+variable delivery metadata belongs in the separate
+`hew_distribution_manifest` schema and is mapped from `DistributionVariable`
+to Amadeus `ProductVariable`.
 
 ## Dependency direction
 
@@ -13,8 +17,9 @@ profiles/hew_amadeus.yaml -> hew_ext_geospatial -> hew_core -> linkml:types
 
 Core owns GeographicLocation, Geometry, BoundingBox, SpatialExtent,
 TemporalExtent, resolution value classes, shared slots and calendar/duration
-types. The geospatial extension owns grids, value supports, variable deliveries
-and exposure classes. Core never imports an extension or profile. Amadeus is
+types. The geospatial extension owns grids, value supports, canonical environmental
+variables and exposure classes. Distribution manifests own source-specific
+variable deliveries. Core never imports an extension or profile. Amadeus is
 referenced only through mapping URIs. Every schema is checked for cycles,
 duplicate definitions and unresolved class-slot ranges in
 `tests/test_amadeus_alignment.py`.
@@ -39,12 +44,11 @@ Numeric SRIDs are checked automatically only for EPSG; other authorities need
 an explicit lookup. Full projection definitions are retained even when they
 cannot be exported to Amadeus's authority-code CRS field.
 
-Dataset spatial_support and temporal_support are defaults. Each explicit
-EnvironmentalVariableDelivery support object replaces the corresponding default
-as a whole. EnvironmentalVariable can remain a legacy embedded description, or
-serve as the quantity identity referenced by a delivery. The containing dataset
-provides the Amadeus Product reference during export. Legacy variable support
-must be reconciled explicitly before exporting through the strict profile.
+Dataset `spatial_support` and `temporal_support` describe catalog-level
+defaults. Source-specific delivery support belongs in a distribution manifest,
+not in the catalog. `EnvironmentalVariable` is the canonical quantity identity;
+the manifest's `DistributionVariable.canonical_variable` references it. The
+containing dataset provides the Amadeus Product reference during export.
 
 temporal_resolution exclusively uses Amadeus's TemporalResolutionEnum:
 instantaneous, subhourly, hourly, three_hourly, daily, monthly, seasonal, annual,

@@ -118,7 +118,7 @@ modules/hew_publication.yaml     LiteratureResource
 modules/hew_survey.yaml          SurveyInstrument, SurveyConstruct, SurveyQuestion,
                                  ResponseOption, SurveyDataset, Population
 modules/hew_ext_geospatial.yaml  GeospatialResource, GridDefinition, EnvironmentalVariable,
-                                 EnvironmentalVariableDelivery, supports,
+                                 supports,
                                  SpatiotemporalExposure, OMOP/Gaia linkage
 profiles/hew_amadeus.yaml        Optional AmadeusGeospatialResource interoperability profile
 modules/hew_ext_projects.yaml    Program, Project, FundingSource, AgentAssociation
@@ -205,10 +205,12 @@ See `hew-model/examples/publication_resource.yaml` for a publication record.
 `DatasetResource.data_dictionary` is the catalog representation of the
 dataset's variables and fields. It should make the data interpretable and
 discoverable without requiring a user to first download a separate document.
-For environmental data, use the richer `EnvironmentalVariable` and
-`EnvironmentalVariableDelivery` structures where applicable; generic
-`DataDictionary.variables` also covers ordinary tabular columns, identifiers,
-dimensions, coordinates, and other data elements.
+For environmental data, use canonical `EnvironmentalVariable` entries in the
+catalog. Source-specific names, units, transforms, and file-level support do
+not belong in the catalog; use the separate `hew_distribution_manifest`
+schema for those delivery details. Generic `DataDictionary.variables` also
+covers ordinary tabular columns, identifiers, dimensions, coordinates, and
+other data elements.
 
 A full codebook can be distributed as a sidecar file when it is too detailed,
 large, or format-specific to be convenient in catalog metadata. Treat it as a
@@ -429,11 +431,12 @@ vocabularies.
 ### Amadeus spatial and temporal alignment
 
 `GeospatialResource` adds dataset support defaults, reusable `GridDefinition`,
-`update_cadence_iso`, `typical_latency_iso` and source-specific
-`EnvironmentalVariableDelivery` bindings. Explicit delivery support replaces the
-corresponding dataset default. Grids describe native spacing, dimensions,
-projection, outer-corner origin, row direction and vertical levels. Hex-cell and
-line-feature supports extend the existing controlled values.
+`update_cadence_iso`, and `typical_latency_iso`. Source-specific delivery
+metadata is kept in a distribution manifest, where it can replace the
+corresponding dataset default for that concrete distribution. Grids describe
+native spacing, dimensions, projection, outer-corner origin, row direction and
+vertical levels. Hex-cell and line-feature supports extend the existing
+controlled values.
 
 `TemporalSupport` uses enum-valued `temporal_resolution` alongside
 `day_boundary_convention`, a controlled `calendar`

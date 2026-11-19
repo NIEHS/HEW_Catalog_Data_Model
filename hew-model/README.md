@@ -10,6 +10,7 @@ the [HEW Schema Handbook](../docs/schema_handbook.md).
 hew-model/
 |-- schema/
 |   |-- hew.yaml                  # canonical schema, composed from all modules
+|   |-- distribution_manifest.yaml # per-distribution delivery metadata
 |   |-- hew.schema.json           # generated from hew.yaml
 |   |-- hew.context.jsonld        # generated from hew.yaml
 |   `-- modules/
@@ -27,7 +28,10 @@ hew-model/
 ```
 
 Shared extent and geometry classes live in core; grids and support classes live
-in the geospatial extension. The optional `schema/profiles/hew_amadeus.yaml`
+in the geospatial extension. Catalog geospatial resources contain canonical
+`EnvironmentalVariable` identities only. Source-specific names, transforms,
+and file-level support belong in `distribution_manifest.yaml`, which is
+validated separately. The optional `schema/profiles/hew_amadeus.yaml`
 imports that extension and adds an interoperability entry point. See the
 [HEW-owned Amadeus crosswalk](../mappings/amadeus/README.md) for mappings,
 semantic validation and migration. Amadeus is referenced by URI, never imported.

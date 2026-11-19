@@ -51,12 +51,6 @@ environmental_variables:
     data_type: float
     unit: UCUM:Cel
     aggregation_method: maximum
-variable_deliveries:
-  - id: HEWVARDELIVERY:daymet-v4-r1-tmax
-    canonical_variable: HEWVAR:air-temperature-daily-maximum
-    native_name: tmax
-    aggregation_method: maximum
-    cf_cell_methods: 'time: maximum'
 data_dictionary:
   id: HEWDD:daymet-v4-r1
   title: Daymet V4 R1 data dictionary

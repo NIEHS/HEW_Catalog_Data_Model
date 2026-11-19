@@ -33,7 +33,6 @@ classes:
       A geospatial dataset, layer, raster, vector file, map service, or spatial data product.
     slots:
       - environmental_variables
-      - variable_deliveries
       - spatial_support
       - temporal_support
       - grid_definition
@@ -83,22 +82,6 @@ classes:
         required: true
       resolution_y:
         required: true
-
-  EnvironmentalVariableDelivery:
-    close_mappings:
-      - amadeus:ProductVariable
-    description: >-
-      Source-specific delivery of an EnvironmentalVariable. The containing dataset
-      supplies support defaults; explicit delivery support overrides those defaults
-      as a whole. Legacy environmental_variables may still embed delivery semantics.
-    slots:
-      - id
-      - canonical_variable
-      - native_name
-      - spatial_support
-      - temporal_support
-      - aggregation_method
-      - cf_cell_methods
 
   EnvironmentalVariable:
     is_a: Variable
@@ -515,23 +498,6 @@ slots:
     range: Iso8601Duration
     exact_mappings:
       - amadeus:typical_latency_iso
-  variable_deliveries:
-    description: "Source-specific variable representations, including native names and any support overrides."
-    range: EnvironmentalVariableDelivery
-    multivalued: true
-    inlined_as_list: true
-  canonical_variable:
-    range: EnvironmentalVariable
-    required: true
-    description: Reference to the quantity definition, without source-specific support.
-    close_mappings:
-      - amadeus:canonical_variable
-  native_name:
-    description: "Variable name used in the source dataset or product."
-    range: string
-    required: true
-    exact_mappings:
-      - amadeus:native_name
   cf_cell_methods:
     description: "Climate and Forecast conventions cell_methods text describing how values represent or summarize cells."
     range: string

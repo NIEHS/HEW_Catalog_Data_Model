@@ -45,12 +45,6 @@ environmental_variables:
   - id: HEWVAR:air-temperature
     name: air_temperature
     unit: UCUM:Cel
-variable_deliveries:
-  - id: HEWVAR:example-tmax
-    canonical_variable: HEWVAR:air-temperature
-    native_name: tmax
-    aggregation_method: maximum
-    cf_cell_methods: 'time: maximum'
 distributions:
   - id: HEWRES:aligned-temperature-20200101
     title: Daily temperature grid for 2020-01-01

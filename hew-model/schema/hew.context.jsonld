@@ -149,10 +149,6 @@
       },
       "@id": "calendar"
     },
-    "canonical_variable": {
-      "@type": "@id",
-      "@id": "canonical_variable"
-    },
     "cde_integration": {
       "@type": "xsd:boolean",
       "@id": "cde_integration"
@@ -631,9 +627,6 @@
     "named_locations": {
       "@type": "@id",
       "@id": "named_locations"
-    },
-    "native_name": {
-      "@id": "native_name"
     },
     "needs_human_review": {
       "@type": "xsd:boolean",
@@ -1230,10 +1223,6 @@
     "value_unit": {
       "@id": "value_unit"
     },
-    "variable_deliveries": {
-      "@type": "@id",
-      "@id": "variable_deliveries"
-    },
     "variables": {
       "@type": "@id",
       "@id": "variables"
@@ -1297,9 +1286,6 @@
     },
     "EnvironmentalVariable": {
       "@id": "EnvironmentalVariable"
-    },
-    "EnvironmentalVariableDelivery": {
-      "@id": "EnvironmentalVariableDelivery"
     },
     "ExternalExposureLinkage": {
       "@id": "ExternalExposureLinkage"

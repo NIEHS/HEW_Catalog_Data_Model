@@ -10,7 +10,7 @@ notes: >-
 classes:
   GeospatialResource: Product
   GridDefinition: GridDefinition
-  EnvironmentalVariableDelivery: ProductVariable
+  DistributionVariable: ProductVariable
   Distribution: Asset
 slots:
   GeospatialResource:
@@ -62,13 +62,13 @@ slots:
     vertical_level_type: {target: vertical_level_type, operation: copy}
     vertical_level_unit: {target: vertical_level_unit, operation: copy}
     vertical_levels: {target: vertical_levels, operation: copy}
-  EnvironmentalVariableDelivery:
+  DistributionVariable:
     id: {target: id, operation: copy}
     canonical_variable: {target: canonical_variable, operation: reference_quantity_identity}
     native_name: {target: native_name, operation: copy}
     aggregation_method: {target: aggregation_method, operation: copy}
     cf_cell_methods: {target: cf_cell_methods, operation: copy}
-    temporal_support.aggregation_window: {target: aggregation_window_iso, operation: copy}
+    aggregation_window: {target: aggregation_window_iso, operation: copy}
     temporal_support.temporal_alignment: {target: temporal_alignment, operation: copy}
   Distribution:
     temporal_extent.start_time: {target: valid_time_start, operation: copy_inclusive_start}
